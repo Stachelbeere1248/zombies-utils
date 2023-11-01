@@ -8,7 +8,7 @@ plugins {
 
 //Constants:
 
-val baseGroup: String by project
+val baseGroup = "com.github.stachelbeere1248.zombiesutils"
 val mcVersion: String by project
 val version: String by project
 val mixinGroup = "$baseGroup.mixin"
