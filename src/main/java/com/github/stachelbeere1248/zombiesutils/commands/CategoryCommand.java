@@ -3,7 +3,6 @@ package com.github.stachelbeere1248.zombiesutils.commands;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -27,7 +26,7 @@ public class CategoryCommand extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String[] args) {
         if (args.length == 0) {
             IChatComponent error = new ChatComponentText("Please input the name for the category");
             sender.addChatMessage(error);

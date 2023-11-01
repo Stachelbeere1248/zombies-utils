@@ -7,7 +7,6 @@ public class GameMode {
     public static final GameMode DEAD_END_NORMAL = new GameMode(Map.DEAD_END), DEAD_END_HARD = new GameMode(Map.DEAD_END, Difficulty.HARD), DEAD_END_RIP = new GameMode(Map.DEAD_END, Difficulty.RIP);
     public static final GameMode BAD_BLOOD_NORMAL = new GameMode(Map.BAD_BLOOD), BAD_BLOOD_HARD = new GameMode(Map.BAD_BLOOD, Difficulty.HARD), BAD_BLOOD_RIP = new GameMode(Map.BAD_BLOOD, Difficulty.RIP);
     public static final GameMode ALIEN_ARCADIUM = new GameMode(Map.ALIEN_ARCADIUM);
-
     private final Map map;
     private final Difficulty difficulty;
 
@@ -41,7 +40,8 @@ public class GameMode {
                     case NORMAL: currentGameMode = DEAD_END_NORMAL; break;
                     case HARD: currentGameMode = DEAD_END_HARD; break;
                     case RIP: currentGameMode = DEAD_END_RIP; break;
-                } break;
+                }
+                break;
             case BAD_BLOOD:
                 switch (difficulty) {
                     case NORMAL: currentGameMode = BAD_BLOOD_NORMAL; break;
@@ -59,5 +59,9 @@ public class GameMode {
      */
     public static void drop() {
         currentGameMode = null;
+    }
+
+    public boolean equals(@NotNull GameMode gameMode) {
+        return (this.getDifficulty() == gameMode.getDifficulty() && this.getMap() == gameMode.getMap());
     }
 }

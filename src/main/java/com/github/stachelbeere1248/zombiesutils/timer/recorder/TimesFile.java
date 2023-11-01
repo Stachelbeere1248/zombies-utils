@@ -1,8 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
-import org.jetbrains.annotations.NotNull;
-import scala.reflect.io.Directory;
 
 import java.io.File;
 

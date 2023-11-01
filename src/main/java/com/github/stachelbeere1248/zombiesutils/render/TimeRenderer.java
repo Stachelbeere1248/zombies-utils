@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.render;
 
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
+import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -18,6 +19,7 @@ public class TimeRenderer {
 
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
+        if (!Scoreboard.isZombies()) return;
         if (event.type != RenderGameOverlayEvent.ElementType.ALL) return;
         if (!Timer.getInstance().isPresent()) return;
 

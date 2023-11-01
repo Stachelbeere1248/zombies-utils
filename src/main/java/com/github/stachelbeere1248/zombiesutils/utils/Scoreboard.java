@@ -9,7 +9,10 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -38,7 +41,7 @@ public class Scoreboard {
         if (sidebar == null) return;
 
         // get
-        title = sidebar.getDisplayName().trim();
+        title = STRIP_COLOR_PATTERN.matcher(sidebar.getDisplayName().trim()).replaceAll("");
         Collection<Score> scoreCollection = scoreboard.getSortedScores(sidebar);
         List<Score> filteredScores = scoreCollection.stream().filter(input -> input.getPlayerName() != null && !input.getPlayerName().startsWith("#")).collect(Collectors.toList());
 
@@ -106,7 +109,7 @@ public class Scoreboard {
             default: return Optional.empty();
         }
     }
-    public static String getTitle() {
-        return title;
+    public static boolean isZombies() {
+        return ("ZOMBIES".equals(title));
     }
 }

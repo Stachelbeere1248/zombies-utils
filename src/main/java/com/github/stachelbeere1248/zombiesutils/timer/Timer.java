@@ -3,7 +3,6 @@ package com.github.stachelbeere1248.zombiesutils.timer;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
-//import com.github.stachelbeere1248.zombiesutils.game.Waves;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
@@ -88,7 +87,7 @@ public class Timer {
     /**
      * Call to invalidate {@link #instance} to trigger the garbage collector
      */
-    public static void drop() {
+    public static void dropInstance() {
         instance = null;
         GameMode.drop();
     }
