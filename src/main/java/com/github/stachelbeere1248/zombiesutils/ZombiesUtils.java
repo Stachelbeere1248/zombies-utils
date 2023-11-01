@@ -19,7 +19,6 @@ public class ZombiesUtils {
     private Logger logger;
     public ZombiesUtils() {
         instance = this;
-        System.out.println("Initialised zombies-utils");
     }
     public static ZombiesUtils getInstance() {
         return instance;

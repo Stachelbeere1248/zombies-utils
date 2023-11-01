@@ -5,9 +5,10 @@ import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.TimesFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import org.jetbrains.annotations.NotNull;
 
 public class RecordManager {
-    public static void compareSegment(byte round, short roundTime, Category category) {
+    public static void compareSegment(byte round, short roundTime, @NotNull Category category) {
         sendBar();
         TimesFile timesFile = category.getByGameMode(GameMode.getCurrentGameMode());
         short bestSegment = timesFile.getBestSegment(round);
@@ -29,12 +30,12 @@ public class RecordManager {
                 timesFile.setBestSegment(round, roundTime);
             }
             final String timeString = getTimeString(roundTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + " \u00a79\u03B4" + (double) (roundTime-bestSegment)/20;
+            final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + " \u00a79\u0394" + (double) (roundTime-bestSegment)/20;
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
         }
         sendBar();
     }
-    public static void compareBest(byte round, int gameTime, Category category) {
+    public static void compareBest(byte round, int gameTime, @NotNull Category category) {
         sendBar();
         TimesFile timesFile = category.getByGameMode(GameMode.getCurrentGameMode());
         int personalBest = timesFile.getPersonalBest(round);
@@ -58,7 +59,7 @@ public class RecordManager {
             }
 
             final String timeString = getTimeString(gameTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + " \u00a79\u03B4" + (double) (gameTime-personalBest)/20;
+            final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + " \u00a79\u0394" + (double) (gameTime-personalBest)/20;
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
         }

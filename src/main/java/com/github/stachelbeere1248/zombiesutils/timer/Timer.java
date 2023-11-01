@@ -1,8 +1,8 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
@@ -22,9 +22,9 @@ public class Timer {
     /**
      * Constructs a timer and saves it to {@link #instance}.
      * @param serverNumber The game's server the timer should be bound to.
-     * @param enumMap The map the timer should be started for.
+     * @param map The map the timer should be started for.
      */
-    public Timer (@NotNull String serverNumber, @NotNull Map enumMap) {
+    public Timer (@NotNull String serverNumber, @NotNull Map map) {
         instance = this;
 
         savedTotalWorldTime = getCurrentTotalWorldTime();
@@ -32,7 +32,7 @@ public class Timer {
         else throw new RuntimeException("invalid servernumber");
 
         this.category = new Category();
-        GameMode.create(enumMap);
+        GameMode.create(map);
     }
 
 
@@ -51,8 +51,6 @@ public class Timer {
         final int gameTime = gameTime();
         final short roundTime = (short) (gameTime - passedRoundsTickSum);
 
-        //short clearTime = (short) (roundTime - Waves.getLastWave(GameMode.getCurrentGameMode().getMap(), passedRound));
-        //ZombiesUtils.getInstance().getLogger().debug("ClearTime: " + clearTime);
         ZombiesUtils.getInstance().getLogger().debug("Passed round: " + passedRound);
 
         RecordManager.compareSegment(passedRound, roundTime, category);
