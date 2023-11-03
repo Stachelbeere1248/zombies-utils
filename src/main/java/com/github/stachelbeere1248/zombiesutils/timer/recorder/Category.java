@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class Category {
-    private static String selectedCategory = "default"; // read from config ?
+    private static String selectedCategory = "general"; // read from config ?
     public final TimesFile[] timesFiles = new TimesFile[7];
     private final String name;
     public Category() {

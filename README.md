@@ -5,6 +5,14 @@ Disclaimers
 ## For Users
 The Timer automatically splits every round. The Personal-Best-recorder automatically distinguishes between maps and difficulties.
 ### Commands
-- /runCategory <name> - Switches to the category called name. All recorded times are bound to its category. Tabcomplete suggests already existing categories, but you can insert a new (clean) one as well.
-  - Examples: /runCategory pistol_only, /runCategory casual
-  - selected on launch: default
+- /runCategory \<name> - Switches to the category called name. All recorded times are bound to its category. Tabcomplete suggests already existing categories, but you can insert a new (clean) one as well.
+  - Examples:
+    - /runCategory pistol_only
+    - /runCategory casual
+  - default name: general
+- /sla \<toggle|set|offset>
+  - /sla toggle - Enables / disables the overlay
+    - default state: disabled
+  - /sla set \<de|bb|aa> - forcefully set the map
+  - /sla offset \<x> \<y> \<z> - set an offset, allowing you to use sla on map-recreations, such as housings
+

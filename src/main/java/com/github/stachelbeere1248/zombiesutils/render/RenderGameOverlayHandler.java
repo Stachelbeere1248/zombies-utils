@@ -22,7 +22,6 @@ public class RenderGameOverlayHandler {
 
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
-        if (!Scoreboard.isZombies()) return;
         if (event.type != RenderGameOverlayEvent.ElementType.TEXT) return;
         Timer.getInstance().ifPresent(timer -> renderTime(timer.roundTime()));
         if (Sla.isEnabled()) Sla.getInstance().ifPresent(sla -> {
@@ -33,6 +32,7 @@ public class RenderGameOverlayHandler {
     }
 
     private void renderTime(long timerTicks) {
+        if (!Scoreboard.isZombies()) return;
         long minutesPart = (timerTicks*50) / 60000;
         long secondsPart = ((timerTicks*50) % 60000) / 1000;
         long tenthSecondsPart = ((timerTicks*50) % 1000) / 100;
