@@ -18,7 +18,7 @@ public class RecordManager {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
                     "\u00a7l\u00a7e Category: " + category.getName() + " - ***" + "\u00a7l\u00a76 NEW BEST SEGMENT! " + "\u00a7l\u00a7e***"
             ));
-            final String timeString = getTimeString(roundTime);
+            final String timeString = formattedTime(roundTime);
             final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + "\u00a7e!";
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
@@ -29,8 +29,8 @@ public class RecordManager {
                 ));
                 timesFile.setBestSegment(round, roundTime);
             }
-            final String timeString = getTimeString(roundTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + " \u00a79\u0394" + (double) (roundTime-bestSegment)/20;
+            final String timeString = formattedTime(roundTime);
+            final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + " \u00a79" + formattedDelta(roundTime,bestSegment);
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
         }
         sendBar();
@@ -46,7 +46,7 @@ public class RecordManager {
                     "\u00a7l\u00a7e Category: " + category.getName() + " - ***" + "\u00a7l\u00a76 NEW PERSONAL BEST! " + "\u00a7l\u00a7e***"
             ));
 
-            final String timeString = getTimeString(gameTime);
+            final String timeString = formattedTime(gameTime);
             final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + "\u00a7e!";
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
@@ -58,19 +58,25 @@ public class RecordManager {
                 timesFile.setPersonalBest(round, gameTime);
             }
 
-            final String timeString = getTimeString(gameTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + " \u00a79\u0394" + (double) (gameTime-personalBest)/20;
+            final String timeString = formattedTime(gameTime);
+            final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + " \u00a79" + formattedDelta(gameTime, personalBest);
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
         }
         sendBar();
     }
-    private static String getTimeString(int gameTime) {
+    private static String formattedTime(int gameTime) {
         return String.format("%d:%02d.%d",
                 (gameTime *50) / 60000,
                 ((gameTime *50) % 60000) / 1000,
                 ((gameTime *50) % 1000) / 100
         );
+    }
+    private static String formattedDelta(int newTime, int prevTime) {
+        double delta = (double) (newTime - prevTime) / 20;
+        if (delta<0) {
+            return String.valueOf(delta);
+        } else return ("+" + delta);
     }
     private static void sendBar() {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(

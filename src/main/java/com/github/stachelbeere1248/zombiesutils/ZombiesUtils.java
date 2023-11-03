@@ -1,9 +1,10 @@
 package com.github.stachelbeere1248.zombiesutils;
 
 import com.github.stachelbeere1248.zombiesutils.commands.CategoryCommand;
+import com.github.stachelbeere1248.zombiesutils.commands.SlaCommand;
 import com.github.stachelbeere1248.zombiesutils.handlers.ChatHandler;
 import com.github.stachelbeere1248.zombiesutils.handlers.TickHandler;
-import com.github.stachelbeere1248.zombiesutils.render.TimeRenderer;
+import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -32,10 +33,11 @@ public class ZombiesUtils {
     }
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new TimeRenderer());
+        MinecraftForge.EVENT_BUS.register(new RenderGameOverlayHandler());
         MinecraftForge.EVENT_BUS.register(new TickHandler());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
         ClientCommandHandler.instance.registerCommand(new CategoryCommand());
+        ClientCommandHandler.instance.registerCommand(new SlaCommand());
     }
     public Configuration getConfig() {
         return config;

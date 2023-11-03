@@ -6,7 +6,6 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +26,8 @@ public class CategoryCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length == 0) {
-            IChatComponent error = new ChatComponentText("Please input the name for the category");
-            sender.addChatMessage(error);
-        } else {
+        if (args.length == 0) sender.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
+        else {
             Category.setSelectedCategory(args[0]);
             Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
         }

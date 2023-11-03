@@ -67,18 +67,18 @@ public class MixinNetHandlerPlayClient {
                 case DEAD_END: case BAD_BLOOD:
                     Timer.getInstance().ifPresent(timer -> {
                         timer.split((byte) 30);
-                        Timer.dropInstance();
+                        Timer.dropInstances();
                     });
                     break;
                 case ALIEN_ARCADIUM:
                     Timer.getInstance().ifPresent(timer -> {
                         timer.split((byte) 105);
-                        Timer.dropInstance();
+                        Timer.dropInstances();
                     });
                     break;
             }
         } else if (message.equals("\u00a7cGame Over!")) {
-            Timer.dropInstance();
+            Timer.dropInstances();
         } else {
             ZombiesUtils.getInstance().getLogger().debug(message);
         }

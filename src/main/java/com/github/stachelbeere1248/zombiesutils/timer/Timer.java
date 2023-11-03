@@ -1,8 +1,9 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.windows.Sla;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +34,7 @@ public class Timer {
 
         this.category = new Category();
         GameMode.create(map);
+        new Sla(map);
     }
 
 
@@ -85,8 +87,9 @@ public class Timer {
     /**
      * Call to invalidate {@link #instance} to trigger the garbage collector
      */
-    public static void dropInstance() {
+    public static void dropInstances() {
         instance = null;
         GameMode.drop();
+        Sla.drop();
     }
 }
