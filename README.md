@@ -10,6 +10,7 @@ The Timer automatically splits every round. The Personal-Best-recorder automatic
     - /runCategory pistol_only
     - /runCategory casual
   - default name: general
+  - note: you do NOT need to make your own categories to distinguish difficulties or map
 - /sla \<toggle|set|offset>
   - /sla toggle - Enables / disables the overlay
     - default state: disabled
