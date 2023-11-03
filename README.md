@@ -15,4 +15,5 @@ The Timer automatically splits every round. The Personal-Best-recorder automatic
     - default state: disabled
   - /sla set \<de|bb|aa> - forcefully set the map
   - /sla offset \<x> \<y> \<z> - set an offset, allowing you to use sla on map-recreations, such as housings
-
+### Extra
+- Migration of split-category names: In your minecraft folder is a folder called "zombies". You can simply rename the sub-folders.
