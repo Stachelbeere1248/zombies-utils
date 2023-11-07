@@ -5,6 +5,7 @@ import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.TimesFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class RecordManager {
@@ -16,21 +17,21 @@ public class RecordManager {
             timesFile.setBestSegment(round, roundTime);
 
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                    "\u00a7l\u00a7e Category: " + category.getName() + " - ***" + "\u00a7l\u00a76 NEW BEST SEGMENT! " + "\u00a7l\u00a7e***"
+                    "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW BEST SEGMENT! " + "§l§e***"
             ));
             final String timeString = formattedTime(roundTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + "\u00a7e!";
+            final String message = "§cRound " + round + "§e took §a" + timeString + "§e!";
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
         } else {
             if (roundTime<bestSegment) {
                 Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                        "\u00a7l\u00a7e Category: " + category.getName() + " - ***" + "\u00a7l\u00a76 NEW BEST SEGMENT! " + "\u00a7l\u00a7e***"
+                        "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW BEST SEGMENT! " + "§l§e***"
                 ));
                 timesFile.setBestSegment(round, roundTime);
             }
             final String timeString = formattedTime(roundTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e took \u00a7a" + timeString + " \u00a79" + formattedDelta(roundTime,bestSegment);
+            final String message = "§cRound " + round + "§e took §a" + timeString + " §9" + formattedDelta(roundTime,bestSegment);
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
         }
         sendBar();
@@ -43,23 +44,23 @@ public class RecordManager {
             timesFile.setPersonalBest(round, gameTime);
 
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                    "\u00a7l\u00a7e Category: " + category.getName() + " - ***" + "\u00a7l\u00a76 NEW PERSONAL BEST! " + "\u00a7l\u00a7e***"
+                    "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW PERSONAL BEST! " + "§l§e***"
             ));
 
             final String timeString = formattedTime(gameTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + "\u00a7e!";
+            final String message = "§cRound " + round + "§e finished at §a" + timeString + "§e!";
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
         } else {
             if (gameTime<personalBest) {
                 Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                        "\u00a7l\u00a7e Category: " + category.getName() + " - ***" + "\u00a7l\u00a76 NEW PERSONAL BEST! " + "\u00a7l\u00a7e***"
+                        "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW PERSONAL BEST! " + "§l§e***"
                 ));
                 timesFile.setPersonalBest(round, gameTime);
             }
 
             final String timeString = formattedTime(gameTime);
-            final String message = "\u00a7cRound " + round + "\u00a7e finished at \u00a7a" + timeString + " \u00a79" + formattedDelta(gameTime, personalBest);
+            final String message = "§cRound " + round + "§e finished at §a" + timeString + " §9" + formattedDelta(gameTime, personalBest);
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
 
         }
@@ -72,7 +73,8 @@ public class RecordManager {
                 ((gameTime *50) % 1000) / 100
         );
     }
-    private static String formattedDelta(int newTime, int prevTime) {
+    @Contract(pure = true)
+    private static @NotNull String formattedDelta(int newTime, int prevTime) {
         double delta = (double) (newTime - prevTime) / 20;
         if (delta<0) {
             return String.valueOf(delta);
@@ -80,7 +82,7 @@ public class RecordManager {
     }
     private static void sendBar() {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                "\u00a7l\u00a7a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+                "§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
         ));
     }
 }

@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Scoreboard {
+    @SuppressWarnings("UnnecessaryUnicodeEscape")
     private static final Pattern SIDEBAR_EMOJI_PATTERN = Pattern.compile("[\uD83D\uDD2B\uD83C\uDF6B\uD83D\uDCA3\uD83D\uDC7D\uD83D\uDD2E\uD83D\uDC0D\uD83D\uDC7E\uD83C\uDF20\uD83C\uDF6D\u26BD\uD83C\uDFC0\uD83D\uDC79\uD83C\uDF81\uD83C\uDF89\uD83C\uDF82]+");
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("§[0-9A-FK-ORZ]", Pattern.CASE_INSENSITIVE);
     private static final Pattern ROUND_LINE_PATTERN = Pattern.compile("(Round )([0-9]{1,3})");
@@ -50,7 +51,7 @@ public class Scoreboard {
         else scores = filteredScores;
         scores = Lists.reverse(scores);
 
-        lines = new ArrayList<String>();
+        lines = new ArrayList<>();
         for (Score score: scores
              ) {
             ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
@@ -110,6 +111,6 @@ public class Scoreboard {
         }
     }
     public static boolean isZombies() {
-        return ("ZOMBIES".equals(title));
+        return (!"ZOMBIES".equals(title));
     }
 }

@@ -1,16 +1,17 @@
 package com.github.stachelbeere1248.zombiesutils.game.windows;
 
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 public class Sla {
-    private static Sla instance = null;
-    private static boolean enabled = false;
+    public static Sla instance = null;
     private final double[] offset = new double[3];
     private final Room[] rooms;
 
@@ -22,15 +23,39 @@ public class Sla {
             case ALIEN_ARCADIUM: this.rooms = Room.getAA(); break;
             default: throw new IllegalStateException("Unexpected value: " + map);
         }
-        instance = this;
     }
 
+    public void rotate() {
+        for (Room room : rooms) {
+            for (Window window: room.getWindows()) {
+                window.rotate();
+            }
+        }
+        System.out.println("Co3 now at " + Arrays.toString(rooms[0].getWindows()[0].getXYZ()));
+    }
+    public void mirrorX() {
+        for (Room room : rooms) {
+            for (Window window: room.getWindows()) {
+                window.mirrorX();
+            }
+        }
+        System.out.println("Co3 now at " + Arrays.toString(rooms[0].getWindows()[0].getXYZ()));
+    }
+    public void mirrorZ() {
+        for (Room room : rooms) {
+            for (Window window: room.getWindows()) {
+                window.mirrorZ();
+            }
+        }
+        short[] win0 = rooms[0].getWindows()[0].getXYZ();
+        ZombiesUtils.getInstance().getLogger().info("Window \"0\" is now at %s %s %s" + (double) win0[0]/2 + (double) win0[1]/2 + (double) win0[2]/2);
+    }
     public void refreshActives() {
         final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         final double[] playerCoords = {
-                player.posX + offset[0],
-                player.posY + offset[1],
-                player.posZ + offset[2]
+                (player.posX - offset[0]),
+                player.posY - offset[1],
+                player.posZ - offset[2]
         };
         for (Room room: rooms
              ) {
@@ -60,12 +85,6 @@ public class Sla {
     }
     public Room[] getRooms() {
         return rooms;
-    }
-    public static boolean isEnabled() {
-        return enabled;
-    }
-    public static void toggle() {
-        Sla.enabled = !Sla.enabled;
     }
     public void resetOffset() {
         Arrays.fill(this.offset, 0);

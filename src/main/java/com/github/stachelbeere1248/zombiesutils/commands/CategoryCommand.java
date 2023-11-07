@@ -3,10 +3,13 @@ package com.github.stachelbeere1248.zombiesutils.commands;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,10 +28,12 @@ public class CategoryCommand extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length == 0) sender.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
+    public void processCommand(ICommandSender sender, String @NotNull [] args) throws CommandException {
+        if (args.length == 0) throw new WrongUsageException("Please enter a name for the category");
         else {
-            Category.setSelectedCategory(args[0]);
+            String cat = args[0];
+            if (cat.contains(File.separator)) throw new WrongUsageException("Your name must not contain '" + File.separator + "' as this is the systems separator character for folder" + File.separator + "subfolder");
+            Category.setSelectedCategory(cat);
             Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
         }
     }

@@ -1,13 +1,14 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
 public class TimesFile extends File {
     private final FileData fileData;
     private final GameMode gameMode;
-    public TimesFile(String category, GameMode gameMode) {
+    public TimesFile(String category, @NotNull GameMode gameMode) {
         // Game-directory -> custom category -> file named "MAP_DIFFICULTY.times"
         // Content encoded in StandardCharsets.UTF_16
         super("zombies" + File.separator + category,gameMode.getMap() + "_" + gameMode.getDifficulty() + ".times");

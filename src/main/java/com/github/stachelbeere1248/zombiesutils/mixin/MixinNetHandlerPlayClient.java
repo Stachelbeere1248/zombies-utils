@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetHandlerPlayClient.class)
 public class MixinNetHandlerPlayClient {
-    public MixinNetHandlerPlayClient() {}
     @Unique
     private boolean zombies_utils$alienUfoOpened;
     @Inject(method = "handleSoundEffect", at = @At(value = "HEAD"))
@@ -29,7 +28,7 @@ public class MixinNetHandlerPlayClient {
     }
     @Unique
     private void zombies_utils$handleSound(@NotNull S29PacketSoundEffect packet) {
-        if (!Scoreboard.isZombies()) return;
+        if (Scoreboard.isZombies()) return;
         String soundEffect = packet.getSoundName();
         if (!(
                 soundEffect.equals("mob.wither.spawn")
@@ -58,11 +57,11 @@ public class MixinNetHandlerPlayClient {
         }
     }
     @Unique
-    private void zombies_utils$handleTitle(S45PacketTitle packet) {
+    private void zombies_utils$handleTitle(@NotNull S45PacketTitle packet) {
         if (packet.getType() != S45PacketTitle.Type.TITLE) return;
-        if (!Scoreboard.isZombies()) return;
+        if (Scoreboard.isZombies()) return;
         final String message = packet.getMessage().getUnformattedText().trim();
-        if (message.equals("\u00a7aYou Win!")) {
+        if (message.equals("§aYou Win!")) {
             switch (GameMode.getCurrentGameMode().getMap()) {
                 case DEAD_END: case BAD_BLOOD:
                     Timer.getInstance().ifPresent(timer -> {
@@ -77,7 +76,7 @@ public class MixinNetHandlerPlayClient {
                     });
                     break;
             }
-        } else if (message.equals("\u00a7cGame Over!")) {
+        } else if (message.equals("§cGame Over!")) {
             Timer.dropInstances();
         } else {
             ZombiesUtils.getInstance().getLogger().debug(message);

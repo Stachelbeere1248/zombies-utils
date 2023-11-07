@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
+import com.github.stachelbeere1248.zombiesutils.config.Config;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Sla;
@@ -34,7 +35,7 @@ public class Timer {
 
         this.category = new Category();
         GameMode.create(map);
-        new Sla(map);
+        if (Config.isSlaToggled()) Sla.instance = new Sla(map);
     }
 
 
@@ -44,7 +45,7 @@ public class Timer {
      * @param passedRound The round that has been passed.
      */
     public void split(byte passedRound) {
-        if (dontDupeSplitPlease == passedRound) {
+        if (dontDupeSplitPlease == passedRound || passedRound == 0) {
             ZombiesUtils.getInstance().getLogger().debug("SPLIT CANCELLED");
             return;
         }

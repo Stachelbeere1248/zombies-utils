@@ -1,5 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.game.windows;
 
+import net.minecraft.util.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +22,8 @@ public class Room {
 
     @Contract(" -> new")
     public static Room @NotNull [] getDE() {
+        Vec3 t = new Vec3(3,3,3);
+        t.rotatePitch(3);
         return new Room[]{
                 new Room("Alley", new Window[]{
                         new Window(1,13,138,63),

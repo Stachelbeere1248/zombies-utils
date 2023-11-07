@@ -17,10 +17,21 @@ public class Window {
         return xyz;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
     public boolean isActive() {
         return isActive;
     }
-    public void setActive(boolean active) {
-        isActive = active;
+    public void rotate() {
+        final short x = xyz[0], z = xyz[2];
+        xyz[0] = (short) -z;
+        xyz[2] = x;
+    }
+    public void mirrorX() {
+        xyz[0] = (short) -xyz[0];
+    }
+    public void mirrorZ() {
+        xyz[2] = (short) -xyz[2];
     }
 }

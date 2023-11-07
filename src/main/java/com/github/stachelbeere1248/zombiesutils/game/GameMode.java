@@ -2,6 +2,7 @@ package com.github.stachelbeere1248.zombiesutils.game;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("DuplicatedCode")
 public class GameMode {
     private static GameMode currentGameMode = null;
     public static final GameMode DEAD_END_NORMAL = new GameMode(Map.DEAD_END), DEAD_END_HARD = new GameMode(Map.DEAD_END, Difficulty.HARD), DEAD_END_RIP = new GameMode(Map.DEAD_END, Difficulty.RIP);
