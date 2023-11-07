@@ -14,7 +14,13 @@ The Timer automatically splits every round. The Personal-Best-recorder automatic
   - /sla toggle - Enables / disables the overlay
     - default state: disabled
   - /sla set \<de|bb|aa> - forcefully set the map
+  - /sla rotate - rotates all windows around the axis (0,y,0)
+  - /sla mirror \<x|z> - mirrors all windows along the plane (0,y,z) or (x,y,0)
   - /sla offset \<x> \<y> \<z> - set an offset, allowing you to use sla on map-recreations, such as housings
-    - Mogi_a: 41 -35 22
 ### Extra
 - Migration of split-category names: In your minecraft folder is a folder called "zombies". You can simply rename the sub-folders.
+- Mogi_a housing (quick-command might be released):
+  - rotations: 1
+  - x mirrored: yes
+  - y mirrored: yes
+  - offset: -3 35 -9
