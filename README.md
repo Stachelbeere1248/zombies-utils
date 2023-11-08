@@ -20,7 +20,7 @@ The Timer automatically splits every round. The Personal-Best-recorder automatic
 ### Extra
 - Migration of split-category names: In your minecraft folder is a folder called "zombies". You can simply rename the sub-folders.
 - Mogi_a housing (quick-command might be released):
-  - rotations: 1
-  - x mirrored: yes
-  - y mirrored: yes
+  - rotations: 3
+  - x mirrored: no
+  - y mirrored: no
   - offset: -3 35 -9
