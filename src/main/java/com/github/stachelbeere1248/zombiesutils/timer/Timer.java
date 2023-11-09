@@ -34,7 +34,7 @@ public class Timer {
         else throw new RuntimeException("invalid servernumber");
 
         this.category = new Category();
-        GameMode.create(map);
+        GameMode.currentGameMode = new GameMode(map);
         if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
     }
 

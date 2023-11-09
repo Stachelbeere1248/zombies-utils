@@ -2,8 +2,8 @@ package com.github.stachelbeere1248.zombiesutils;
 
 import com.github.stachelbeere1248.zombiesutils.commands.CategoryCommand;
 import com.github.stachelbeere1248.zombiesutils.commands.SlaCommand;
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
+import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.handlers.ChatHandler;
 import com.github.stachelbeere1248.zombiesutils.handlers.TickHandler;
 import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;

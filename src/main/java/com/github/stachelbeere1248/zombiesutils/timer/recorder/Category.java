@@ -1,45 +1,49 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
+import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.game.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
 public class Category {
-    private static String selectedCategory = "general"; // read from config ?
+    private static String selectedCategory = ZombiesUtilsConfig.getDefaultCategory();
     public final TimesFile[] timesFiles = new TimesFile[7];
     private final String name;
     public Category() {
-        timesFiles[0] = new TimesFile(selectedCategory, GameMode.DEAD_END_NORMAL);
-        timesFiles[1] = new TimesFile(selectedCategory, GameMode.DEAD_END_HARD);
-        timesFiles[2] = new TimesFile(selectedCategory, GameMode.DEAD_END_RIP);
+        timesFiles[0] = new TimesFile(selectedCategory, new GameMode(Map.DEAD_END));
+        timesFiles[1] = new TimesFile(selectedCategory, new GameMode(Map.DEAD_END, Difficulty.HARD));
+        timesFiles[2] = new TimesFile(selectedCategory, new GameMode(Map.DEAD_END, Difficulty.RIP));
 
-        timesFiles[3] = new TimesFile(selectedCategory, GameMode.BAD_BLOOD_NORMAL);
-        timesFiles[4] = new TimesFile(selectedCategory, GameMode.BAD_BLOOD_HARD);
-        timesFiles[5] = new TimesFile(selectedCategory, GameMode.BAD_BLOOD_RIP);
+        timesFiles[3] = new TimesFile(selectedCategory, new GameMode(Map.BAD_BLOOD));
+        timesFiles[4] = new TimesFile(selectedCategory, new GameMode(Map.BAD_BLOOD, Difficulty.HARD));
+        timesFiles[5] = new TimesFile(selectedCategory, new GameMode(Map.BAD_BLOOD, Difficulty.RIP));
 
-        timesFiles[6] = new TimesFile(selectedCategory, GameMode.ALIEN_ARCADIUM);
+        timesFiles[6] = new TimesFile(selectedCategory, new GameMode(Map.ALIEN_ARCADIUM));
         name = selectedCategory;
     }
 
 
 
     public TimesFile getByGameMode(@NotNull GameMode gameMode) {
-        if (gameMode.equals(GameMode.DEAD_END_NORMAL)) return timesFiles[0];
-        if (gameMode.equals(GameMode.DEAD_END_HARD)) return timesFiles[1];
-        if (gameMode.equals(GameMode.DEAD_END_RIP)) return timesFiles[2];
-        if (gameMode.equals(GameMode.BAD_BLOOD_NORMAL)) return timesFiles[3];
-        if (gameMode.equals(GameMode.BAD_BLOOD_HARD)) return timesFiles[4];
-        if (gameMode.equals(GameMode.BAD_BLOOD_RIP)) return timesFiles[5];
-        if (gameMode.equals(GameMode.ALIEN_ARCADIUM)) return timesFiles[6];
-        throw new IllegalStateException("Unexpected value: " + gameMode);
+        if (gameMode.is(Map.DEAD_END, Difficulty.NORMAL)) return timesFiles[0];
+        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.NORMAL)) return timesFiles[3];
+        else if (gameMode.is(Map.ALIEN_ARCADIUM, Difficulty.NORMAL)) return timesFiles[6];
+
+        else if (gameMode.is(Map.DEAD_END, Difficulty.HARD)) return timesFiles[1];
+        else if (gameMode.is(Map.DEAD_END, Difficulty.RIP)) return timesFiles[2];
+
+        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.HARD)) return timesFiles[4];
+        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.RIP)) return timesFiles[5];
+        else throw new IllegalStateException("Unexpected value: " + gameMode);
     }
 
     public static void setSelectedCategory(String selectedCategory) {
         Category.selectedCategory = selectedCategory;
-        if (!Timer.getInstance().isPresent()) return;
-        Timer.getInstance().get().category = new Category();
+        Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
     }
     public static String[] getCategories() {
         File dir = new File("zombies");

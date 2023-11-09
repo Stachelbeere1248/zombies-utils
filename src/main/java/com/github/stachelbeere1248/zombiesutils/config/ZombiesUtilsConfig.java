@@ -10,6 +10,7 @@ public class ZombiesUtilsConfig {
     public static Configuration config;
     private static boolean slaToggle;
     private static String chatMacro;
+    private static String defaultCategory;
     public static void load() {
         ZombiesUtils.getInstance().getLogger().debug("Loading config...");
         config.load();
@@ -26,7 +27,13 @@ public class ZombiesUtilsConfig {
                 Configuration.CATEGORY_GENERAL,
                 "T",
                 "The Text to be sent when pressing the chat-macro hotkey"
-                );
+        );
+        defaultCategory = config.getString(
+                "Default Category",
+                Configuration.CATEGORY_GENERAL,
+                "general",
+                "name of the category to be selected unless specified using /runCategory"
+        );
 
         ZombiesUtils.getInstance().getLogger().debug("Saving Config...");
         config.save();
@@ -44,5 +51,8 @@ public class ZombiesUtilsConfig {
     }
     public static String getChatMacro() {
         return chatMacro;
+    }
+    public static String getDefaultCategory() {
+        return defaultCategory;
     }
 }
