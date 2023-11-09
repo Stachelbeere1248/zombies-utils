@@ -1,8 +1,14 @@
 # zombies-utils
-Disclaimers
+Hello, I am currently working on this mod. More features will come. For now it has:
+- An accurate timer
+- Automatic splitting
+- Tracking of splits & segment PBs (with custom categories)
+- SLA hud
+- 1 chat macro
+#### Disclaimers
 - If you are using a Hypixel language other than english the mod may not work entirely. Use /lang en.
 ## For Users
-The Timer automatically splits every round. The Personal-Best-recorder automatically distinguishes between maps and difficulties.
+The timer automatically splits every round. The Personal-Best-recorder automatically distinguishes between maps and difficulties.
 ### Config
 - SLA Launcher: if on, sets and displays SLA when the mod starts the timer
 - short SLA: if on, hides inactive windows & rooms from the SLA display
