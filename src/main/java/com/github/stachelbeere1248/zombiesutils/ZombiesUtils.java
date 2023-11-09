@@ -2,7 +2,8 @@ package com.github.stachelbeere1248.zombiesutils;
 
 import com.github.stachelbeere1248.zombiesutils.commands.CategoryCommand;
 import com.github.stachelbeere1248.zombiesutils.commands.SlaCommand;
-import com.github.stachelbeere1248.zombiesutils.config.Config;
+import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.handlers.ChatHandler;
 import com.github.stachelbeere1248.zombiesutils.handlers.TickHandler;
 import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;
@@ -18,8 +19,10 @@ import org.jetbrains.annotations.NotNull;
 @Mod(modid = "zombiesutils", useMetadata = true, clientSideOnly = true, guiFactory = "com.github.stachelbeere1248.zombiesutils.config.GuiFactory")
 public class ZombiesUtils {
     private static ZombiesUtils instance;
+    private final Hotkeys hotkeys;
     private Logger logger;
     public ZombiesUtils() {
+        hotkeys = new Hotkeys();
         instance = this;
     }
     public static ZombiesUtils getInstance() {
@@ -29,19 +32,30 @@ public class ZombiesUtils {
     @Mod.EventHandler
     public void preInit(@NotNull FMLPreInitializationEvent event) {
         logger = event.getModLog();
-        Config.config = new Configuration(event.getSuggestedConfigurationFile());
-        Config.load();
+        ZombiesUtilsConfig.config = new Configuration(
+                event.getSuggestedConfigurationFile(),
+                "1.1.1"
+        );
+        ZombiesUtilsConfig.load();
     }
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(new ZombiesUtilsConfig());
         MinecraftForge.EVENT_BUS.register(new RenderGameOverlayHandler());
         MinecraftForge.EVENT_BUS.register(new TickHandler());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
-        MinecraftForge.EVENT_BUS.register(new Config());
+        MinecraftForge.EVENT_BUS.register(hotkeys);
+
         ClientCommandHandler.instance.registerCommand(new CategoryCommand());
         ClientCommandHandler.instance.registerCommand(new SlaCommand());
+
+        hotkeys.registerAll();
     }
     public Logger getLogger() {
         return logger;
+    }
+
+    public Hotkeys getHotkeys() {
+        return hotkeys;
     }
 }

@@ -8,13 +8,8 @@ import java.util.Set;
 
 public class GuiFactory implements IModGuiFactory {
 
-    public boolean hasConfigGui() {
-        return true;
-    }
-
     @Override
     public void initialize(Minecraft minecraft) {
-
     }
 
     @Override

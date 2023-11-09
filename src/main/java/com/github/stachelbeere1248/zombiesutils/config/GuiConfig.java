@@ -8,7 +8,7 @@ public class GuiConfig extends net.minecraftforge.fml.client.config.GuiConfig {
     public GuiConfig(GuiScreen parentScreen) {
         super(
                 parentScreen,
-                new ConfigElement(Config.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(),
+                new ConfigElement(ZombiesUtilsConfig.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(),
                 "zombiesutils",
                 false,
                 false,

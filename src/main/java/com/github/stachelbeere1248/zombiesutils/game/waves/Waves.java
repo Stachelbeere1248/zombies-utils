@@ -1,5 +1,6 @@
-package com.github.stachelbeere1248.zombiesutils.game;
+package com.github.stachelbeere1248.zombiesutils.game.waves;
 
+import com.github.stachelbeere1248.zombiesutils.game.Map;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("DuplicatedCode")

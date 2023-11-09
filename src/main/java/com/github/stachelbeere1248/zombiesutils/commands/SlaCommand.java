@@ -1,8 +1,8 @@
 package com.github.stachelbeere1248.zombiesutils.commands;
 
 import com.github.stachelbeere1248.zombiesutils.game.Map;
-import com.github.stachelbeere1248.zombiesutils.game.windows.Sla;
-import net.minecraft.client.Minecraft;
+import com.github.stachelbeere1248.zombiesutils.game.sla.QuickSLA;
+import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import net.minecraft.command.*;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -26,74 +26,118 @@ public class SlaCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String @NotNull [] args) throws CommandException {
-        if (args.length == 0) sender.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
+        if (args.length == 0) throw new WrongUsageException(
+                "[Missing option] options: off, offset, rotate, mirror, map");
         else {
             switch (args[0]) {
                 case "off":
-                    Sla.drop();
+                    SLA.drop();
                     sender.addChatMessage(new ChatComponentText("SLA data deleted"));
                     break;
                 case "offset":
-                    if (args.length == 1) Sla.getInstance().ifPresent(Sla::resetOffset);
-                    else if (args.length != 4) throw new WrongUsageException("An offset should have three coordinates!");
+                    if (args.length == 1) SLA.getInstance().ifPresent(SLA::resetOffset);
+                    else if (args.length != 4) throw new WrongUsageException(
+                            "An offset should have three coordinates!");
                     else {
                         try {
-                            double x = Double.parseDouble(args[1]);
-                            double y = Double.parseDouble(args[2]);
-                            double z = Double.parseDouble(args[3]);
-                            Sla.getInstance().ifPresent(sla -> sla.setOffset(new double[]{x, y, z}));
-                            sender.addChatMessage(new ChatComponentText(String.format("Offset set to %s %s %s", x, y, z)));
+                            int x = Integer.parseInt(args[1]);
+                            int y = Integer.parseInt(args[2]);
+                            int z = Integer.parseInt(args[3]);
+                            SLA.getInstance().ifPresent(sla -> sla.setOffset(new int[]{x, y, z}));
                         } catch (NumberFormatException ignored) {
-                            throw new NumberInvalidException();
+                            throw new NumberInvalidException("Invalid Integer:", args[1]);
                         }
                     }
                     break;
                 case "rotate":
-                    sender.addChatMessage(new ChatComponentText("Rotating map..."));
-                    Sla.getInstance().ifPresent(Sla::rotate);
+                    if (args.length == 1) SLA.getInstance().ifPresent(sla -> sla.rotate(1));
+                    else {
+                        int rotations;
+                        try {
+                            rotations = Integer.parseInt(args[1]);
+                        } catch (NumberFormatException ignored) {
+                            throw new NumberInvalidException("Invalid Integer:", args[1]);
+                        }
+                        SLA.getInstance().ifPresent(sla -> sla.rotate(rotations));
+                    }
                     break;
                 case "mirror":
                     switch (args[1]) {
                         case "x":
-                            Sla.getInstance().ifPresent(Sla::mirrorX);
+                            SLA.getInstance().ifPresent(SLA::mirrorX);
                             break;
                         case "z":
-                            Sla.getInstance().ifPresent(Sla::mirrorZ);
+                            SLA.getInstance().ifPresent(SLA::mirrorZ);
                             break;
-                        default: throw new WrongUsageException("Invalid option: available: x, z");
+                        default:
+                            throw new WrongUsageException("Invalid option: available: x, z");
                     }
                     break;
                 case "map":
                     switch (args[1]) {
                         case "de":
-                            Sla.instance = new Sla(Map.DEAD_END);
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("SLA forced to map DE"));
+                            SLA.instance = new SLA(Map.DEAD_END);
                             break;
                         case "bb":
-                            Sla.instance = new Sla(Map.BAD_BLOOD);
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("SLA forced to map BB"));
+                            SLA.instance = new SLA(Map.BAD_BLOOD);
                             break;
                         case "aa":
-                            Sla.instance = new Sla(Map.ALIEN_ARCADIUM);
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("SLA forced to map AA"));
+                            SLA.instance = new SLA(Map.ALIEN_ARCADIUM);
                             break;
-                        default: throw new WrongUsageException("Invalid option: available: de, bb, aa");
-
+                        default:
+                            throw new WrongUsageException(
+                                    "[Invalid option] options: de, bb, aa", args[1]);
                     }
                     break;
-                default: throw new WrongUsageException("Invalid option: available: off, offset, rotate, mirror, map");
+                case "quick":
+                    switch (args[1]) {
+                        //noinspection SpellCheckingInspection
+                        case "mogi_a":
+                            QuickSLA.mogi_a();
+                            break;
+                        //noinspection SpellCheckingInspection
+                        case "ghxula":
+                            QuickSLA.ghxula();
+                            break;
+                        //noinspection SpellCheckingInspection
+                        case "ghxula-garden":
+                            QuickSLA.ghxulaGarden();
+                            break;
+                        default:
+                            //noinspection SpellCheckingInspection
+                            throw new WrongUsageException(
+                                    "[Invalid option] options: mogi_a, ghxula, ghxula-garden", args[1]);                    }
+                    break;
+                default:
+                    throw new WrongUsageException(
+                            "[Invalid option] options: off, offset, rotate, mirror, map", args[0]);
             }
         }
     }
+
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String @NotNull [] args, BlockPos blockPos) {
         List<String> options = new ArrayList<>();
-        if (args.length == 1) options.addAll(Arrays.asList("off","offset","rotate","mirror","map"));
-        else if ("offset".equals(args[0]) && (args.length == 2 || args.length == 3 || args.length == 4))
-            options.add("0");
-        else if ("map".equals(args[0])) options.addAll(Arrays.asList("de", "bb", "aa"));
-        else if ("mirror".equals(args[0])) {
-            options.addAll(Arrays.asList("x","z"));
+        if (args.length == 1) options.addAll(Arrays.asList("off", "offset", "rotate", "mirror", "map"));
+        else {
+            if (args.length > 1) switch (args[0]) {
+                case "offset":
+                    if (args.length<5) options.add("0");
+                    break;
+                case "map":
+                    options.addAll(Arrays.asList("de", "bb", "aa"));
+                    break;
+                case "mirror":
+                    options.addAll(Arrays.asList("x", "z"));
+                    break;
+                case "rotate":
+                    options.add("1");
+                    break;
+                case "quick":
+                    //noinspection SpellCheckingInspection
+                    options.addAll(Arrays.asList("mogi_a", "ghxula", "ghxula-garden"));
+                default:
+            }
         }
         return options;
     }

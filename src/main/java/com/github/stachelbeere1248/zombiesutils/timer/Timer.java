@@ -1,10 +1,10 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.config.Config;
+import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
-import com.github.stachelbeere1248.zombiesutils.game.windows.Sla;
+import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +35,7 @@ public class Timer {
 
         this.category = new Category();
         GameMode.create(map);
-        if (Config.isSlaToggled()) Sla.instance = new Sla(map);
+        if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
     }
 
 
@@ -91,6 +91,6 @@ public class Timer {
     public static void dropInstances() {
         instance = null;
         GameMode.drop();
-        Sla.drop();
+        SLA.drop();
     }
 }

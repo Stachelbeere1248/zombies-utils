@@ -1,7 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.render;
 
+import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
-import com.github.stachelbeere1248.zombiesutils.game.windows.Sla;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ public class RenderGameOverlayHandler {
     public void onRenderGameOverlay(RenderGameOverlayEvent.@NotNull Post event) {
         if (event.type != RenderGameOverlayEvent.ElementType.TEXT) return;
         Timer.getInstance().ifPresent(timer -> renderTime(timer.roundTime()));
-        Sla.getInstance().ifPresent(sla -> {
+        SLA.getInstance().ifPresent(sla -> {
             sla.refreshActives();
             renderSla(sla.getRooms());
         });

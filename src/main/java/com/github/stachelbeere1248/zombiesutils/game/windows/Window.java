@@ -23,10 +23,34 @@ public class Window {
     public boolean isActive() {
         return isActive;
     }
-    public void rotate() {
+    private void rotateCounterClockwise() {
         final short x = xyz[0], z = xyz[2];
         xyz[0] = (short) -z;
         xyz[2] = x;
+    }
+    private void mirrorBoth() {
+        xyz[0] = (short) -xyz[0];
+        xyz[2] = (short) -xyz[2];
+    }
+    private void rotateClockwise() {
+        final short x = xyz[0], z = xyz[2];
+        xyz[0] = z;
+        xyz[2] = (short) -x;
+    }
+    public void rotate(int rotations) {
+        rotations %= 4;
+        switch (rotations) {
+            case -3: case 1:
+                rotateCounterClockwise();
+                break;
+            case -2: case 2:
+                mirrorBoth();
+                break;
+            case -1: case 3:
+                rotateClockwise();
+                break;
+            case 0: break;
+        }
     }
     public void mirrorX() {
         xyz[0] = (short) -xyz[0];

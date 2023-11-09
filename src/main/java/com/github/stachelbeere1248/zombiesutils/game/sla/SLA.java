@@ -1,7 +1,9 @@
-package com.github.stachelbeere1248.zombiesutils.game.windows;
+package com.github.stachelbeere1248.zombiesutils.game.sla;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
+import com.github.stachelbeere1248.zombiesutils.game.windows.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import org.jetbrains.annotations.NotNull;
@@ -9,13 +11,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class Sla {
-    public static Sla instance = null;
-    private final double[] offset = new double[3];
+public class SLA {
+    public static SLA instance = null;
+    private final int[] offset = new int[3];
     private final Room[] rooms;
 
 
-    public Sla(@NotNull Map map) {
+    public SLA(@NotNull Map map) {
         switch (map) {
             case DEAD_END: this.rooms = Room.getDE(); break;
             case BAD_BLOOD: this.rooms = Room.getBB(); break;
@@ -24,10 +26,10 @@ public class Sla {
         }
     }
 
-    public void rotate() {
+    public void rotate(int rotations) {
         for (Room room : rooms) {
             for (Window window: room.getWindows()) {
-                window.rotate();
+                window.rotate(rotations);
             }
         }
         System.out.println("Co3 now at " + Arrays.toString(rooms[0].getWindows()[0].getXYZ()));
@@ -66,7 +68,7 @@ public class Sla {
                     distanceDoubledThenSquared += ((playerCoords[i]*2 - window.getXYZ()[i]) * (playerCoords[i]*2 - window.getXYZ()[i]));
                 }
 
-                // (2x)² + (2y)² + (2z)² = 4 (x²+y²+z²)
+                // (2x)²+(2y)²+(2z)² = 4(x²+y²+z²) = 4d²
                 if (distanceDoubledThenSquared < 10000) {
                     window.setActive(true);
                     room.increaseActiveWindowCount();
@@ -76,7 +78,7 @@ public class Sla {
     }
 
 
-    public static Optional<Sla> getInstance() {
+    public static Optional<SLA> getInstance() {
         return Optional.ofNullable(instance);
     }
     public static void drop() {
@@ -88,7 +90,7 @@ public class Sla {
     public void resetOffset() {
         Arrays.fill(this.offset, 0);
     }
-    public void setOffset(double[] offset) {
+    public void setOffset(int[] offset) {
         System.arraycopy(offset, 0, this.offset, 0, 3);
     }
 }
