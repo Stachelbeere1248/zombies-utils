@@ -13,12 +13,12 @@ The timer automatically splits every round. The Personal-Best-recorder automatic
 - SLA Launcher: if on, sets and displays SLA when the mod starts the timer
 - short SLA: if on, hides inactive windows & rooms from the SLA display
 - chat macro: the text to be sent when pressing the respective keybind (-> control settings), DO NOT use "§" as symbol
+- default category name: the category to be tracked until /runCategory is used
 ### Commands
 - /runCategory \<name> - Switches to the category called name. All recorded times are bound to its category. Tabcomplete suggests already existing categories, but you can insert a new (clean) one as well.
   - Examples:
     - /runCategory pistol_only
     - /runCategory casual
-  - default name: general
   - note: you do NOT need to make your own categories to distinguish difficulties or map
 - /sla \<off|map|quick|rotate|mirror|offset>
   - /sla off - Disables the SLA hud
