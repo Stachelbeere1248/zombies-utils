@@ -4,8 +4,8 @@ Disclaimers
 ## For Users
 The Timer automatically splits every round. The Personal-Best-recorder automatically distinguishes between maps and difficulties.
 ### Config
-- SLA Launcher: sets and displays SLA when the mod starts the timer
-- short SLA: hides inactive windows & rooms from the SLA display
+- SLA Launcher: if on, sets and displays SLA when the mod starts the timer
+- short SLA: if on, hides inactive windows & rooms from the SLA display
 - chat macro: the text to be sent when pressing the respective keybind (-> control settings), DO NOT use "§" as symbol
 ### Commands
 - /runCategory \<name> - Switches to the category called name. All recorded times are bound to its category. Tabcomplete suggests already existing categories, but you can insert a new (clean) one as well.
