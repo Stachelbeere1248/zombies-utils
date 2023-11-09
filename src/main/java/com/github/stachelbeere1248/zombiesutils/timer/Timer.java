@@ -45,13 +45,13 @@ public class Timer {
      * @param passedRound The round that has been passed.
      */
     public void split(byte passedRound) {
-        if (dontDupeSplitPlease == passedRound || passedRound == 0) {
+        final int gameTime = gameTime();
+        if (dontDupeSplitPlease == passedRound || passedRound == 0 || gameTime == 0) {
             ZombiesUtils.getInstance().getLogger().debug("SPLIT CANCELLED");
             return;
         }
         if (passedRound == (byte) 1) pbTracking = true;
 
-        final int gameTime = gameTime();
         final short roundTime = (short) (gameTime - passedRoundsTickSum);
 
         ZombiesUtils.getInstance().getLogger().debug("Passed round: " + passedRound);

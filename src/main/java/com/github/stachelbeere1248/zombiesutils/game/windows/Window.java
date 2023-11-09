@@ -1,17 +1,21 @@
 package com.github.stachelbeere1248.zombiesutils.game.windows;
 
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
+
+import java.util.Arrays;
+
 public class Window {
     private final short[] xyz = new short[3];
-    private final int alias;
+    private final int id;
     private boolean isActive;
 
-    public Window(int alias, int x, int y, int z) {
-        this.alias = alias;
+    public Window(int id, int x, int y, int z) {
+        this.id = id;
         xyz[0] = (short) x; xyz[1] = (short) y; xyz[2] = (short) z;
     }
 
-    public int getAlias() {
-        return alias;
+    public int getID() {
+        return id;
     }
     public short[] getXYZ() {
         return xyz;

@@ -21,13 +21,13 @@ public class SlaCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/sla off\n/sla offset [x] [x] [x]\n/sla rotate\n/sla mirror\n/sla map <de|bb|aa>";
+        return "/sla off\n/sla offset [x] [x] [x]\n/sla rotate\n/sla mirror\n/sla map <de|bb|aa>\n/sla quick";
     }
 
     @Override
     public void processCommand(ICommandSender sender, String @NotNull [] args) throws CommandException {
         if (args.length == 0) throw new WrongUsageException(
-                "[Missing option] options: off, offset, rotate, mirror, map");
+                "[Missing option] options: off, offset, rotate, mirror, map, quick");
         else {
             switch (args[0]) {
                 case "off":
@@ -118,7 +118,7 @@ public class SlaCommand extends CommandBase {
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String @NotNull [] args, BlockPos blockPos) {
         List<String> options = new ArrayList<>();
-        if (args.length == 1) options.addAll(Arrays.asList("off", "offset", "rotate", "mirror", "map"));
+        if (args.length == 1) options.addAll(Arrays.asList("off", "offset", "rotate", "mirror", "map", "quick"));
         else {
             if (args.length > 1) switch (args[0]) {
                 case "offset":

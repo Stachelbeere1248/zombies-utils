@@ -32,7 +32,6 @@ public class SLA {
                 window.rotate(rotations);
             }
         }
-        System.out.println("Co3 now at " + Arrays.toString(rooms[0].getWindows()[0].getXYZ()));
     }
     public void mirrorX() {
         for (Room room : rooms) {

@@ -11,10 +11,12 @@ public class QuickSLA {
     }
     public static void ghxula() {
         SLA.instance = new SLA(Map.DEAD_END);
-        //TODO
+        SLA.instance.rotate(1);
+        SLA.instance.setOffset(new int[]{27, 35, 5});
     }
     public static void ghxulaGarden() {
         SLA.instance = new SLA(Map.DEAD_END);
-        //TODO
+        SLA.instance.rotate(1);
+        SLA.instance.setOffset(new int[]{13, 53, -8});
     }
 }

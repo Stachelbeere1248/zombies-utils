@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ZombiesUtilsConfig {
     public static Configuration config;
     private static boolean slaToggle;
+    private static boolean slaShortener;
     private static String chatMacro;
     private static String defaultCategory;
     public static void load() {
@@ -21,6 +22,12 @@ public class ZombiesUtilsConfig {
                 Configuration.CATEGORY_GENERAL,
                 slaToggle,
                 "Should SLA be started when a game starts?"
+        );
+        slaShortener = config.getBoolean(
+                "shortened SLA",
+                Configuration.CATEGORY_GENERAL,
+                slaShortener,
+                "If on, inactive windows / rooms will not show"
         );
         chatMacro = config.getString(
                 "Chat Macro",
@@ -48,6 +55,9 @@ public class ZombiesUtilsConfig {
     }
     public static boolean isSlaToggled() {
         return slaToggle;
+    }
+    public static boolean isSlaShortened() {
+        return slaShortener;
     }
     public static String getChatMacro() {
         return chatMacro;

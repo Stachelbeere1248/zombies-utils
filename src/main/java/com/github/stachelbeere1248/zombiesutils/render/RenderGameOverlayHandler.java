@@ -1,5 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.render;
 
+import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
@@ -47,10 +48,13 @@ public class RenderGameOverlayHandler {
     private void renderSla(Room @NotNull [] rooms) {
         int y = 0;
         for (Room room: rooms) {
-            int actives = room.getActiveWindowCount();
-            if (actives == 0) continue;
-            String roomString = String.format("%s: %x",room.getAlias(), actives);
-            fontRenderer.drawStringWithShadow(roomString,1,1+y*fontRenderer.FONT_HEIGHT,0xFFFFFF);
+            if (ZombiesUtilsConfig.isSlaShortened() && room.getActiveWindowCount() == 0) continue;
+            fontRenderer.drawStringWithShadow(
+                    room.getSlaString(),
+                    1,
+                    1 + y * fontRenderer.FONT_HEIGHT,
+                    0xFFFFFF
+            );
             y++;
         }
     }
