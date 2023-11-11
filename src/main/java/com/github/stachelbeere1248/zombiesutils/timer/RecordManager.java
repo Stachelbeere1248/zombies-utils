@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class RecordManager {
-    public static void compareSegment(byte round, short roundTime, @NotNull Category category) {
+    public static void compareSegment(byte round, short roundTime, @NotNull Category category) throws IndexOutOfBoundsException {
         sendBar();
         TimesFile timesFile = category.getByGameMode(GameMode.getCurrentGameMode());
         short bestSegment = timesFile.getBestSegment(round);
@@ -36,7 +36,7 @@ public class RecordManager {
         }
         sendBar();
     }
-    public static void compareBest(byte round, int gameTime, @NotNull Category category) {
+    public static void compareBest(byte round, int gameTime, @NotNull Category category) throws IndexOutOfBoundsException {
         sendBar();
         TimesFile timesFile = category.getByGameMode(GameMode.getCurrentGameMode());
         int personalBest = timesFile.getPersonalBest(round);

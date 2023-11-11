@@ -7,6 +7,7 @@ import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -46,18 +47,23 @@ public class Timer {
      */
     public void split(byte passedRound) {
         final int gameTime = gameTime();
-        if (dontDupeSplitPlease == passedRound || passedRound == 0 || gameTime == 0) {
+        final short roundTime = (short) (gameTime - passedRoundsTickSum);
+
+        if (dontDupeSplitPlease == passedRound || passedRound == 0 || roundTime == 0) {
             ZombiesUtils.getInstance().getLogger().debug("SPLIT CANCELLED");
             return;
         }
         if (passedRound == (byte) 1) pbTracking = true;
 
-        final short roundTime = (short) (gameTime - passedRoundsTickSum);
 
-        ZombiesUtils.getInstance().getLogger().debug("Passed round: " + passedRound);
-
-        RecordManager.compareSegment(passedRound, roundTime, category);
-        if (pbTracking) RecordManager.compareBest(passedRound, gameTime, category);
+        try {
+            RecordManager.compareSegment(passedRound, roundTime, category);
+            if (pbTracking) RecordManager.compareBest(passedRound, gameTime, category);
+        } catch (IndexOutOfBoundsException exception) {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+                    String.format("Split not recorded. (invalid round parsed from scoreboard: %s)", passedRound)
+            ));
+        }
         passedRoundsTickSum = gameTime;
         dontDupeSplitPlease = passedRound;
     }
