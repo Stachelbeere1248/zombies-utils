@@ -2,7 +2,6 @@ package com.github.stachelbeere1248.zombiesutils.game;
 
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("DuplicatedCode")
 public class GameMode {
     public static GameMode currentGameMode = null;
     private final Map map;

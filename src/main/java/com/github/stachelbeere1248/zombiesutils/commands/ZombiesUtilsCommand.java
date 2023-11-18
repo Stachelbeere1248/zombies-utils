@@ -1,13 +1,11 @@
 package com.github.stachelbeere1248.zombiesutils.commands;
 
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
-import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.command.*;
 import net.minecraft.util.BlockPos;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

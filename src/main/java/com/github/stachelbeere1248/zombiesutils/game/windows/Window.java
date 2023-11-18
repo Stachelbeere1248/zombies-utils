@@ -1,9 +1,5 @@
 package com.github.stachelbeere1248.zombiesutils.game.windows;
 
-import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-
-import java.util.Arrays;
-
 public class Window {
     private final short[] xyz = new short[3];
     private final int id;
