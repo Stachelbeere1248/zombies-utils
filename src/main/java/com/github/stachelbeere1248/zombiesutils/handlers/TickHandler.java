@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jetbrains.annotations.NotNull;

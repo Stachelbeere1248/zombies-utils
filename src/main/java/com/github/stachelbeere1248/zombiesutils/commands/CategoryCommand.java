@@ -19,12 +19,12 @@ public class CategoryCommand extends CommandBase {
     }
     @Override
     public String getCommandName() {
-        return "runCategory";
+        return "category";
     }
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "runCategory <category-name>";
+        return "/category <category-name>";
     }
 
     @Override

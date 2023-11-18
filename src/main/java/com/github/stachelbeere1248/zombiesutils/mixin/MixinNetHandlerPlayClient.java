@@ -4,6 +4,7 @@ import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraft.network.play.server.S45PacketTitle;
@@ -40,18 +41,24 @@ public class MixinNetHandlerPlayClient {
             ZombiesUtils.getInstance().getLogger().info("Attempting creation of new timer");
             new Timer(
                     Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
-                    Scoreboard.getMap().orElseThrow(() -> new RuntimeException("cannot figure out map"))
+                    Scoreboard.getMap().orElseThrow(() -> new RuntimeException("cannot figure out map")).map
             );
-        } else {
-            Timer timer = Timer.getInstance().get();
-            if (timer.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) timer.split(Scoreboard.getRound());
+        }  else { Timer timer = Timer.getInstance().get();
 
+            Scoreboard.MapContainer map = Scoreboard.getMap().orElseThrow(() -> new RuntimeException("Scoreboard Error"));
+            if (map.pregame) {
+                ZombiesUtils.getInstance().getLogger().info("Attempting creation of new timer");
+                new Timer(
+                        Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
+                        map.map
+                );
+            } else if (timer.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) timer.split(Scoreboard.getRound());
             else {
                 ZombiesUtils.getInstance().getLogger().info("Attempting creation of new timer");
                 //also kills the previous timer using the garbage collector
                 new Timer(
                         Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
-                        Scoreboard.getMap().orElseThrow(() -> new RuntimeException("cannot figure out map"))
+                        map.map
                 );
             }
         }

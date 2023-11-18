@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import com.github.stachelbeere1248.zombiesutils.utils.FileManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -11,7 +12,7 @@ public class TimesFile extends File {
     public TimesFile(String category, @NotNull GameMode gameMode) {
         // Game-directory -> custom category -> file named "MAP_DIFFICULTY.times"
         // Content encoded in StandardCharsets.UTF_16
-        super("zombies" + File.separator + category,gameMode.getMap() + "_" + gameMode.getDifficulty() + ".times");
+        super("zombies" + File.separator + "splits" + File.separator + category,gameMode.getMap() + "_" + gameMode.getDifficulty() + ".times");
         this.gameMode = gameMode;
         fileData = FileManager.readOrCreate(this);
     }
@@ -31,7 +32,7 @@ public class TimesFile extends File {
         FileManager.writeDataToFile(fileData,this);
     }
 
-    GameMode getGameMode() {
+    public GameMode getGameMode() {
         return gameMode;
     }
 }

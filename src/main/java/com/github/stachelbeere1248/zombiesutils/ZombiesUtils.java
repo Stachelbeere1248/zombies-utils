@@ -5,6 +5,7 @@ import com.github.stachelbeere1248.zombiesutils.commands.SlaCommand;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.handlers.ChatHandler;
+import com.github.stachelbeere1248.zombiesutils.handlers.KeyInputHandler;
 import com.github.stachelbeere1248.zombiesutils.handlers.TickHandler;
 import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -44,7 +45,7 @@ public class ZombiesUtils {
         MinecraftForge.EVENT_BUS.register(new RenderGameOverlayHandler());
         MinecraftForge.EVENT_BUS.register(new TickHandler());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
-        MinecraftForge.EVENT_BUS.register(hotkeys);
+        MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
 
         ClientCommandHandler.instance.registerCommand(new CategoryCommand());
         ClientCommandHandler.instance.registerCommand(new SlaCommand());

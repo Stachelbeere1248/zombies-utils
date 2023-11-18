@@ -1,5 +1,7 @@
-package com.github.stachelbeere1248.zombiesutils.timer.recorder;
+package com.github.stachelbeere1248.zombiesutils.utils;
 
+import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileData;
+import com.github.stachelbeere1248.zombiesutils.timer.recorder.TimesFile;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;

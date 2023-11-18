@@ -20,7 +20,7 @@ public class Timer {
     private final String serverNumber;
     public Category category;
     private boolean pbTracking = false;
-    private byte dontDupeSplitPlease = 0;
+    private int round = 0;
 
     /**
      * Constructs a timer and saves it to {@link #instance}.
@@ -49,12 +49,19 @@ public class Timer {
         final int gameTime = gameTime();
         final short roundTime = (short) (gameTime - passedRoundsTickSum);
 
-        if (dontDupeSplitPlease == passedRound || passedRound == 0 || roundTime == 0) {
+        if ((round == passedRound) || (passedRound == 0) || (roundTime == 0)) {
             ZombiesUtils.getInstance().getLogger().debug("SPLIT CANCELLED");
             return;
         }
-        if (passedRound == (byte) 1) pbTracking = true;
 
+        record(passedRound, roundTime, gameTime);
+
+        passedRoundsTickSum = gameTime;
+        round = passedRound;
+    }
+
+    private void record(byte passedRound, short roundTime, int gameTime) {
+        if (passedRound == (byte) 1) pbTracking = true;
 
         try {
             RecordManager.compareSegment(passedRound, roundTime, category);
@@ -64,12 +71,9 @@ public class Timer {
                     String.format("Split not recorded. (invalid round parsed from scoreboard: %s)", passedRound)
             ));
         }
-        passedRoundsTickSum = gameTime;
-        dontDupeSplitPlease = passedRound;
     }
 
 
-    
     private long getCurrentTotalWorldTime() {
         if (Minecraft.getMinecraft() == null) return 0;
         if (Minecraft.getMinecraft().theWorld == null) return 0;
@@ -97,6 +101,8 @@ public class Timer {
     public static void dropInstances() {
         instance = null;
         GameMode.drop();
-        SLA.drop();
+    }
+    public int getRound() {
+        return round+1;
     }
 }

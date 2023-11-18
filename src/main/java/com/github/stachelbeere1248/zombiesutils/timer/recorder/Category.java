@@ -46,7 +46,7 @@ public class Category {
         Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
     }
     public static String[] getCategories() {
-        File dir = new File("zombies");
+        File dir = new File("zombies"+File.separator+"splits");
         if (dir.isDirectory()) return dir.list();
         else return new String[0];
     }

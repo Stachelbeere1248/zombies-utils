@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 public class Hotkeys {
     private final KeyBinding chatMacro;
+    private final KeyBinding debug;
 
     public Hotkeys() {
         chatMacro = new KeyBinding(
@@ -16,14 +17,20 @@ public class Hotkeys {
                 Keyboard.KEY_Q,
                 "Zombies Utils"
         );
+        debug = new KeyBinding(
+                "Debug",
+                Keyboard.KEY_K,
+                "Zombies Utils"
+        );
     }
     public void registerAll() {
         ClientRegistry.registerKeyBinding(this.chatMacro);
+        ClientRegistry.registerKeyBinding(this.debug);
     }
-    @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (Keyboard.getEventKey() == chatMacro.getKeyCode() && Keyboard.getEventKeyState() && Minecraft.getMinecraft().currentScreen == null) {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage(ZombiesUtilsConfig.getChatMacro());
-        }
+    public KeyBinding getChatMacro() {
+        return chatMacro;
+    }
+    public KeyBinding getDebugger() {
+        return debug;
     }
 }

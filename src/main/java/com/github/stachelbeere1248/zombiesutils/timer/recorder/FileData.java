@@ -19,7 +19,7 @@ public class FileData{
         Arrays.fill(bestSegments, (short) 0);
         Arrays.fill(personalBests, 0);
     }
-    String getAsJsonString() {
+    public String getAsJsonString() {
         Gson gson = new Gson();
         return gson.toJson(this, FileData.class);
     }
