@@ -15,6 +15,7 @@ import java.util.Optional;
 public class Timer {
 
     private static Timer instance;
+    private final GameMode gameMode;
     private final long savedTotalWorldTime;
     private int passedRoundsTickSum = 0;
     private final String serverNumber;
@@ -28,15 +29,34 @@ public class Timer {
      * @param map The map the timer should be started for.
      */
     public Timer (@NotNull String serverNumber, @NotNull Map map) {
-        instance = this;
-
         savedTotalWorldTime = getCurrentTotalWorldTime();
         if (!serverNumber.trim().isEmpty()) this.serverNumber = serverNumber.trim();
         else throw new RuntimeException("invalid servernumber");
 
         this.category = new Category();
-        GameMode.currentGameMode = new GameMode(map);
+        this.gameMode = new GameMode(map);
         if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
+
+        instance = this;
+    }
+    /**
+     * Constructs a timer and saves it to {@link #instance}.
+     * @param serverNumber The game's server the timer should be bound to.
+     * @param map The map the timer should be started for.
+     * @param round If available, round to begin splitting.
+     */
+    //TODO: brooooooooo
+    public Timer (@NotNull String serverNumber, @NotNull Map map, byte round) {
+        savedTotalWorldTime = getCurrentTotalWorldTime();
+        if (!serverNumber.trim().isEmpty()) this.serverNumber = serverNumber.trim();
+        else throw new RuntimeException("invalid servernumber");
+
+        this.category = new Category();
+        this.gameMode = new GameMode(map);
+        this.round = round;
+        if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
+
+        instance = this;
     }
 
 
@@ -100,9 +120,12 @@ public class Timer {
      */
     public static void dropInstances() {
         instance = null;
-        GameMode.drop();
     }
-    public int getRound() {
-        return round+1;
+    public byte getRound() {
+        return (byte) (round+1);
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
     }
 }

@@ -1,6 +1,5 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
-import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.TimesFile;
 import net.minecraft.client.Minecraft;
@@ -9,68 +8,66 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class RecordManager {
+    private static final String bar = "§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
     public static void compareSegment(byte round, short roundTime, @NotNull Category category) throws IndexOutOfBoundsException {
-        sendBar();
-        TimesFile timesFile = category.getByGameMode(GameMode.getCurrentGameMode());
+        String segmentMessage = bar +
+                "\n§e Category: §d" + category.getName()
+        ;
+
+
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
+        final TimesFile timesFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
         short bestSegment = timesFile.getBestSegment(round);
         if (bestSegment == (short) 0) {
             timesFile.setBestSegment(round, roundTime);
 
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                    "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW BEST SEGMENT! " + "§l§e***"
-            ));
+            segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
             final String timeString = formattedTime(roundTime);
-            final String message = "§cRound " + round + "§e took §a" + timeString + "§e!";
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
-
+            segmentMessage += "\n§cRound " + round + "§e took §a" + timeString + "§e!";
         } else {
             if (roundTime<bestSegment) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                        "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW BEST SEGMENT! " + "§l§e***"
-                ));
+                segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
                 timesFile.setBestSegment(round, roundTime);
             }
             final String timeString = formattedTime(roundTime);
-            final String message = "§cRound " + round + "§e took §a" + timeString + " §9" + formattedDelta(roundTime,bestSegment);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
+            segmentMessage += "\n§cRound " + round + "§e took §a" + timeString + " §9" + formattedDelta(roundTime,bestSegment);
         }
-        sendBar();
+        segmentMessage += "\n" + bar;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(segmentMessage));
     }
     public static void compareBest(byte round, int gameTime, @NotNull Category category) throws IndexOutOfBoundsException {
-        sendBar();
-        TimesFile timesFile = category.getByGameMode(GameMode.getCurrentGameMode());
+        String bestMessage = bar +
+                "\n§e Category: §d" + category.getName()
+        ;
+
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
+        final TimesFile timesFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
         int personalBest = timesFile.getPersonalBest(round);
         if (personalBest == 0) {
             timesFile.setPersonalBest(round, gameTime);
 
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                    "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW PERSONAL BEST! " + "§l§e***"
-            ));
-
+            bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
             final String timeString = formattedTime(gameTime);
-            final String message = "§cRound " + round + "§e finished at §a" + timeString + "§e!";
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
-
+            bestMessage += "\n§cRound " + round + "§e finished at §a" + timeString + "§e!";
         } else {
             if (gameTime<personalBest) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                        "§l§e Category: " + category.getName() + " - ***" + "§l§6 NEW PERSONAL BEST! " + "§l§e***"
-                ));
+                bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
                 timesFile.setPersonalBest(round, gameTime);
             }
 
             final String timeString = formattedTime(gameTime);
-            final String message = "§cRound " + round + "§e finished at §a" + timeString + " §9" + formattedDelta(gameTime, personalBest);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
-
+            bestMessage += "\n§cRound " + round + "§e finished at §a" + timeString + " §9" + formattedDelta(gameTime, personalBest);
         }
-        sendBar();
+        bestMessage += "\n" + bar;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(bestMessage));
     }
     private static String formattedTime(int gameTime) {
-        return String.format("%d:%02d.%d",
-                (gameTime *50) / 60000,
-                ((gameTime *50) % 60000) / 1000,
-                ((gameTime *50) % 1000) / 100
+        gameTime *= 50;
+        return String.format("%d:%02d.%d%d",
+                gameTime / 60000,
+                (gameTime % 60000) / 1000,
+                (gameTime % 1000) / 100,
+                (gameTime % 100) / 10
         );
     }
     @Contract(pure = true)
@@ -79,10 +76,5 @@ public class RecordManager {
         if (delta<0) {
             return String.valueOf(delta);
         } else return ("+" + delta);
-    }
-    private static void sendBar() {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                "§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
-        ));
     }
 }

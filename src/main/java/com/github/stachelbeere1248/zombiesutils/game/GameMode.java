@@ -3,7 +3,6 @@ package com.github.stachelbeere1248.zombiesutils.game;
 import org.jetbrains.annotations.NotNull;
 
 public class GameMode {
-    public static GameMode currentGameMode = null;
     private final Map map;
     private Difficulty difficulty;
 
@@ -30,17 +29,6 @@ public class GameMode {
                 throw new RuntimeException("Achievement Get: Alien Arcadium Hard/RIP" + Map.ALIEN_ARCADIUM);
         }
     }
-    public static GameMode getCurrentGameMode() {
-        return currentGameMode;
-    }
-
-    /**
-     * Call to invalidate {@link #currentGameMode} to trigger the garbage collector
-     */
-    public static void drop() {
-        currentGameMode = null;
-    }
-
     public boolean is(Map map, Difficulty difficulty) {
         return this.getDifficulty() == difficulty && this.getMap() == map;
     }

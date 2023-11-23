@@ -12,6 +12,7 @@ public class ZombiesUtilsConfig {
     private static boolean slaShortener;
     private static String chatMacro;
     private static String defaultCategory;
+    private static short waveOffset;
     public static void load() {
         ZombiesUtils.getInstance().getLogger().debug("Loading config...");
         config.load();
@@ -41,11 +42,24 @@ public class ZombiesUtilsConfig {
                 "general",
                 "name of the category to be selected unless specified using /runCategory"
         );
+        waveOffset = (short) config.getInt(
+                "spawn-time offset ticks",
+                Configuration.CATEGORY_GENERAL,
+                0,
+                -200,
+                200,
+                "max: 200 ticks"
+        );
 
         ZombiesUtils.getInstance().getLogger().debug("Saving Config...");
         config.save();
         ZombiesUtils.getInstance().getLogger().debug("Config saved.");
     }
+
+    public static short getWaveOffset() {
+        return waveOffset;
+    }
+
     @SubscribeEvent
     public void onConfigChange(ConfigChangedEvent.@NotNull OnConfigChangedEvent event) {
         if (event.modID.equals("zombiesutils") && event.configID == null) {

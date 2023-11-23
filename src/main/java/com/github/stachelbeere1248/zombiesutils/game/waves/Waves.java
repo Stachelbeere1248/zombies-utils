@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.game.waves;
 
 import com.github.stachelbeere1248.zombiesutils.game.Map;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("DuplicatedCode")
@@ -16,22 +17,18 @@ public class Waves {
 
 
 
+    @Contract(pure = true)
     public static byte[] get(@NotNull Map map, byte round) {
-        byte[] waves;
         switch (map) {
             case DEAD_END:
-                waves = deadEndWaveTimes[round - 1];
-                break;
+                return deadEndWaveTimes[round - 1];
             case BAD_BLOOD:
-                waves = badBloodWaveTimes[round - 1];
-                break;
+                return badBloodWaveTimes[round - 1];
             case ALIEN_ARCADIUM:
-                waves = alienArcadiumWaveTimes[round - 1];
-                break;
+                return alienArcadiumWaveTimes[round - 1];
             default:
                 throw new IllegalStateException("Unexpected value: " + map);
         }
-        return waves;
     }
     public static short getSum(@NotNull Map map, byte round) {
         short sum;

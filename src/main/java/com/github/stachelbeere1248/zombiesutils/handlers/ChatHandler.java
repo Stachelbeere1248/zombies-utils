@@ -3,6 +3,7 @@ package com.github.stachelbeere1248.zombiesutils.handlers;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
@@ -17,11 +18,11 @@ public class ChatHandler {
 
     @SubscribeEvent
     public void difficultyChange(@NotNull ClientChatReceivedEvent event) {
+        if (!Timer.getInstance().isPresent()) return;
         String message = STRIP_COLOR_PATTERN.matcher(event.message.getUnformattedText()).replaceAll("").trim();
-        GameMode gameMode = GameMode.getCurrentGameMode();
+        GameMode gameMode = Timer.getInstance().get().getGameMode();
 
         if (message.contains(":")) return;
-        if (gameMode == null) return;
 
         if (message.contains("Hard Difficulty") || message.contains("困难") || message.contains("困難")) {
             gameMode.changeDifficulty(Difficulty.HARD);

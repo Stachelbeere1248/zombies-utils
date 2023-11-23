@@ -1,7 +1,5 @@
 package com.github.stachelbeere1248.zombiesutils.mixin;
 
-import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -44,7 +42,7 @@ public class MixinNetHandlerPlayClient {
         }  else { Timer timer = Timer.getInstance().get();
 
             final Scoreboard.MapContainer map = Scoreboard.getMap().orElse(new Scoreboard.MapContainer(
-                    GameMode.getCurrentGameMode().getMap(),
+                    timer.getGameMode().getMap(),
                     false
             ));
 
@@ -65,28 +63,23 @@ public class MixinNetHandlerPlayClient {
     @Unique
     private void zombies_utils$handleTitle(@NotNull S45PacketTitle packet) {
         if (packet.getType() != S45PacketTitle.Type.TITLE) return;
-        if (Scoreboard.isZombies()) return;
-        final String message = packet.getMessage().getUnformattedText().trim();
-        if (message.equals("§aYou Win!")) {
-            switch (GameMode.getCurrentGameMode().getMap()) {
-                case DEAD_END: case BAD_BLOOD:
-                    Timer.getInstance().ifPresent(timer -> {
+
+        Timer.getInstance().ifPresent(timer -> {
+            if (Scoreboard.isZombies()) return;
+            final String message = packet.getMessage().getUnformattedText().trim();
+
+            if (message.equals("§aYou Win!")) {
+                switch (timer.getGameMode().getMap()) {
+                    case DEAD_END: case BAD_BLOOD:
                         timer.split((byte) 30);
                         Timer.dropInstances();
-                    });
-                    break;
-                case ALIEN_ARCADIUM:
-                    Timer.getInstance().ifPresent(timer -> {
+                        break;
+                    case ALIEN_ARCADIUM:
                         timer.split((byte) 105);
                         Timer.dropInstances();
-                    });
-                    break;
-            }
-        } else if (message.equals("§cGame Over!")) {
-            Timer.dropInstances();
-        } else {
-            ZombiesUtils.getInstance().getLogger().debug(message);
-        }
-
+                        break;
+                }
+            } else if (message.equals("§cGame Over!")) Timer.dropInstances();
+        });
     }
 }
