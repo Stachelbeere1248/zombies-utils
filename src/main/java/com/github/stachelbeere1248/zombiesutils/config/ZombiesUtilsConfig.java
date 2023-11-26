@@ -43,9 +43,9 @@ public class ZombiesUtilsConfig {
                 "name of the category to be selected unless specified using /runCategory"
         );
         waveOffset = (short) config.getInt(
-                "spawn-time offset ticks",
+                "RL-mode offset",
                 Configuration.CATEGORY_GENERAL,
-                0,
+                -28,
                 -200,
                 200,
                 "max: 200 ticks"

@@ -17,6 +17,8 @@ import java.util.Objects;
 
 public class RenderGameOverlayHandler {
     private final FontRenderer fontRenderer;
+    private static int rl = 0;
+
     public RenderGameOverlayHandler() {
         this.fontRenderer = Objects.requireNonNull(Minecraft.getMinecraft().fontRendererObj, "FontRenderer must not be null!");
     }
@@ -78,7 +80,7 @@ public class RenderGameOverlayHandler {
         int color = 0xFFFF55;
 
         for (byte waveTime: waveTimes) {
-            final short waveTicks = (short) ((waveTime * 20)-ZombiesUtilsConfig.getWaveOffset());
+            final short waveTicks = (short) ((waveTime * 20)-rl);
 
             if (roundTicks>waveTicks) {
                 heightIndex++;
@@ -110,7 +112,12 @@ public class RenderGameOverlayHandler {
     private static String getWaveString(long waveTicks, int wave) {
         final long minutesPart = (waveTicks *50) / 60000;
         final long secondsPart = ((waveTicks *50) % 60000) / 1000;
-        return String.format("W%d %d:%02d", wave, minutesPart, secondsPart);
+        final long tenthSecondsPart = ((waveTicks *50) % 1000) / 100;
+        return String.format("W%d %d:%02d.%d", wave, minutesPart, secondsPart, tenthSecondsPart);
     }
 
+    public static void toggleRL() {
+        if (rl == 0) rl = ZombiesUtilsConfig.getWaveOffset();
+        else rl = 0;
+    }
 }

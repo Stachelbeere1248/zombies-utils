@@ -1,10 +1,13 @@
 package com.github.stachelbeere1248.zombiesutils.mixin;
 
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraft.network.play.server.S45PacketTitle;
+import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -33,8 +36,7 @@ public class MixinNetHandlerPlayClient {
                 || (soundEffect.equals("mob.guardian.curse") && !zombies_utils$alienUfoOpened)
         )) return;
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
-
-        if (!Timer.getInstance().isPresent()) {
+        /*if (!Timer.getInstance().isPresent()) {
             new Timer(
                     Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
                     Scoreboard.getMap().orElseThrow(() -> new RuntimeException("cannot figure out map")).map
@@ -58,15 +60,48 @@ public class MixinNetHandlerPlayClient {
                         map.map
                 );
             }
+        }*/
+
+
+        try {
+
+            if (Timer.getInstance().isPresent()) {
+                final Timer running = Timer.getInstance().get();
+                final byte round = Scoreboard.getRound();
+
+                if (round == 0) {
+                    if (Scoreboard.getLineCount()<13) Timer.setInstance(new Timer(
+                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                            Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
+                            round
+                    ));
+                } else if (!running.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) {
+                    Timer.setInstance(new Timer(
+                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                            Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
+                            round
+                    ));
+                } else running.split(round);
+
+
+
+            } else Timer.setInstance(new Timer(
+                    Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                    Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
+                    Scoreboard.getRound()
+            ));
+        } catch (Timer.TimerException e) {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cFailed to start or split timer.\nData parsing error. Blame scoreboard."));
+            ZombiesUtils.getInstance().getLogger().warn(e);
         }
     }
     @Unique
     private void zombies_utils$handleTitle(@NotNull S45PacketTitle packet) {
         if (packet.getType() != S45PacketTitle.Type.TITLE) return;
+        final String message = packet.getMessage().getUnformattedText().trim();
 
         Timer.getInstance().ifPresent(timer -> {
             if (Scoreboard.isZombies()) return;
-            final String message = packet.getMessage().getUnformattedText().trim();
 
             if (message.equals("§aYou Win!")) {
                 switch (timer.getGameMode().getMap()) {
@@ -82,4 +117,5 @@ public class MixinNetHandlerPlayClient {
             } else if (message.equals("§cGame Over!")) Timer.dropInstances();
         });
     }
+
 }

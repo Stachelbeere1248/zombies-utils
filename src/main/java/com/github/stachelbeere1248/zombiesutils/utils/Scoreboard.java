@@ -91,40 +91,30 @@ public class Scoreboard {
         ZombiesUtils.getInstance().getLogger().debug("Servernumber: " + string);
         return Optional.ofNullable(string);
     }
-    public static Optional<MapContainer> getMap() {
+    public static Optional<Map> getMap() {
         String line;
-        boolean pregame;
         try {
             line = lines.get(12);
-            pregame = false;
         } catch (Exception couldBePregame) {
             try {
                 line = lines.get(2);
-                pregame = true;
             } catch (IndexOutOfBoundsException | NullPointerException ignored) {
                 return Optional.empty();
             }
         }
         String mapString = MAP_PATTERN.matcher(line).replaceAll("$1");
         switch (mapString) {
-            case "Dead End": return Optional.of(new MapContainer(Map.DEAD_END,pregame));
-            case "Bad Blood": return Optional.of(new MapContainer(Map.BAD_BLOOD,pregame));
-            case "Alien Arcadium": return Optional.of(new MapContainer(Map.ALIEN_ARCADIUM,pregame));
+            case "Dead End": return Optional.of(Map.DEAD_END);
+            case "Bad Blood": return Optional.of(Map.BAD_BLOOD);
+            case "Alien Arcadium": return Optional.of(Map.ALIEN_ARCADIUM);
             default: return Optional.empty();
         }
 
     }
+    public static int getLineCount() {
+        return lines.size();
+    }
     public static boolean isZombies() {
         return (!"ZOMBIES".equals(title));
-    }
-
-    public static class MapContainer {
-        public final Map map;
-        public final boolean pregame;
-
-        public MapContainer(Map map, boolean pregame) {
-            this.map = map;
-            this.pregame = pregame;
-        }
     }
 }

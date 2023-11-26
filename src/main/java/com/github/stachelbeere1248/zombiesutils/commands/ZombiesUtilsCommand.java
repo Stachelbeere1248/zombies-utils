@@ -1,7 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.commands;
 
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
-import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.command.*;
 import net.minecraft.util.BlockPos;
 import org.jetbrains.annotations.NotNull;
@@ -36,13 +35,9 @@ public class ZombiesUtilsCommand  extends CommandBase {
                         } catch (NumberFormatException | NullPointerException ignored) {
                             throw new NumberInvalidException("t",args[2]);
                         } break;
-                    case "start": new Timer(
-                                Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
-                                Scoreboard.getMap().orElseThrow(() -> new RuntimeException("cannot figure out map")).map
-                        ); break;
                     default:
                         throw new WrongUsageException(
-                                "[Invalid option] options: kill, split, start", args[0]);
+                                "[Invalid option] options: kill, split", args[0]);
                 } break;
             default:
                 throw new WrongUsageException(
@@ -54,7 +49,7 @@ public class ZombiesUtilsCommand  extends CommandBase {
         if (args.length == 1) return new ArrayList<>(Collections.singleton("timer"));
         switch (args[0]) {
             case "timer":
-                return new ArrayList<>(Arrays.asList("kill","split","start"));
+                return new ArrayList<>(Arrays.asList("kill","split"));
             default: return Collections.emptyList();
         }
     }
