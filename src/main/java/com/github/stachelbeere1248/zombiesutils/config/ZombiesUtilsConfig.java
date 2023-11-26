@@ -10,6 +10,8 @@ public class ZombiesUtilsConfig {
     public static Configuration config;
     private static boolean slaToggle;
     private static boolean slaShortener;
+    private static boolean shortSpawntime;
+
     private static String chatMacro;
     private static String defaultCategory;
     private static short waveOffset;
@@ -21,13 +23,13 @@ public class ZombiesUtilsConfig {
         slaToggle = config.getBoolean(
                 "SLA Launcher",
                 Configuration.CATEGORY_GENERAL,
-                slaToggle,
+                false,
                 "Should SLA be started when a game starts?"
         );
         slaShortener = config.getBoolean(
                 "shortened SLA",
                 Configuration.CATEGORY_GENERAL,
-                slaShortener,
+                true,
                 "If on, inactive windows / rooms will not show"
         );
         chatMacro = config.getString(
@@ -50,10 +52,12 @@ public class ZombiesUtilsConfig {
                 200,
                 "max: 200 ticks"
         );
-
-        ZombiesUtils.getInstance().getLogger().debug("Saving Config...");
-        config.save();
-        ZombiesUtils.getInstance().getLogger().debug("Config saved.");
+        shortSpawntime = config.getBoolean(
+                "passed wave spawns",
+                Configuration.CATEGORY_GENERAL,
+                true,
+                "Display spawn-time for passed waves"
+        );
     }
 
     public static short getWaveOffset() {
@@ -72,6 +76,9 @@ public class ZombiesUtilsConfig {
     }
     public static boolean isSlaShortened() {
         return slaShortener;
+    }
+    public static boolean isSpawntimeNotShortened() {
+        return shortSpawntime;
     }
     public static String getChatMacro() {
         return chatMacro;

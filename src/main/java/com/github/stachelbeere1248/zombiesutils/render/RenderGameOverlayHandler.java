@@ -80,11 +80,12 @@ public class RenderGameOverlayHandler {
         int color = 0xFFFF55;
 
         for (byte waveTime: waveTimes) {
+            int clonedColor = color;
             final short waveTicks = (short) ((waveTime * 20)-rl);
 
             if (roundTicks>waveTicks) {
-                heightIndex++;
-                continue;
+                if (ZombiesUtilsConfig.isSpawntimeNotShortened()) clonedColor = 0x555555;
+                else continue;
             }
 
             final String time = getWaveString(waveTicks, heightIndex + 1);
@@ -97,9 +98,9 @@ public class RenderGameOverlayHandler {
                     time,
                     screenWidth - width,
                     screenHeight - fontRenderer.FONT_HEIGHT * (length-heightIndex),
-                    color
+                    clonedColor
             );
-            color = 0xAAAAAA;
+            if (clonedColor!=0x555555) color = 0xAAAAAA;
             heightIndex++;
         }
     }
