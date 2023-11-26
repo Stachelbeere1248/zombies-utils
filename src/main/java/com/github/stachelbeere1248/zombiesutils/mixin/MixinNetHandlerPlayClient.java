@@ -36,33 +36,6 @@ public class MixinNetHandlerPlayClient {
                 || (soundEffect.equals("mob.guardian.curse") && !zombies_utils$alienUfoOpened)
         )) return;
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
-        /*if (!Timer.getInstance().isPresent()) {
-            new Timer(
-                    Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
-                    Scoreboard.getMap().orElseThrow(() -> new RuntimeException("cannot figure out map")).map
-            );
-        }  else { Timer timer = Timer.getInstance().get();
-
-            final Scoreboard.MapContainer map = Scoreboard.getMap().orElse(new Scoreboard.MapContainer(
-                    timer.getGameMode().getMap(),
-                    false
-            ));
-
-            if (map.pregame) {
-                new Timer(
-                        Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
-                        map.map
-                );
-            } else if (timer.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) timer.split(Scoreboard.getRound());
-            else {
-                new Timer(
-                        Scoreboard.getServerNumber().orElseThrow(() -> new RuntimeException("cannot figure out servernumber")),
-                        map.map
-                );
-            }
-        }*/
-
-
         try {
 
             if (Timer.getInstance().isPresent()) {

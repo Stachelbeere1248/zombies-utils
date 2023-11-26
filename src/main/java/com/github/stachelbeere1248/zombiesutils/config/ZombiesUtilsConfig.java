@@ -50,7 +50,7 @@ public class ZombiesUtilsConfig {
                 -28,
                 -200,
                 200,
-                "max: 200 ticks"
+                "ticks to be added to the wave spawn time"
         );
         shortSpawntime = config.getBoolean(
                 "passed wave spawns",

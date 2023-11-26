@@ -26,10 +26,8 @@ public class ChatHandler {
 
         if (message.contains("Hard Difficulty") || message.contains("困难") || message.contains("困難")) {
             gameMode.changeDifficulty(Difficulty.HARD);
-            ZombiesUtils.getInstance().getLogger().debug("Changed to Hard");
-        } else if (message.contains("RIP Difficulty") || message.contains("安息") || message.contains("RIP")) {
+        } else if (message.contains("RIP") || message.contains("安息")) {
             gameMode.changeDifficulty(Difficulty.RIP);
-            ZombiesUtils.getInstance().getLogger().debug("Changed to RIP");
         }
     }
 
