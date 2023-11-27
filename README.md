@@ -35,6 +35,6 @@ The timer automatically splits every round. The Personal-Best-recorder automatic
     - /zombiesutils timer split \<round> - Splits as if \<round> was passed, not recommended to use as it might create impossible PBs
 ### Hotkeys
 - Chat Macro: sends the message specified in the config
-- RL Mode: Toggle usage of the rocket launcher spawn-time offset.
+- RL Mode: Toggle usage of the rocket launcher mode spawn-time offset.
 ### Extra
 - Managing split-categories: In your minecraft folder is a folder called "zombies" which contains the folder "splits". You can simply rename or delete the folders inside "splits". You can also edit your splits, the data is stored in ticks inside the MAP_DIFFICULTY.times files, a simple text editor should be able to edit it (UTF-16 encoded text).
