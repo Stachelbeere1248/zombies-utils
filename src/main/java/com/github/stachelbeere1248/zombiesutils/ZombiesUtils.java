@@ -2,6 +2,7 @@ package com.github.stachelbeere1248.zombiesutils;
 
 import com.github.stachelbeere1248.zombiesutils.commands.CategoryCommand;
 import com.github.stachelbeere1248.zombiesutils.commands.SlaCommand;
+import com.github.stachelbeere1248.zombiesutils.commands.ZombiesUtilsCommand;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.handlers.ChatHandler;
@@ -49,6 +50,7 @@ public class ZombiesUtils {
 
         ClientCommandHandler.instance.registerCommand(new CategoryCommand());
         ClientCommandHandler.instance.registerCommand(new SlaCommand());
+        ClientCommandHandler.instance.registerCommand(new ZombiesUtilsCommand());
 
         hotkeys.registerAll();
     }

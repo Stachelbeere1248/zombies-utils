@@ -29,7 +29,7 @@ public class MixinNetHandlerPlayClient {
     }
     @Unique
     private void zombies_utils$handleSound(@NotNull S29PacketSoundEffect packet) {
-        if (Scoreboard.isZombies()) return;
+        if (Scoreboard.isNotZombies()) return;
         final String soundEffect = packet.getSoundName();
         if (!(
                 soundEffect.equals("mob.wither.spawn")
@@ -74,7 +74,7 @@ public class MixinNetHandlerPlayClient {
         final String message = packet.getMessage().getUnformattedText().trim();
 
         Timer.getInstance().ifPresent(timer -> {
-            if (Scoreboard.isZombies()) return;
+            if (Scoreboard.isNotZombies()) return;
 
             if (message.equals("§aYou Win!")) {
                 switch (timer.getGameMode().getMap()) {

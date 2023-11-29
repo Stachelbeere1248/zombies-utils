@@ -43,7 +43,7 @@ public class RenderGameOverlayHandler {
     }
 
     private void renderTime(long timerTicks) {
-        if (Scoreboard.isZombies()) return;
+        if (Scoreboard.isNotZombies()) return;
 
         final String time = getTimeString(timerTicks);
         final int width = fontRenderer.getStringWidth(time);
@@ -75,6 +75,8 @@ public class RenderGameOverlayHandler {
         }
     }
     private void renderSpawnTime(byte @NotNull [] waveTimes, short roundTicks) {
+        if (Scoreboard.isNotZombies()) return;
+
         final int length  = waveTimes.length + 1;
         int heightIndex = 0;
         int color = 0xFFFF55;

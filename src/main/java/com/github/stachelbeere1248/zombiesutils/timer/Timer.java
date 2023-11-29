@@ -6,6 +6,8 @@ import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
+import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileManager;
+import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.GameFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +22,7 @@ public class Timer {
     private int passedRoundsTickSum = 0;
     private final String serverNumber;
     public Category category;
+    private final GameFile gameFile;
     private boolean pbTracking = false;
     private int round;
 
@@ -35,6 +38,8 @@ public class Timer {
         else throw new RuntimeException("invalid servernumber");
 
         this.category = new Category();
+        this.gameFile = new GameFile(serverNumber.trim(),map);
+
         this.gameMode = new GameMode(map);
         this.round = round;
         if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
@@ -66,6 +71,7 @@ public class Timer {
         if (passedRound == (byte) 1) pbTracking = true;
 
         try {
+            FileManager.
             RecordManager.compareSegment(passedRound, roundTime, category);
             if (pbTracking) RecordManager.compareBest(passedRound, gameTime, category);
         } catch (IndexOutOfBoundsException exception) {

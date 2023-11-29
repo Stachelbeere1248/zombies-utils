@@ -114,7 +114,7 @@ public class Scoreboard {
     public static int getLineCount() {
         return lines.size();
     }
-    public static boolean isZombies() {
+    public static boolean isNotZombies() {
         return (!"ZOMBIES".equals(title));
     }
 }

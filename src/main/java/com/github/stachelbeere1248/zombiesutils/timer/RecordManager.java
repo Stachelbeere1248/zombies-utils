@@ -1,7 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
-import com.github.stachelbeere1248.zombiesutils.timer.recorder.TimesFile;
+import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.Contract;
@@ -16,10 +16,10 @@ public class RecordManager {
 
 
         @SuppressWarnings("OptionalGetWithoutIsPresent")
-        final TimesFile timesFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
-        short bestSegment = timesFile.getBestSegment(round);
+        final CategoryFile categoryFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
+        short bestSegment = categoryFile.getBestSegment(round);
         if (bestSegment == (short) 0) {
-            timesFile.setBestSegment(round, roundTime);
+            categoryFile.setBestSegment(round, roundTime);
 
             segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
             final String timeString = formattedTime(roundTime);
@@ -27,7 +27,7 @@ public class RecordManager {
         } else {
             if (roundTime<bestSegment) {
                 segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
-                timesFile.setBestSegment(round, roundTime);
+                categoryFile.setBestSegment(round, roundTime);
             }
             final String timeString = formattedTime(roundTime);
             segmentMessage += "\n§cRound " + round + "§e took §a" + timeString + " §9" + formattedDelta(roundTime,bestSegment);
@@ -41,10 +41,10 @@ public class RecordManager {
         ;
 
         @SuppressWarnings("OptionalGetWithoutIsPresent")
-        final TimesFile timesFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
-        int personalBest = timesFile.getPersonalBest(round);
+        final CategoryFile categoryFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
+        int personalBest = categoryFile.getPersonalBest(round);
         if (personalBest == 0) {
-            timesFile.setPersonalBest(round, gameTime);
+            categoryFile.setPersonalBest(round, gameTime);
 
             bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
             final String timeString = formattedTime(gameTime);
@@ -52,7 +52,7 @@ public class RecordManager {
         } else {
             if (gameTime<personalBest) {
                 bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
-                timesFile.setPersonalBest(round, gameTime);
+                categoryFile.setPersonalBest(round, gameTime);
             }
 
             final String timeString = formattedTime(gameTime);
