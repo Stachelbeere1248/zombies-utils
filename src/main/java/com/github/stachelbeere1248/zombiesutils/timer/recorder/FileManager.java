@@ -19,7 +19,7 @@ public class FileManager {
         Gson gson = new Gson();
 
         try {
-            dataJson = FileUtils.readFileToString(file, StandardCharsets.US_ASCII);
+            dataJson = FileUtils.readFileToString(file, StandardCharsets.UTF_16);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +38,7 @@ public class FileManager {
         }
     }
     public static void writeDataToFile(SplitsFile splitsFile) throws IOException {
-        FileUtils.writeStringToFile(splitsFile, splitsFile.getData().toJSON(), StandardCharsets.US_ASCII);
+        FileUtils.writeStringToFile(splitsFile, splitsFile.getData().toJSON(), StandardCharsets.UTF_16);
     }
     public static CategoryData categoryReadOrCreate(CategoryFile file) {
         CategoryData data;

@@ -2,6 +2,7 @@ package com.github.stachelbeere1248.zombiesutils.timer.recorder.data;
 
 import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.ISplitsData;
+import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -25,12 +26,8 @@ public class GameData implements ISplitsData {
 
     @Override
     public String toJSON() {
-        StringBuilder JSON = new StringBuilder("[");
-        for (short segment: segments) {
-            JSON.append(segment + ',');
-        }
-        JSON.setCharAt(JSON.length()-1,']');
-        return JSON.toString();
+        Gson gson = new Gson();
+        return gson.toJson(this.segments);
     }
     public void setSegment(int index, short ticks) {
         segments[index] = ticks;

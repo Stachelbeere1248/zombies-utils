@@ -29,7 +29,7 @@ public class CategoryData implements ISplitsData {
     @Override
     public String toJSON() {
         Gson gson = new Gson();
-        return gson.toJson(this, CategoryData.class);
+        return gson.toJson(this);
     }
 
     public short getBestSegment(int index) {
