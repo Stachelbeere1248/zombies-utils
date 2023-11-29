@@ -26,19 +26,19 @@ public class FileManager {
 
         return gson.fromJson(dataJson, CategoryData.class);
     }
-    public static void createDataFile(ISplitsData splitsData, @NotNull SplitsFile splitsFile) {
+    public static void createDataFile(@NotNull SplitsFile splitsFile) {
         try {
             //noinspection ResultOfMethodCallIgnored
             splitsFile.getParentFile().mkdirs();
             //noinspection ResultOfMethodCallIgnored
             splitsFile.createNewFile();
-            writeDataToFile(splitsData, splitsFile);
+            writeDataToFile(splitsFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void writeDataToFile(@NotNull ISplitsData splitsData, SplitsFile splitsFile) throws IOException {
-        FileUtils.writeStringToFile(splitsFile, splitsData.toJSON(), StandardCharsets.US_ASCII);
+    public static void writeDataToFile(SplitsFile splitsFile) throws IOException {
+        FileUtils.writeStringToFile(splitsFile, splitsFile.getData().toJSON(), StandardCharsets.US_ASCII);
     }
     public static CategoryData categoryReadOrCreate(CategoryFile file) {
         CategoryData data;
@@ -46,7 +46,7 @@ public class FileManager {
             data = FileManager.readDataFromFile(file);
         } catch (FileNotFoundException ignored) {
             data = new CategoryData(file.getGameMode().getMap());
-            FileManager.createDataFile(data, file);
+            FileManager.createDataFile(file);
         }
         return data;
     }

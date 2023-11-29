@@ -27,7 +27,7 @@ public class CategoryFile extends SplitsFile {
     public void setBestSegment(int round, short ticks) {
         data.setBestSegment(round-1, ticks);
 
-        try { FileManager.writeDataToFile(data,this); }
+        try { FileManager.writeDataToFile(this); }
         catch (IOException e) { throw new RuntimeException(e); }
     }
     public int getPersonalBest(int round) {
@@ -36,7 +36,7 @@ public class CategoryFile extends SplitsFile {
     public void setPersonalBest(int round, int ticks) {
         data.setPersonalBest(round-1, ticks);
 
-        try { FileManager.writeDataToFile(data,this); }
+        try { FileManager.writeDataToFile(this); }
         catch (IOException e) { throw new RuntimeException(e); }
     }
 

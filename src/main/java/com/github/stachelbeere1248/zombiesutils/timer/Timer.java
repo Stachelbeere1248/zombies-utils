@@ -6,7 +6,6 @@ import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
-import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileManager;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.GameFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -71,7 +70,7 @@ public class Timer {
         if (passedRound == (byte) 1) pbTracking = true;
 
         try {
-            FileManager.
+            gameFile.setSegment(passedRound,roundTime);
             RecordManager.compareSegment(passedRound, roundTime, category);
             if (pbTracking) RecordManager.compareBest(passedRound, gameTime, category);
         } catch (IndexOutOfBoundsException exception) {

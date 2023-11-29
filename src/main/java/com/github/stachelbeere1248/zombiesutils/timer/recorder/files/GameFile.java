@@ -20,6 +20,7 @@ public class GameFile extends SplitsFile {
     public GameFile(String serverNumber, Map map) {
         super("zombies" + File.separator + "runs", formattedTime() + "_" + serverNumber + ".times");
         data = new GameData(map);
+        FileManager.createDataFile(this);
     }
 
     private static @NotNull String formattedTime() {
@@ -30,7 +31,7 @@ public class GameFile extends SplitsFile {
     public void setSegment(int round, short ticks) {
         data.setSegment(round-1, ticks);
 
-        try { FileManager.writeDataToFile(data,this); }
+        try { FileManager.writeDataToFile(this); }
         catch (IOException e) { throw new RuntimeException(e); }
     }
 
