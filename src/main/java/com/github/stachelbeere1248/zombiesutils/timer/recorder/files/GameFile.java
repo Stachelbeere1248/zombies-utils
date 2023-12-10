@@ -18,14 +18,14 @@ public class GameFile extends SplitsFile {
     private final GameData data;
 
     public GameFile(String serverNumber, Map map) {
-        super("zombies" + File.separator + "runs", formattedTime() + "_" + serverNumber + ".times");
+        super(new File("zombies", "runs"), formattedTime() + "_" + serverNumber + ".seg");
         data = new GameData(map);
         FileManager.createDataFile(this);
     }
 
     private static @NotNull String formattedTime() {
         final LocalDateTime dateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-        return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace(':','-').replaceFirst("T","_");
     }
 
     public void setSegment(int round, short ticks) {
