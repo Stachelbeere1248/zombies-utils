@@ -21,10 +21,12 @@ public class Hotkeys {
         );
 
     }
+
     public void registerAll() {
         ClientRegistry.registerKeyBinding(this.chatMacro);
         ClientRegistry.registerKeyBinding(this.rlSpawn);
     }
+
     public KeyBinding getChatMacro() {
         return chatMacro;
     }

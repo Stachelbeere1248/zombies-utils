@@ -15,7 +15,8 @@ public class GameData implements ISplitsData {
             case ALIEN_ARCADIUM:
                 segments = new short[105];
                 break;
-            case DEAD_END: case BAD_BLOOD:
+            case DEAD_END:
+            case BAD_BLOOD:
                 segments = new short[30];
                 break;
             default:
@@ -29,6 +30,7 @@ public class GameData implements ISplitsData {
         Gson gson = new Gson();
         return gson.toJson(this.segments);
     }
+
     public void setSegment(int index, short ticks) {
         segments[index] = ticks;
     }

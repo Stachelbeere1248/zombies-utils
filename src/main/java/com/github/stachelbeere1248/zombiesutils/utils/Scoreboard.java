@@ -47,13 +47,14 @@ public class Scoreboard {
         List<Score> filteredScores = scoreCollection.stream().filter(input -> input.getPlayerName() != null && !input.getPlayerName().startsWith("#")).collect(Collectors.toList());
 
         List<Score> scores;
-        if (filteredScores.size() > 15) scores = Lists.newArrayList(Iterables.skip(filteredScores, scoreCollection.size() - 15));
+        if (filteredScores.size() > 15)
+            scores = Lists.newArrayList(Iterables.skip(filteredScores, scoreCollection.size() - 15));
         else scores = filteredScores;
         scores = Lists.reverse(scores);
 
         lines = new ArrayList<>();
-        for (Score score: scores
-             ) {
+        for (Score score : scores
+        ) {
             ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
             String scoreboardLine = ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()).trim();
             lines.add(STRIP_COLOR_PATTERN.matcher(SIDEBAR_EMOJI_PATTERN.matcher(scoreboardLine).replaceAll("")).replaceAll(""));
@@ -79,6 +80,7 @@ public class Scoreboard {
             return 0;
         }
     }
+
     public static Optional<String> getServerNumber() {
         String line;
         try {
@@ -91,6 +93,7 @@ public class Scoreboard {
         ZombiesUtils.getInstance().getLogger().debug("Servernumber: " + string);
         return Optional.ofNullable(string);
     }
+
     public static Optional<Map> getMap() {
         String line;
         try {
@@ -104,16 +107,22 @@ public class Scoreboard {
         }
         String mapString = MAP_PATTERN.matcher(line).replaceAll("$1");
         switch (mapString) {
-            case "Dead End": return Optional.of(Map.DEAD_END);
-            case "Bad Blood": return Optional.of(Map.BAD_BLOOD);
-            case "Alien Arcadium": return Optional.of(Map.ALIEN_ARCADIUM);
-            default: return Optional.empty();
+            case "Dead End":
+                return Optional.of(Map.DEAD_END);
+            case "Bad Blood":
+                return Optional.of(Map.BAD_BLOOD);
+            case "Alien Arcadium":
+                return Optional.of(Map.ALIEN_ARCADIUM);
+            default:
+                return Optional.empty();
         }
 
     }
+
     public static int getLineCount() {
         return lines.size();
     }
+
     public static boolean isNotZombies() {
         return (!"ZOMBIES".equals(title));
     }

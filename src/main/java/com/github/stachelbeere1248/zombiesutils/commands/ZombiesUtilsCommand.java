@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ZombiesUtilsCommand  extends CommandBase {
+public class ZombiesUtilsCommand extends CommandBase {
     @Override
     public String getCommandName() {
         return "zombiesutils";
@@ -28,29 +28,35 @@ public class ZombiesUtilsCommand  extends CommandBase {
         else switch (args[0]) {
             case "timer":
                 switch (args[1]) {
-                    case "kill": Timer.dropInstances(); break;
+                    case "kill":
+                        Timer.dropInstances();
+                        break;
                     case "split":
                         try {
-                        Timer.getInstance().ifPresent(timer -> timer.split(Byte.parseByte(args[2])));
+                            Timer.getInstance().ifPresent(timer -> timer.split(Byte.parseByte(args[2])));
                         } catch (NumberFormatException | NullPointerException ignored) {
-                            throw new NumberInvalidException("t",args[2]);
-                        } break;
+                            throw new NumberInvalidException("t", args[2]);
+                        }
+                        break;
                     default:
                         throw new WrongUsageException(
                                 "[Invalid option] options: kill, split", args[0]);
-                } break;
+                }
+                break;
             default:
                 throw new WrongUsageException(
                         "[Invalid option] options: timer", args[0]);
         }
     }
+
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String @NotNull [] args, BlockPos blockPos) {
         if (args.length == 1) return new ArrayList<>(Collections.singleton("timer"));
         switch (args[0]) {
             case "timer":
-                return new ArrayList<>(Arrays.asList("kill","split"));
-            default: return Collections.emptyList();
+                return new ArrayList<>(Arrays.asList("kill", "split"));
+            default:
+                return Collections.emptyList();
         }
     }
 

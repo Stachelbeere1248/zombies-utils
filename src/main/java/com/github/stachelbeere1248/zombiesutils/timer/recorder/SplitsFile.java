@@ -8,8 +8,10 @@ public abstract class SplitsFile extends File {
     public SplitsFile(String parent, @NotNull String child) {
         super(parent, child);
     }
+
     public SplitsFile(File category, String child) {
         super(category, child);
     }
+
     abstract public ISplitsData getData();
 }

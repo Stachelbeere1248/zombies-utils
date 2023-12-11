@@ -15,6 +15,7 @@ public class ZombiesUtilsConfig {
     private static String chatMacro;
     private static String defaultCategory;
     private static short waveOffset;
+
     public static void load() {
         ZombiesUtils.getInstance().getLogger().debug("Loading config...");
         config.load();
@@ -64,26 +65,31 @@ public class ZombiesUtilsConfig {
         return waveOffset;
     }
 
+    public static boolean isSlaToggled() {
+        return slaToggle;
+    }
+
+    public static boolean isSlaShortened() {
+        return slaShortener;
+    }
+
+    public static boolean isSpawntimeNotShortened() {
+        return shortSpawntime;
+    }
+
+    public static String getChatMacro() {
+        return chatMacro;
+    }
+
+    public static String getDefaultCategory() {
+        return defaultCategory;
+    }
+
     @SubscribeEvent
     public void onConfigChange(ConfigChangedEvent.@NotNull OnConfigChangedEvent event) {
         if (event.modID.equals("zombiesutils") && event.configID == null) {
             config.save();
             ZombiesUtilsConfig.load();
         }
-    }
-    public static boolean isSlaToggled() {
-        return slaToggle;
-    }
-    public static boolean isSlaShortened() {
-        return slaShortener;
-    }
-    public static boolean isSpawntimeNotShortened() {
-        return shortSpawntime;
-    }
-    public static String getChatMacro() {
-        return chatMacro;
-    }
-    public static String getDefaultCategory() {
-        return defaultCategory;
     }
 }

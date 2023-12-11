@@ -19,40 +19,50 @@ public class Timer {
 
     public static Timer instance;
     private final GameMode gameMode;
+    private final String serverNumber;
+    private final GameFile gameFile;
+    public Category category;
     private long savedTotalWorldTime;
     private int passedRoundsTickSum = 0;
-    private final String serverNumber;
-    public Category category;
-    private final GameFile gameFile;
     private boolean pbTracking = false;
     private int round;
     private boolean r1Corrected = false;
 
     /**
      * @param serverNumber The game's server the timer should be bound to.
-     * @param map The map the timer should be started for.
-     * @param round If available, round to begin splitting.
+     * @param map          The map the timer should be started for.
+     * @param round        If available, round to begin splitting.
      */
-    public Timer (@NotNull String serverNumber, @NotNull Map map, byte round) {
+    public Timer(@NotNull String serverNumber, @NotNull Map map, byte round) throws TimerException.ServerNumberException {
+        this.savedTotalWorldTime = getCurrentTotalWorldTime();
+        if (!serverNumber.trim().isEmpty()) this.serverNumber = serverNumber.trim();
+        else throw new Timer.TimerException.ServerNumberException();
 
-            this.savedTotalWorldTime = getCurrentTotalWorldTime();
-            if (!serverNumber.trim().isEmpty()) this.serverNumber = serverNumber.trim();
-            else throw new RuntimeException("invalid servernumber");
+        this.category = new Category();
+        this.gameFile = new GameFile(serverNumber.trim(), map);
 
-            this.category = new Category();
-            this.gameFile = new GameFile(serverNumber.trim(), map);
-
-            this.gameMode = new GameMode(map);
-            this.round = round;
-            if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
+        this.gameMode = new GameMode(map);
+        this.round = round;
+        if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
 
         MinecraftForge.EVENT_BUS.register(new Round1Correction());
     }
 
+    public static Optional<Timer> getInstance() {
+        return Optional.ofNullable(instance);
+    }
+
+    /**
+     * Call to invalidate {@link #instance} to trigger the garbage collector
+     */
+    public static void dropInstances() {
+        instance = null;
+    }
 
     /**
      * The main splitting function.
      * Cancels on the second occurring sound-effect, important for {@link RecordManager} to not override values incorrectly.
+     *
      * @param passedRound The round that has been passed.
      */
     public void split(byte passedRound) {
@@ -69,9 +79,10 @@ public class Timer {
         passedRoundsTickSum = gameTime;
         round = passedRound;
     }
+
     public void correctRn() {
         if (r1Corrected) return;
-        savedTotalWorldTime = getCurrentTotalWorldTime()-200L;
+        savedTotalWorldTime = getCurrentTotalWorldTime() - 200L;
         r1Corrected = true;
     }
 
@@ -79,7 +90,7 @@ public class Timer {
         if (passedRound == (byte) 1) pbTracking = true;
 
         try {
-            gameFile.setSegment(passedRound,roundTime);
+            gameFile.setSegment(passedRound, roundTime);
             RecordManager.compareSegment(passedRound, roundTime, category);
             if (pbTracking) RecordManager.compareBest(passedRound, gameTime, category);
         } catch (IndexOutOfBoundsException exception) {
@@ -89,15 +100,16 @@ public class Timer {
         }
     }
 
-
     private long getCurrentTotalWorldTime() {
         if (Minecraft.getMinecraft() == null) return 0;
         if (Minecraft.getMinecraft().theWorld == null) return 0;
         return Minecraft.getMinecraft().theWorld.getTotalWorldTime();
     }
+
     public int gameTime() {
         return (int) (getCurrentTotalWorldTime() - savedTotalWorldTime);
     }
+
     public short roundTime() {
         return (short) (gameTime() - passedRoundsTickSum);
     }
@@ -109,21 +121,13 @@ public class Timer {
     public boolean equalsServerOrNull(String serverNumber) {
         return (serverNumber == null || serverNumber.equals(this.serverNumber) || serverNumber.isEmpty());
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    public static Optional<Timer> getInstance() {
-        return Optional.ofNullable(instance);
-    }
 
-    /**
-     * Call to invalidate {@link #instance} to trigger the garbage collector
-     */
-    public static void dropInstances() {
-        instance = null;
-    }
     public byte getRound() {
-        return (byte) (round+1);
+        return (byte) (round + 1);
     }
 
     public GameMode getGameMode() {
@@ -134,6 +138,7 @@ public class Timer {
 
         public static class MapException extends TimerException {
         }
+
         public static class ServerNumberException extends TimerException {
         }
     }

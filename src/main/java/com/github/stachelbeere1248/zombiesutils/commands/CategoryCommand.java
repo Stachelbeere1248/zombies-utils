@@ -14,9 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CategoryCommand extends CommandBase {
-    public CategoryCommand () {
+    public CategoryCommand() {
 
     }
+
     @Override
     public String getCommandName() {
         return "category";
@@ -32,11 +33,13 @@ public class CategoryCommand extends CommandBase {
         if (args.length == 0) throw new WrongUsageException("Please enter a name for the category");
         else {
             String cat = args[0];
-            if (cat.contains(File.separator)) throw new WrongUsageException("Your name must not contain '" + File.separator + "' as this is the systems separator character for folder" + File.separator + "subfolder");
+            if (cat.contains(File.separator))
+                throw new WrongUsageException("Your name must not contain '" + File.separator + "' as this is the systems separator character for folder" + File.separator + "subfolder");
             Category.setSelectedCategory(cat);
             Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
         }
     }
+
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos blockPos) {
         return Arrays.asList(Category.getCategories());

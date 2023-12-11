@@ -24,7 +24,7 @@ public class QuickZombiesCommand extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String @NotNull [] args) throws CommandException {
         if (args.length == 0) throw new WrongUsageException(
                 "[Missing option] options: de, bb, aa");
         else switch (args[0]) {
@@ -43,6 +43,7 @@ public class QuickZombiesCommand extends CommandBase {
 
         }
     }
+
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String @NotNull [] args, BlockPos blockPos) {
         if (args.length == 1) return Arrays.asList("de", "bb", "aa");

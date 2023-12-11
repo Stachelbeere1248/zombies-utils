@@ -1,7 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;
 import net.minecraftforge.common.MinecraftForge;
 
 public class HandlerRegistry {

@@ -16,10 +16,12 @@ public class ZombiesUtils {
     private static ZombiesUtils instance;
     private final Hotkeys hotkeys;
     private Logger logger;
+
     public ZombiesUtils() {
         hotkeys = new Hotkeys();
         instance = this;
     }
+
     public static ZombiesUtils getInstance() {
         return instance;
     }
@@ -33,12 +35,14 @@ public class ZombiesUtils {
         );
         ZombiesUtilsConfig.load();
     }
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         HandlerRegistry.registerAll();
         CommandRegistry.registerAll();
         hotkeys.registerAll();
     }
+
     public Logger getLogger() {
         return logger;
     }

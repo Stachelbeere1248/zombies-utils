@@ -121,7 +121,7 @@ public class SlaCommand extends CommandBase {
         else {
             if (args.length > 1) switch (args[0]) {
                 case "offset":
-                    if (args.length<5) options.add("0");
+                    if (args.length < 5) options.add("0");
                     break;
                 case "map":
                     options.addAll(Arrays.asList("de", "bb", "aa"));
@@ -135,7 +135,8 @@ public class SlaCommand extends CommandBase {
                 case "quick":
                     //noinspection SpellCheckingInspection
                     options.addAll(Arrays.asList("mogi_a", "ghxula", "ghxula-garden"));
-                default: break;
+                default:
+                    break;
             }
         }
         return options;

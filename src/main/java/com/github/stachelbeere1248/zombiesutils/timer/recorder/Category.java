@@ -14,6 +14,7 @@ public class Category {
     private static String selectedCategory = ZombiesUtilsConfig.getDefaultCategory();
     public final CategoryFile[] categoryFiles = new CategoryFile[7];
     private final String name;
+
     public Category() {
         final File category = new File(new File("zombies", "splits"), selectedCategory);
         categoryFiles[0] = new CategoryFile(category, new GameMode(Map.DEAD_END));
@@ -28,7 +29,16 @@ public class Category {
         this.name = Category.selectedCategory;
     }
 
+    public static void setSelectedCategory(String selectedCategory) {
+        Category.selectedCategory = selectedCategory;
+        Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
+    }
 
+    public static String[] getCategories() {
+        File dir = new File("zombies" + File.separator + "splits");
+        if (dir.isDirectory()) return dir.list();
+        else return new String[0];
+    }
 
     public CategoryFile getByGameMode(@NotNull GameMode gameMode) {
         if (gameMode.is(Map.DEAD_END, Difficulty.NORMAL)) return categoryFiles[0];
@@ -41,16 +51,6 @@ public class Category {
         else if (gameMode.is(Map.BAD_BLOOD, Difficulty.HARD)) return categoryFiles[4];
         else if (gameMode.is(Map.BAD_BLOOD, Difficulty.RIP)) return categoryFiles[5];
         else throw new IllegalStateException("Unexpected value: " + gameMode);
-    }
-
-    public static void setSelectedCategory(String selectedCategory) {
-        Category.selectedCategory = selectedCategory;
-        Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
-    }
-    public static String[] getCategories() {
-        File dir = new File("zombies"+File.separator+"splits");
-        if (dir.isDirectory()) return dir.list();
-        else return new String[0];
     }
 
     public String getName() {

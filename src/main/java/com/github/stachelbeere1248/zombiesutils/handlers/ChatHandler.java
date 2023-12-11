@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Pattern;
 
 public class ChatHandler {
-    public ChatHandler () {
-    }
-
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("§[0-9A-FK-ORZ]", Pattern.CASE_INSENSITIVE);
+
+    public ChatHandler() {
+    }
 
     @SubscribeEvent
     public void difficultyChange(@NotNull ClientChatReceivedEvent event) {

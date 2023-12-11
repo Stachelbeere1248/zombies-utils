@@ -25,14 +25,17 @@ public class GameFile extends SplitsFile {
 
     private static @NotNull String formattedTime() {
         final LocalDateTime dateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-        return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace(':','-').replaceFirst("T","_");
+        return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace(':', '-').replaceFirst("T", "_");
     }
 
     public void setSegment(int round, short ticks) {
-        data.setSegment(round-1, ticks);
+        data.setSegment(round - 1, ticks);
 
-        try { FileManager.writeDataToFile(this); }
-        catch (IOException e) { throw new RuntimeException(e); }
+        try {
+            FileManager.writeDataToFile(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

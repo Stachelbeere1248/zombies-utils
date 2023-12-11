@@ -1,4 +1,4 @@
-package com.github.stachelbeere1248.zombiesutils.render;
+package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
@@ -16,11 +16,30 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class RenderGameOverlayHandler {
-    private final FontRenderer fontRenderer;
     private static int rl = 0;
+    private final FontRenderer fontRenderer;
 
     public RenderGameOverlayHandler() {
         this.fontRenderer = Objects.requireNonNull(Minecraft.getMinecraft().fontRendererObj, "FontRenderer must not be null!");
+    }
+
+    private static String getTimeString(long timerTicks) {
+        final long minutesPart = (timerTicks * 50) / 60000;
+        final long secondsPart = ((timerTicks * 50) % 60000) / 1000;
+        final long tenthSecondsPart = ((timerTicks * 50) % 1000) / 100;
+        return String.format("%d:%02d.%d", minutesPart, secondsPart, tenthSecondsPart);
+    }
+
+    private static String getWaveString(long waveTicks, int wave) {
+        final long minutesPart = (waveTicks * 50) / 60000;
+        final long secondsPart = ((waveTicks * 50) % 60000) / 1000;
+        final long tenthSecondsPart = ((waveTicks * 50) % 1000) / 100;
+        return String.format("W%d %d:%02d.%d", wave, minutesPart, secondsPart, tenthSecondsPart);
+    }
+
+    static void toggleRL() {
+        if (rl == 0) rl = ZombiesUtilsConfig.getWaveOffset();
+        else rl = 0;
     }
 
     @SubscribeEvent
@@ -60,10 +79,9 @@ public class RenderGameOverlayHandler {
         );
     }
 
-
     private void renderSla(Room @NotNull [] rooms) {
         int y = 0;
-        for (Room room: rooms) {
+        for (Room room : rooms) {
             if (ZombiesUtilsConfig.isSlaShortened() && room.getActiveWindowCount() == 0) continue;
             fontRenderer.drawStringWithShadow(
                     room.getSlaString(),
@@ -74,18 +92,19 @@ public class RenderGameOverlayHandler {
             y++;
         }
     }
+
     private void renderSpawnTime(byte @NotNull [] waveTimes, short roundTicks) {
         if (Scoreboard.isNotZombies()) return;
 
-        final int length  = waveTimes.length + 1;
+        final int length = waveTimes.length + 1;
         int heightIndex = 0;
         int color = 0xFFFF55;
 
-        for (byte waveTime: waveTimes) {
+        for (byte waveTime : waveTimes) {
             int clonedColor = color;
-            final short waveTicks = (short) ((waveTime * 20)+rl);
+            final short waveTicks = (short) ((waveTime * 20) + rl);
 
-            if (roundTicks>waveTicks) {
+            if (roundTicks > waveTicks) {
                 if (ZombiesUtilsConfig.isSpawntimeNotShortened()) clonedColor = 0x555555;
                 else {
                     heightIndex++;
@@ -102,28 +121,11 @@ public class RenderGameOverlayHandler {
             fontRenderer.drawStringWithShadow(
                     time,
                     screenWidth - width,
-                    screenHeight - fontRenderer.FONT_HEIGHT * (length-heightIndex),
+                    screenHeight - fontRenderer.FONT_HEIGHT * (length - heightIndex),
                     clonedColor
             );
-            if (clonedColor!=0x555555) color = 0xAAAAAA;
+            if (clonedColor != 0x555555) color = 0xAAAAAA;
             heightIndex++;
         }
-    }
-    private static String getTimeString(long timerTicks) {
-        final long minutesPart = (timerTicks *50) / 60000;
-        final long secondsPart = ((timerTicks *50) % 60000) / 1000;
-        final long tenthSecondsPart = ((timerTicks *50) % 1000) / 100;
-        return String.format("%d:%02d.%d", minutesPart, secondsPart, tenthSecondsPart);
-    }
-    private static String getWaveString(long waveTicks, int wave) {
-        final long minutesPart = (waveTicks *50) / 60000;
-        final long secondsPart = ((waveTicks *50) % 60000) / 1000;
-        final long tenthSecondsPart = ((waveTicks *50) % 1000) / 100;
-        return String.format("W%d %d:%02d.%d", wave, minutesPart, secondsPart, tenthSecondsPart);
-    }
-
-    public static void toggleRL() {
-        if (rl == 0) rl = ZombiesUtilsConfig.getWaveOffset();
-        else rl = 0;
     }
 }

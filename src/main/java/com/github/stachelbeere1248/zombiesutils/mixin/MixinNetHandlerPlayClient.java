@@ -19,21 +19,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinNetHandlerPlayClient {
     @Unique
     private boolean zombies_utils$alienUfoOpened;
+
     @Inject(method = "handleSoundEffect", at = @At(value = "HEAD"))
     private void handleSound(S29PacketSoundEffect packetIn, CallbackInfo ci) {
         zombies_utils$handleSound(packetIn);
     }
+
     @Inject(method = "handleTitle", at = @At(value = "HEAD"))
     private void handleTitle(S45PacketTitle packetIn, CallbackInfo ci) {
         zombies_utils$handleTitle(packetIn);
     }
+
     @Unique
     private void zombies_utils$handleSound(@NotNull S29PacketSoundEffect packet) {
         if (Scoreboard.isNotZombies()) return;
         final String soundEffect = packet.getSoundName();
         if (!(
                 soundEffect.equals("mob.wither.spawn")
-                || (soundEffect.equals("mob.guardian.curse") && !zombies_utils$alienUfoOpened)
+                        || (soundEffect.equals("mob.guardian.curse") && !zombies_utils$alienUfoOpened)
         )) return;
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
         try {
@@ -42,13 +45,14 @@ public class MixinNetHandlerPlayClient {
                 final byte round = Scoreboard.getRound();
 
                 if (round == 0) {
-                    if (Scoreboard.getLineCount()<13) Timer.instance = new Timer(
+                    if (Scoreboard.getLineCount() < 13) Timer.instance = new Timer(
                             Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
                             Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
                             round
                     );
                 } else if (!running.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) {
-                    Timer.instance = new Timer(                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                    Timer.instance = new Timer(
+                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
                             Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
                             round
                     );
@@ -63,6 +67,7 @@ public class MixinNetHandlerPlayClient {
             ZombiesUtils.getInstance().getLogger().warn(e);
         }
     }
+
     @Unique
     private void zombies_utils$handleTitle(@NotNull S45PacketTitle packet) {
         if (packet.getType() != S45PacketTitle.Type.TITLE) return;
@@ -73,7 +78,8 @@ public class MixinNetHandlerPlayClient {
 
             if (message.equals("§aYou Win!")) {
                 switch (timer.getGameMode().getMap()) {
-                    case DEAD_END: case BAD_BLOOD:
+                    case DEAD_END:
+                    case BAD_BLOOD:
                         timer.split((byte) 30);
                         Timer.dropInstances();
                         break;

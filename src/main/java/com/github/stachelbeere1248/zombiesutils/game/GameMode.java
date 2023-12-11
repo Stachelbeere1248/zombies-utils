@@ -10,25 +10,31 @@ public class GameMode {
         this.map = map;
         this.difficulty = Difficulty.NORMAL;
     }
+
     public GameMode(@NotNull Map map, @NotNull Difficulty difficulty) {
         this.map = map;
         this.difficulty = difficulty;
     }
+
     public Map getMap() {
         return map;
     }
+
     public Difficulty getDifficulty() {
         return difficulty;
     }
+
     public void changeDifficulty(@NotNull Difficulty difficulty) {
         switch (map) {
-            case DEAD_END: case BAD_BLOOD:
+            case DEAD_END:
+            case BAD_BLOOD:
                 this.difficulty = difficulty;
                 break;
             case ALIEN_ARCADIUM:
                 throw new RuntimeException("Achievement Get: Alien Arcadium Hard/RIP" + Map.ALIEN_ARCADIUM);
         }
     }
+
     public boolean is(Map map, Difficulty difficulty) {
         return this.getDifficulty() == difficulty && this.getMap() == map;
     }

@@ -3,7 +3,6 @@ package com.github.stachelbeere1248.zombiesutils.handlers;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
