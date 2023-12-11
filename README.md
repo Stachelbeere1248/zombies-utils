@@ -34,7 +34,7 @@ The timer automatically splits every round. The Personal-Best-recorder automatic
   - /zombiesutils timer \<kill|split>
     - /zombiesutils timer kill - Stops the running timer completely
     - /zombiesutils timer split \<round> - Splits as if \<round> was passed, not recommended to use as it might create impossible PBs
-- /qz \<de|bb|aa> - sends you to a new game of dead end, bad blood or alien arcadium
+- /qz \<de|bb|aa> - sends you to a new game of Dead End, Bad Blood or Alien Arcadium
 ### Hotkeys
 - Chat Macro: sends the message specified in the config
 - RL Mode: Toggle usage of the rocket launcher mode spawn-time offset.
