@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class Timer {
 
-    private static Timer instance;
+    public static Timer instance;
     private final GameMode gameMode;
     private long savedTotalWorldTime;
     private int passedRoundsTickSum = 0;
@@ -26,7 +26,7 @@ public class Timer {
     private final GameFile gameFile;
     private boolean pbTracking = false;
     private int round;
-    private final Round1Correction correction;
+    private boolean r1Corrected = false;
 
     /**
      * @param serverNumber The game's server the timer should be bound to.
@@ -34,22 +34,19 @@ public class Timer {
      * @param round If available, round to begin splitting.
      */
     public Timer (@NotNull String serverNumber, @NotNull Map map, byte round) {
-        dropInstances();
 
-        this.savedTotalWorldTime = getCurrentTotalWorldTime();
-        if (!serverNumber.trim().isEmpty()) this.serverNumber = serverNumber.trim();
-        else throw new RuntimeException("invalid servernumber");
+            this.savedTotalWorldTime = getCurrentTotalWorldTime();
+            if (!serverNumber.trim().isEmpty()) this.serverNumber = serverNumber.trim();
+            else throw new RuntimeException("invalid servernumber");
 
-        this.category = new Category();
-        this.gameFile = new GameFile(serverNumber.trim(),map);
+            this.category = new Category();
+            this.gameFile = new GameFile(serverNumber.trim(), map);
 
-        this.gameMode = new GameMode(map);
-        this.round = round;
-        if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
+            this.gameMode = new GameMode(map);
+            this.round = round;
+            if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
 
-        correction = new Round1Correction();
-        MinecraftForge.EVENT_BUS.register(correction);
-
+        MinecraftForge.EVENT_BUS.register(new Round1Correction());
     }
 
 
@@ -62,7 +59,7 @@ public class Timer {
         final int gameTime = gameTime();
         final short roundTime = (short) (gameTime - passedRoundsTickSum);
 
-        if ((round == passedRound) || (passedRound == 0) || (roundTime == 0)) {
+        if ((round == passedRound) || (passedRound == 0) || (roundTime < 100)) {
             ZombiesUtils.getInstance().getLogger().debug("SPLIT CANCELLED");
             return;
         }
@@ -73,7 +70,9 @@ public class Timer {
         round = passedRound;
     }
     public void correctRn() {
+        if (r1Corrected) return;
         savedTotalWorldTime = getCurrentTotalWorldTime()-200L;
+        r1Corrected = true;
     }
 
     private void record(byte passedRound, short roundTime, int gameTime) {
@@ -121,8 +120,6 @@ public class Timer {
      * Call to invalidate {@link #instance} to trigger the garbage collector
      */
     public static void dropInstances() {
-        if (instance == null) return;
-        if (instance.correction != null) MinecraftForge.EVENT_BUS.unregister(instance.correction);
         instance = null;
     }
     public byte getRound() {
@@ -132,10 +129,6 @@ public class Timer {
     public GameMode getGameMode() {
         return gameMode;
     }
-    public static void setInstance(@NotNull Timer instance) {
-        Timer.instance = instance;
-    }
-
 
     public static abstract class TimerException extends Exception {
 

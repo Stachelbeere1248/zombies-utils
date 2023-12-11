@@ -37,32 +37,27 @@ public class MixinNetHandlerPlayClient {
         )) return;
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
         try {
-
             if (Timer.getInstance().isPresent()) {
                 final Timer running = Timer.getInstance().get();
                 final byte round = Scoreboard.getRound();
 
                 if (round == 0) {
-                    if (Scoreboard.getLineCount()<13) Timer.setInstance(new Timer(
+                    if (Scoreboard.getLineCount()<13) Timer.instance = new Timer(
                             Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
                             Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
                             round
-                    ));
+                    );
                 } else if (!running.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) {
-                    Timer.setInstance(new Timer(
-                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                    Timer.instance = new Timer(                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
                             Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
                             round
-                    ));
+                    );
                 } else running.split(round);
-
-
-
-            } else Timer.setInstance(new Timer(
+            } else Timer.instance = new Timer(
                     Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
                     Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
                     Scoreboard.getRound()
-            ));
+            );
         } catch (Timer.TimerException e) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cFailed to start or split timer.\nData parsing error. Blame scoreboard."));
             ZombiesUtils.getInstance().getLogger().warn(e);

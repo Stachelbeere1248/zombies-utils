@@ -15,7 +15,7 @@ public class Category {
     public final CategoryFile[] categoryFiles = new CategoryFile[7];
     private final String name;
     public Category() {
-        final File category = new File("zombies" + File.separator + "splits" + File.separator + selectedCategory);
+        final File category = new File(new File("zombies", "splits"), selectedCategory);
         categoryFiles[0] = new CategoryFile(category, new GameMode(Map.DEAD_END));
         categoryFiles[1] = new CategoryFile(category, new GameMode(Map.DEAD_END, Difficulty.HARD));
         categoryFiles[2] = new CategoryFile(category, new GameMode(Map.DEAD_END, Difficulty.RIP));

@@ -1,16 +1,9 @@
 package com.github.stachelbeere1248.zombiesutils;
 
-import com.github.stachelbeere1248.zombiesutils.commands.CategoryCommand;
-import com.github.stachelbeere1248.zombiesutils.commands.SlaCommand;
-import com.github.stachelbeere1248.zombiesutils.commands.ZombiesUtilsCommand;
+import com.github.stachelbeere1248.zombiesutils.commands.CommandRegistry;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.handlers.ChatHandler;
-import com.github.stachelbeere1248.zombiesutils.handlers.KeyInputHandler;
-import com.github.stachelbeere1248.zombiesutils.handlers.TickHandler;
-import com.github.stachelbeere1248.zombiesutils.render.RenderGameOverlayHandler;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
+import com.github.stachelbeere1248.zombiesutils.handlers.HandlerRegistry;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -42,16 +35,8 @@ public class ZombiesUtils {
     }
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new ZombiesUtilsConfig());
-        MinecraftForge.EVENT_BUS.register(new RenderGameOverlayHandler());
-        MinecraftForge.EVENT_BUS.register(new TickHandler());
-        MinecraftForge.EVENT_BUS.register(new ChatHandler());
-        MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
-
-        ClientCommandHandler.instance.registerCommand(new CategoryCommand());
-        ClientCommandHandler.instance.registerCommand(new SlaCommand());
-        ClientCommandHandler.instance.registerCommand(new ZombiesUtilsCommand());
-
+        HandlerRegistry.registerAll();
+        CommandRegistry.registerAll();
         hotkeys.registerAll();
     }
     public Logger getLogger() {
