@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class GameData implements ISplitsData {
     private final short[] segments;
 
-    public GameData(@NotNull Map map) {
+    public GameData(@NotNull Map map) throws IllegalStateException {
         switch (map) {
             case ALIEN_ARCADIUM:
                 segments = new short[105];
@@ -25,7 +25,7 @@ public class GameData implements ISplitsData {
         Arrays.fill(segments, (short) 0);
     }
 
-    @Override
+    @Override @NotNull
     public String toJSON() {
         Gson gson = new Gson();
         return gson.toJson(this.segments);

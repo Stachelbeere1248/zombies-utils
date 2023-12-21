@@ -11,6 +11,7 @@ import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.GameFile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -74,7 +75,12 @@ public class Timer {
             return;
         }
 
-        record(passedRound, roundTime, gameTime);
+        try {
+            record(passedRound, roundTime, gameTime);
+        } catch (Exception e) {
+            ZombiesUtils.getInstance().getLogger().error(ExceptionUtils.getStackTrace(e));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error saving splits"));
+        }
 
         passedRoundsTickSum = gameTime;
         round = passedRound;
@@ -90,9 +96,10 @@ public class Timer {
         if (passedRound == (byte) 1) pbTracking = true;
 
         try {
-            gameFile.setSegment(passedRound, roundTime);
             RecordManager.compareSegment(passedRound, roundTime, category);
             if (pbTracking) RecordManager.compareBest(passedRound, gameTime, category);
+
+            gameFile.setSegment(passedRound, roundTime);
         } catch (IndexOutOfBoundsException exception) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
                     String.format("Split not recorded. (invalid round parsed from scoreboard: %s)", passedRound)

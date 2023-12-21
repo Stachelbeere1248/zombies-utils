@@ -1,14 +1,16 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder.files;
 
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileManager;
-import com.github.stachelbeere1248.zombiesutils.timer.recorder.ISplitsData;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.SplitsFile;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.data.CategoryData;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CategoryFile extends SplitsFile {
     private final CategoryData data;
@@ -19,20 +21,21 @@ public class CategoryFile extends SplitsFile {
         // Content encoded in StandardCharsets.UTF_16
         super(category, gameMode.getMap() + "_" + gameMode.getDifficulty() + ".times");
         this.gameMode = gameMode;
-        data = FileManager.categoryReadOrCreate(this);
+        this.data = FileManager.categoryReadOrCreate(this);
     }
 
     public short getBestSegment(int round) {
-        return data.getBestSegment(round - 1);
+        return this.data.getBestSegment(round - 1);
     }
 
     public void setBestSegment(int round, short ticks) {
-        data.setBestSegment(round - 1, ticks);
+        this.data.setBestSegment(round - 1, ticks);
 
         try {
-            FileManager.writeDataToFile(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            FileManager.writeDataToFile(this, this.data);
+        } catch (Exception e) {
+            ZombiesUtils.getInstance().getLogger().error(ExceptionUtils.getStackTrace(e));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error saving segment to splits-file. Please Contact Stachelbeere1248."));
         }
     }
 
@@ -41,12 +44,13 @@ public class CategoryFile extends SplitsFile {
     }
 
     public void setPersonalBest(int round, int ticks) {
-        data.setPersonalBest(round - 1, ticks);
+        this.data.setPersonalBest(round - 1, ticks);
 
         try {
-            FileManager.writeDataToFile(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            FileManager.writeDataToFile(this, this.data);
+        } catch (Exception e) {
+            ZombiesUtils.getInstance().getLogger().error(ExceptionUtils.getStackTrace(e));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error saving pb to splits-file. Please Contact Stachelbeere1248."));
         }
     }
 
@@ -54,8 +58,4 @@ public class CategoryFile extends SplitsFile {
         return gameMode;
     }
 
-    @Override
-    public ISplitsData getData() {
-        return data;
-    }
 }

@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.utils;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
+import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.Map;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -20,9 +21,7 @@ public class Scoreboard {
     @SuppressWarnings("UnnecessaryUnicodeEscape")
     private static final Pattern SIDEBAR_EMOJI_PATTERN = Pattern.compile("[\uD83D\uDD2B\uD83C\uDF6B\uD83D\uDCA3\uD83D\uDC7D\uD83D\uDD2E\uD83D\uDC0D\uD83D\uDC7E\uD83C\uDF20\uD83C\uDF6D\u26BD\uD83C\uDFC0\uD83D\uDC79\uD83C\uDF81\uD83C\uDF89\uD83C\uDF82]+");
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("§[0-9A-FK-ORZ]", Pattern.CASE_INSENSITIVE);
-    private static final Pattern ROUND_LINE_PATTERN = Pattern.compile("(Round )([0-9]{1,3})");
     private static final Pattern SERVER_NUMBER_PATTERN = Pattern.compile(".*([mLM][0-9A-Z]+)");
-    private static final Pattern MAP_PATTERN = Pattern.compile("Map:.*(Dead End|Bad Blood|Alien Arcadium)");
 
     private static String title = null;
     private static List<String> lines = null;
@@ -68,8 +67,9 @@ public class Scoreboard {
         } catch (IndexOutOfBoundsException | NullPointerException ignored) {
             return 0;
         }
+        final Pattern ROUND_LINE_PATTERN = LanguageSupport.roundPattern(ZombiesUtilsConfig.getLanguage());
 
-        String string = ROUND_LINE_PATTERN.matcher(line).replaceAll("$2");
+        String string = ROUND_LINE_PATTERN.matcher(line).replaceAll("$1");
 
         byte round;
         try {
@@ -105,6 +105,7 @@ public class Scoreboard {
                 return Optional.empty();
             }
         }
+        final Pattern MAP_PATTERN = LanguageSupport.mapPattern(ZombiesUtilsConfig.getLanguage());
         String mapString = MAP_PATTERN.matcher(line).replaceAll("$1");
         switch (mapString) {
             case "Dead End":

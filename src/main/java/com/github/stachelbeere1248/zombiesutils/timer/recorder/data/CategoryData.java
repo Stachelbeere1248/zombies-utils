@@ -11,7 +11,7 @@ public class CategoryData implements ISplitsData {
     private final short[] bestSegments; //in ticks, max ~27 min
     private final int[] personalBests; //in ticks,
 
-    public CategoryData(@NotNull Map map) {
+    public CategoryData(@NotNull Map map) throws IllegalStateException {
         switch (map) {
             case ALIEN_ARCADIUM:
                 bestSegments = new short[105];
@@ -29,10 +29,10 @@ public class CategoryData implements ISplitsData {
         Arrays.fill(personalBests, 0);
     }
 
-    @Override
+    @Override @NotNull
     public String toJSON() {
         Gson gson = new Gson();
-        return gson.toJson(this);
+        return gson.toJson(this, CategoryData.class);
     }
 
     public short getBestSegment(int index) {

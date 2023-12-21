@@ -2,6 +2,7 @@ package com.github.stachelbeere1248.zombiesutils.mixin;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
+import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -76,7 +77,7 @@ public class MixinNetHandlerPlayClient {
         Timer.getInstance().ifPresent(timer -> {
             if (Scoreboard.isNotZombies()) return;
 
-            if (message.equals("§aYou Win!")) {
+            if (LanguageSupport.zombies_utils$isWin(message)) {
                 switch (timer.getGameMode().getMap()) {
                     case DEAD_END:
                     case BAD_BLOOD:
@@ -88,7 +89,7 @@ public class MixinNetHandlerPlayClient {
                         Timer.dropInstances();
                         break;
                 }
-            } else if (message.equals("§cGame Over!")) Timer.dropInstances();
+            } else if (LanguageSupport.zombies_utils$isLoss(message)) Timer.dropInstances();
         });
     }
 

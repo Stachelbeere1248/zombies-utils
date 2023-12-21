@@ -1,88 +1,102 @@
 package com.github.stachelbeere1248.zombiesutils.config;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
+import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class ZombiesUtilsConfig {
     public static Configuration config;
-    private static boolean slaToggle;
-    private static boolean slaShortener;
-    private static boolean shortSpawntime;
+    private static Property slaToggle;
+    private static Property slaShortener;
+    private static Property shortSpawntime;
 
-    private static String chatMacro;
-    private static String defaultCategory;
-    private static short waveOffset;
+    private static Property chatMacro;
+    private static Property defaultCategory;
+    private static Property waveOffset;
+    private static Property language;
 
     public static void load() {
         ZombiesUtils.getInstance().getLogger().debug("Loading config...");
         config.load();
         ZombiesUtils.getInstance().getLogger().debug("Config loaded.");
 
-        slaToggle = config.getBoolean(
-                "SLA Launcher",
+        language = config.get(
                 Configuration.CATEGORY_GENERAL,
+                "Language",
+                "EN",
+                "Your Hypixel language",
+                LanguageSupport.Languages.list()
+        );
+        slaToggle = config.get(
+                Configuration.CATEGORY_GENERAL,
+                "SLA Launcher",
                 false,
                 "Should SLA be started when a game starts?"
         );
-        slaShortener = config.getBoolean(
-                "shortened SLA",
+        slaShortener = config.get(
                 Configuration.CATEGORY_GENERAL,
+                "shortened SLA",
                 true,
                 "If on, inactive windows / rooms will not show"
         );
-        chatMacro = config.getString(
-                "Chat Macro",
+        chatMacro = config.get(
                 Configuration.CATEGORY_GENERAL,
+                "Chat Macro",
                 "T",
                 "The Text to be sent when pressing the chat-macro hotkey"
         );
-        defaultCategory = config.getString(
-                "Default Category",
+        defaultCategory = config.get(
                 Configuration.CATEGORY_GENERAL,
+                "Default Category",
                 "general",
                 "name of the category to be selected unless specified using /runCategory"
         );
-        waveOffset = (short) config.getInt(
+        waveOffset = config.get(
+                Configuration.CATEGORY_GENERAL,
                 "RL-mode offset",
-                Configuration.CATEGORY_GENERAL,
                 -28,
+                "ticks to be added to the wave spawn time",
                 -200,
-                200,
-                "ticks to be added to the wave spawn time"
+                200
         );
-        shortSpawntime = config.getBoolean(
-                "passed wave spawns",
+        shortSpawntime = config.get(
                 Configuration.CATEGORY_GENERAL,
+                "passed wave spawns",
                 true,
                 "Display spawn-time for passed waves"
         );
     }
 
     public static short getWaveOffset() {
-        return waveOffset;
+        return (short) waveOffset.getInt();
     }
 
     public static boolean isSlaToggled() {
-        return slaToggle;
+        return slaToggle.getBoolean();
     }
 
     public static boolean isSlaShortened() {
-        return slaShortener;
+        return slaShortener.getBoolean();
     }
 
     public static boolean isSpawntimeNotShortened() {
-        return shortSpawntime;
+        return shortSpawntime.getBoolean();
     }
 
     public static String getChatMacro() {
-        return chatMacro;
+        return chatMacro.getString();
     }
 
     public static String getDefaultCategory() {
-        return defaultCategory;
+        return defaultCategory.getString();
+    }
+
+    public static LanguageSupport.Languages getLanguage() {
+        return LanguageSupport.Languages.valueOf(language.getString());
     }
 
     @SubscribeEvent

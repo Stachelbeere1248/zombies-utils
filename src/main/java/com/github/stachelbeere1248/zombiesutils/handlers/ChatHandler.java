@@ -3,6 +3,7 @@ package com.github.stachelbeere1248.zombiesutils.handlers;
 import com.github.stachelbeere1248.zombiesutils.game.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
+import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
@@ -22,12 +23,10 @@ public class ChatHandler {
         GameMode gameMode = Timer.getInstance().get().getGameMode();
 
         if (message.contains(":")) return;
-
-        if (message.contains("Hard Difficulty") || message.contains("困难") || message.contains("困難")) {
+        if (LanguageSupport.containsHard(message)) {
             gameMode.changeDifficulty(Difficulty.HARD);
-        } else if (message.contains("RIP") || message.contains("安息")) {
+        } else if (LanguageSupport.containsRIP(message)) {
             gameMode.changeDifficulty(Difficulty.RIP);
         }
     }
-
 }

@@ -31,7 +31,7 @@ public class ZombiesUtils {
         logger = event.getModLog();
         ZombiesUtilsConfig.config = new Configuration(
                 event.getSuggestedConfigurationFile(),
-                "1.2.0"
+                "1.2.4"
         );
         ZombiesUtilsConfig.load();
     }

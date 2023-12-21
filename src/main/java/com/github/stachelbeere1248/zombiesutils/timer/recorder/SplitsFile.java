@@ -13,5 +13,4 @@ public abstract class SplitsFile extends File {
         super(category, child);
     }
 
-    abstract public ISplitsData getData();
 }
