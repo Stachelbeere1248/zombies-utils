@@ -29,7 +29,7 @@ public class ZombiesUtilsConfig {
                 "Language",
                 "EN",
                 "Your Hypixel language",
-                LanguageSupport.Languages.list()
+                LanguageSupport.getLanguages()
         );
         slaToggle = config.get(
                 Configuration.CATEGORY_GENERAL,
@@ -95,8 +95,8 @@ public class ZombiesUtilsConfig {
         return defaultCategory.getString();
     }
 
-    public static LanguageSupport.Languages getLanguage() {
-        return LanguageSupport.Languages.valueOf(language.getString());
+    public static String getLanguage() {
+        return language.getString();
     }
 
     @SubscribeEvent

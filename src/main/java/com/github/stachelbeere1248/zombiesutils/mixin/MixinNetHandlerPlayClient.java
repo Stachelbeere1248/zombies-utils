@@ -77,7 +77,7 @@ public class MixinNetHandlerPlayClient {
         Timer.getInstance().ifPresent(timer -> {
             if (Scoreboard.isNotZombies()) return;
 
-            if (LanguageSupport.zombies_utils$isWin(message)) {
+            if (LanguageSupport.isWin(message)) {
                 switch (timer.getGameMode().getMap()) {
                     case DEAD_END:
                     case BAD_BLOOD:
@@ -89,7 +89,7 @@ public class MixinNetHandlerPlayClient {
                         Timer.dropInstances();
                         break;
                 }
-            } else if (LanguageSupport.zombies_utils$isLoss(message)) Timer.dropInstances();
+            } else if (LanguageSupport.isLoss(message)) Timer.dropInstances();
         });
     }
 
