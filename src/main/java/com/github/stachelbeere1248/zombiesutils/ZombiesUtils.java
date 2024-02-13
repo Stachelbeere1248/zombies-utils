@@ -53,6 +53,6 @@ public class ZombiesUtils {
         return hotkeys;
     }
     public static boolean isHypixel() {
-        return Minecraft.getMinecraft().getCurrentServerData().serverIP.matches(".*(hypixel\\.net)(:25565)?");
+        return Minecraft.getMinecraft().getCurrentServerData().serverIP.matches("(.+\\.)?(hypixel\\.net)(:25565)?");
     }
 }
