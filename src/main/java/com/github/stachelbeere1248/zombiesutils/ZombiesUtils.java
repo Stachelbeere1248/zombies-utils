@@ -4,6 +4,8 @@ import com.github.stachelbeere1248.zombiesutils.commands.CommandRegistry;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.handlers.HandlerRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -49,5 +51,8 @@ public class ZombiesUtils {
 
     public Hotkeys getHotkeys() {
         return hotkeys;
+    }
+    public static boolean isHypixel() {
+        return Minecraft.getMinecraft().getCurrentServerData().serverIP.matches(".*(hypixel\\.net)(:25565)?");
     }
 }
