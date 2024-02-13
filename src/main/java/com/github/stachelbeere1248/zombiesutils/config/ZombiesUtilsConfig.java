@@ -109,7 +109,9 @@ public class ZombiesUtilsConfig {
     }
 
     public static String getDefaultCategory() {
-        return defaultCategory.getString();
+        String string = defaultCategory.getString();
+        if (!ZombiesUtils.isHypixel()) string += "-practise";
+        return string;
     }
 
     public static String getLanguage() {

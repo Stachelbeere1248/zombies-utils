@@ -76,7 +76,7 @@ public class Timer {
         }
 
         try {
-            if (!ZombiesUtils.isHypixel()) record(passedRound, roundTime, gameTime);
+            record(passedRound, roundTime, gameTime);
         } catch (Exception e) {
             ZombiesUtils.getInstance().getLogger().error(ExceptionUtils.getStackTrace(e));
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error saving splits"));
