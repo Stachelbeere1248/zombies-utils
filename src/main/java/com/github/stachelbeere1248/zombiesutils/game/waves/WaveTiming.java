@@ -29,7 +29,6 @@ public class WaveTiming {
             final int roundTime = timer.roundTime();
             final int[] auditory = ZombiesUtilsConfig.getAuditory();
             final Integer pre = roundTime-wave;
-
             if (Arrays.stream(auditory).anyMatch(pre::equals)) {
                 Minecraft.getMinecraft().thePlayer.playSound("note.pling",1,2);
             }
