@@ -17,7 +17,9 @@ public class Category {
     private final String name;
 
     public Category() {
-        final File category = new File(new File("zombies", "splits"), selectedCategory);
+        final File category;
+        if (ZombiesUtils.isHypixel()) category = new File(new File("zombies", "splits"), selectedCategory);
+        else category = new File(new File("zombies", "practise-splits"), selectedCategory);
         categoryFiles[0] = new CategoryFile(category, new GameMode(Map.DEAD_END));
         categoryFiles[1] = new CategoryFile(category, new GameMode(Map.DEAD_END, Difficulty.HARD));
         categoryFiles[2] = new CategoryFile(category, new GameMode(Map.DEAD_END, Difficulty.RIP));
@@ -31,13 +33,14 @@ public class Category {
     }
 
     public static void setSelectedCategory(String selectedCategory) {
-        if (!ZombiesUtils.isHypixel()) selectedCategory += "-practise";
         Category.selectedCategory = selectedCategory;
         Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
     }
 
     public static String[] getCategories() {
-        File dir = new File("zombies" + File.separator + "splits");
+        File dir;
+        if (ZombiesUtils.isHypixel()) dir = new File("zombies" + File.separator + "splits");
+        else dir = new File("zombies" + File.separator + "practise-splits");
         if (dir.isDirectory()) return dir.list();
         else return new String[0];
     }
