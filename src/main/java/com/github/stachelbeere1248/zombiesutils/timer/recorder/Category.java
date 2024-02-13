@@ -1,5 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
@@ -30,6 +31,7 @@ public class Category {
     }
 
     public static void setSelectedCategory(String selectedCategory) {
+        if (!ZombiesUtils.isHypixel()) selectedCategory += "-practise";
         Category.selectedCategory = selectedCategory;
         Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
     }
