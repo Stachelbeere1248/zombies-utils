@@ -13,11 +13,12 @@ public class ZombiesUtilsConfig {
     private static Property slaToggle;
     private static Property slaShortener;
     private static Property shortSpawntime;
-
+    private static Property sst;
     private static Property chatMacro;
     private static Property defaultCategory;
     private static Property waveOffset;
     private static Property language;
+    private static Property auditory;
 
     public static void load() {
         ZombiesUtils.getInstance().getLogger().debug("Loading config...");
@@ -69,6 +70,22 @@ public class ZombiesUtilsConfig {
                 true,
                 "Display spawn-time for passed waves"
         );
+        auditory = config.get(Configuration.CATEGORY_GENERAL,
+                "auditory sst",
+                new int[]{-40, -20, 0},
+                "Tick-offset to play sound",
+                -200,
+                200,
+                false,
+                5
+        );
+        sst = config.get(
+                Configuration.CATEGORY_GENERAL,
+                "SST HUD",
+                false,
+                "Enable if not using SST by Sosean"
+
+        );
     }
 
     public static short getWaveOffset() {
@@ -97,6 +114,13 @@ public class ZombiesUtilsConfig {
 
     public static String getLanguage() {
         return language.getString();
+    }
+
+    public static int[] getAuditory() {
+        return auditory.getIntList();
+    }
+    public static boolean getSST() {
+        return sst.getBoolean();
     }
 
     @SubscribeEvent

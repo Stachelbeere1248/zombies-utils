@@ -2,7 +2,7 @@ package com.github.stachelbeere1248.zombiesutils.utils;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;

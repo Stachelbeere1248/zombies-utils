@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder.data;
 
-import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.ISplitsData;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;

@@ -1,7 +1,7 @@
-package com.github.stachelbeere1248.zombiesutils.game.sla;
+package com.github.stachelbeere1248.zombiesutils.game;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Window;
 import net.minecraft.client.Minecraft;

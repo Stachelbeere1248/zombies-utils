@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.game.waves;
 
-import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

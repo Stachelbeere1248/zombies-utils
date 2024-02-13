@@ -1,7 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.game.sla.SLA;
+import com.github.stachelbeere1248.zombiesutils.game.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.waves.Waves;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
@@ -94,7 +94,7 @@ public class RenderGameOverlayHandler {
     }
 
     private void renderSpawnTime(byte @NotNull [] waveTimes, short roundTicks) {
-        if (Scoreboard.isNotZombies()) return;
+        if (Scoreboard.isNotZombies() || !ZombiesUtilsConfig.getSST()) return;
 
         final int length = waveTimes.length + 1;
         int heightIndex = 0;

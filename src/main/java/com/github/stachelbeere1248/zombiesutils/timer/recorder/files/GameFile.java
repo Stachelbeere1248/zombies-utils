@@ -2,7 +2,7 @@ package com.github.stachelbeere1248.zombiesutils.timer.recorder.files;
 
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileManager;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.SplitsFile;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.data.GameData;

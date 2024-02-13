@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
-import com.github.stachelbeere1248.zombiesutils.game.Difficulty;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;

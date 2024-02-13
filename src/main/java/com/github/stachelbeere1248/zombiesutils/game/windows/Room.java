@@ -150,6 +150,11 @@ public class Room {
         };
     }
 
+    @Contract(" -> new")
+    public static Room @NotNull [] getPrison() {
+        return new Room[0];
+    }
+
     public String getName() {
         return name;
     }

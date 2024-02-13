@@ -1,9 +1,9 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.game.Difficulty;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
-import com.github.stachelbeere1248.zombiesutils.game.Map;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
 import org.jetbrains.annotations.NotNull;

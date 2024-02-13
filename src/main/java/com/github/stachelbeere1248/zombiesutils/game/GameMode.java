@@ -1,5 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.game;
 
+import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import org.jetbrains.annotations.NotNull;
 
 public class GameMode {
