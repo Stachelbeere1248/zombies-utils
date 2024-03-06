@@ -16,7 +16,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class RenderGameOverlayHandler {
-    private static int rl = 0;
+    private int rl = 0;
+    private final boolean[] clicks = new boolean[20];
+    private int clickPointer = 0;
     private final FontRenderer fontRenderer;
 
     public RenderGameOverlayHandler() {
@@ -37,7 +39,7 @@ public class RenderGameOverlayHandler {
         return String.format("W%d %d:%02d.%d", wave, minutesPart, secondsPart, tenthSecondsPart);
     }
 
-    static void toggleRL() {
+    void toggleRL() {
         if (rl == 0) rl = ZombiesUtilsConfig.getWaveOffset();
         else rl = 0;
     }
@@ -45,6 +47,7 @@ public class RenderGameOverlayHandler {
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.@NotNull Post event) {
         if (event.type != RenderGameOverlayEvent.ElementType.TEXT) return;
+
         Timer.getInstance().ifPresent(timer -> {
             renderTime(timer.roundTime());
             renderSpawnTime(
@@ -55,10 +58,13 @@ public class RenderGameOverlayHandler {
                     timer.roundTime()
             );
         });
+
         SLA.getInstance().ifPresent(sla -> {
             sla.refreshActives();
             renderSla(sla.getRooms());
         });
+
+        if (ZombiesUtilsConfig.getCpsToggle()) renderCPS();
     }
 
     private void renderTime(long timerTicks) {
@@ -127,5 +133,35 @@ public class RenderGameOverlayHandler {
             if (clonedColor != 0x555555) color = 0xAAAAAA;
             heightIndex++;
         }
+    }
+    public void renderCPS() {
+        final String cps = String.format("%2.1f", getClicks());
+        final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        final int screenWidth = scaledResolution.getScaledWidth();
+        final int width = fontRenderer.getStringWidth(cps);
+
+        fontRenderer.drawStringWithShadow(
+                cps,
+                screenWidth - width,
+                0,
+                0xAAAAAA
+        );
+    }
+
+    public double getClicks() {
+        int i = 0;
+        for (boolean tick : clicks) {
+            if (tick) i++;
+        }
+        return i;
+    }
+
+    public void addClick() {
+        clicks[clickPointer] = true;
+    }
+
+    public void tick() {
+        clickPointer = (clickPointer + 1) % 20;
+        clicks[clickPointer] = false;
     }
 }

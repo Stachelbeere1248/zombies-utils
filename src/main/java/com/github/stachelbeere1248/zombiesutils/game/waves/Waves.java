@@ -1,6 +1,8 @@
 package com.github.stachelbeere1248.zombiesutils.game.waves;
 
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,16 +18,24 @@ public class Waves {
 
     @Contract(pure = true)
     public static byte[] get(@NotNull Map map, byte round) {
-        switch (map) {
-            case DEAD_END:
-                return deadEndWaveTimes[round - 1];
-            case BAD_BLOOD:
-                return badBloodWaveTimes[round - 1];
-            case ALIEN_ARCADIUM:
-                return alienArcadiumWaveTimes[round - 1];
-            default:
-                throw new IllegalStateException("Unexpected value: " + map);
+        byte[] ret = new byte[0];
+        try {
+            switch (map) {
+                case DEAD_END:
+                    ret = deadEndWaveTimes[round - 1];
+                case BAD_BLOOD:
+                    ret = badBloodWaveTimes[round - 1];
+                case ALIEN_ARCADIUM:
+                    ret = alienArcadiumWaveTimes[round - 1];
+                default:
+                    throw new IllegalStateException("Unexpected value: " + map);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(
+                    new ChatComponentText("Achievement get: Round " + round + map)
+            );
         }
+        return ret;
     }
 
     public static short getSum(@NotNull Map map, byte round) {

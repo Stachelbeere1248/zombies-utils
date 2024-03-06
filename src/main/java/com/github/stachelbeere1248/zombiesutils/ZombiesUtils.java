@@ -3,9 +3,8 @@ package com.github.stachelbeere1248.zombiesutils;
 import com.github.stachelbeere1248.zombiesutils.commands.CommandRegistry;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.handlers.HandlerRegistry;
+import com.github.stachelbeere1248.zombiesutils.handlers.Handlers;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -17,10 +16,12 @@ import org.jetbrains.annotations.NotNull;
 public class ZombiesUtils {
     private static ZombiesUtils instance;
     private final Hotkeys hotkeys;
+    private final Handlers handlers;
     private Logger logger;
 
     public ZombiesUtils() {
         hotkeys = new Hotkeys();
+        handlers = new Handlers();
         instance = this;
     }
 
@@ -40,7 +41,7 @@ public class ZombiesUtils {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        HandlerRegistry.registerAll();
+        handlers.registerAll();
         CommandRegistry.registerAll();
         hotkeys.registerAll();
     }
@@ -52,6 +53,11 @@ public class ZombiesUtils {
     public Hotkeys getHotkeys() {
         return hotkeys;
     }
+
+    public Handlers getHandlers() {
+        return handlers;
+    }
+
     public static boolean isHypixel() {
         return Minecraft.getMinecraft().getCurrentServerData().serverIP.matches("(.+\\.)?(hypixel\\.net)(:25565)?");
     }

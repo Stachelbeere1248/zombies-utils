@@ -19,6 +19,8 @@ public class ZombiesUtilsConfig {
     private static Property waveOffset;
     private static Property language;
     private static Property auditory;
+    private static Property copyDelta;
+    private static Property cpsCounter;
 
     public static void load() {
         ZombiesUtils.getInstance().getLogger().debug("Loading config...");
@@ -86,6 +88,18 @@ public class ZombiesUtilsConfig {
                 "Enable if not using SST by Sosean"
 
         );
+        copyDelta = config.get(
+                Configuration.CATEGORY_GENERAL,
+                "copy delta",
+                false,
+                "Also copy the delta-time when clicking the round-end message?"
+        );
+        cpsCounter = config.get(
+                Configuration.CATEGORY_GENERAL,
+                "cps",
+                false,
+                "whether to show cps"
+        );
     }
 
     public static short getWaveOffset() {
@@ -121,6 +135,12 @@ public class ZombiesUtilsConfig {
     }
     public static boolean getSST() {
         return sst.getBoolean();
+    }
+    public static boolean getCopyDelta() {
+        return copyDelta.getBoolean();
+    }
+    public static boolean getCpsToggle() {
+        return cpsCounter.getBoolean();
     }
 
     @SubscribeEvent
