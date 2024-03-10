@@ -16,12 +16,11 @@ import org.jetbrains.annotations.NotNull;
 public class ZombiesUtils {
     private static ZombiesUtils instance;
     private final Hotkeys hotkeys;
-    private final Handlers handlers;
+    private Handlers handlers;
     private Logger logger;
 
     public ZombiesUtils() {
         hotkeys = new Hotkeys();
-        handlers = new Handlers();
         instance = this;
     }
 
@@ -41,6 +40,7 @@ public class ZombiesUtils {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        handlers = new Handlers();
         handlers.registerAll();
         CommandRegistry.registerAll();
         hotkeys.registerAll();

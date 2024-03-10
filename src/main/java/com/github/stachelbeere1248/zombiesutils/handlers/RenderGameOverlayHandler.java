@@ -135,7 +135,7 @@ public class RenderGameOverlayHandler {
         }
     }
     public void renderCPS() {
-        final String cps = String.format("%2.1f", getClicks());
+        final String cps = String.format("%2d", getClicks());
         final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         final int screenWidth = scaledResolution.getScaledWidth();
         final int width = fontRenderer.getStringWidth(cps);
@@ -148,7 +148,7 @@ public class RenderGameOverlayHandler {
         );
     }
 
-    public double getClicks() {
+    public int getClicks() {
         int i = 0;
         for (boolean tick : clicks) {
             if (tick) i++;

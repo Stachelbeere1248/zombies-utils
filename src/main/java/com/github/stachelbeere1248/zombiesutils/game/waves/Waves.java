@@ -18,21 +18,22 @@ public class Waves {
 
     @Contract(pure = true)
     public static byte[] get(@NotNull Map map, byte round) {
-        byte[] ret = new byte[0];
+        byte[] ret = new byte[]{ 0 };
         try {
             switch (map) {
                 case DEAD_END:
                     ret = deadEndWaveTimes[round - 1];
+                    break;
                 case BAD_BLOOD:
                     ret = badBloodWaveTimes[round - 1];
+                    break;
                 case ALIEN_ARCADIUM:
                     ret = alienArcadiumWaveTimes[round - 1];
-                default:
-                    throw new IllegalStateException("Unexpected value: " + map);
+                    break;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(
-                    new ChatComponentText("Achievement get: Round " + round + map)
+                    new ChatComponentText("Achievement get: Round " + round + " " + map)
             );
         }
         return ret;
