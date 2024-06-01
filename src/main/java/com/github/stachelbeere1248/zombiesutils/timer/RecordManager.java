@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
 import net.minecraft.client.Minecraft;
@@ -14,8 +14,7 @@ public class RecordManager {
     private static final String bar = "§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
 
     public static void compareSegment(byte round, short roundTime, @NotNull Category category) throws IndexOutOfBoundsException {
-        @SuppressWarnings("OptionalGetWithoutIsPresent")
-        final CategoryFile categoryFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
+        @SuppressWarnings("OptionalGetWithoutIsPresent") final CategoryFile categoryFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
         final short bestSegment = categoryFile.getBestSegment(round);
 
         final String timeString = formattedTime(roundTime);
@@ -26,16 +25,18 @@ public class RecordManager {
         if (bestSegment == (short) 0) {
             categoryFile.setBestSegment(round, roundTime);
 
-            segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
+            if (ZombiesUtils.getInstance().getConfig().getAnnouncePB())
+                segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
             segmentMessage += "\n§cRound " + round + "§e took §a" + timeString + "§e!";
         } else {
             if (roundTime < bestSegment) {
-                segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
+                if (ZombiesUtils.getInstance().getConfig().getAnnouncePB())
+                    segmentMessage += "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***";
                 categoryFile.setBestSegment(round, roundTime);
             }
             deltaString = formattedDelta(roundTime, bestSegment);
             segmentMessage += "\n§cRound " + round + "§e took §a" + timeString + " §9" + deltaString;
-            if (ZombiesUtilsConfig.getCopyDelta()) deltaString = " (" + deltaString + ")";
+            if (ZombiesUtils.getInstance().getConfig().getCopyDelta()) deltaString = " (" + deltaString + ")";
         }
 
 
@@ -49,8 +50,7 @@ public class RecordManager {
     }
 
     public static void compareBest(byte round, int gameTime, @NotNull Category category) throws IndexOutOfBoundsException {
-        @SuppressWarnings("OptionalGetWithoutIsPresent")
-        final CategoryFile categoryFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
+        @SuppressWarnings("OptionalGetWithoutIsPresent") final CategoryFile categoryFile = category.getByGameMode(Timer.getInstance().get().getGameMode());
         final int personalBest = categoryFile.getPersonalBest(round);
         String deltaString = "";
 
@@ -60,16 +60,18 @@ public class RecordManager {
         if (personalBest == 0) {
             categoryFile.setPersonalBest(round, gameTime);
 
-            bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
+            if (ZombiesUtils.getInstance().getConfig().getAnnouncePB())
+                bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
             bestMessage += "\n§cRound " + round + "§e finished at §a" + timeString + "§e!";
         } else {
             if (gameTime < personalBest) {
-                bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
+                if (ZombiesUtils.getInstance().getConfig().getAnnouncePB())
+                    bestMessage += "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***";
                 categoryFile.setPersonalBest(round, gameTime);
             }
             deltaString = formattedDelta(gameTime, personalBest);
             bestMessage += "\n§cRound " + round + "§e finished at §a" + timeString + " §9" + deltaString;
-            if (ZombiesUtilsConfig.getCopyDelta()) deltaString = " (" + deltaString + ")";
+            if (ZombiesUtils.getInstance().getConfig().getCopyDelta()) deltaString = " (" + deltaString + ")";
         }
         bestMessage += "\n" + bar;
         final ChatComponentText message = new ChatComponentText(bestMessage);

@@ -18,7 +18,7 @@ public class Waves {
 
     @Contract(pure = true)
     public static byte[] get(@NotNull Map map, byte round) {
-        byte[] ret = new byte[]{ 0 };
+        byte[] ret = new byte[]{0};
         try {
             switch (map) {
                 case DEAD_END:

@@ -1,10 +1,9 @@
 package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
-import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.game.SLA;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.handlers.Round1Correction;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.GameFile;
@@ -44,7 +43,7 @@ public class Timer {
 
         this.gameMode = new GameMode(map);
         this.round = round;
-        if (ZombiesUtilsConfig.isSlaToggled()) SLA.instance = new SLA(map);
+        if (ZombiesUtils.getInstance().getConfig().isSlaToggled()) SLA.instance = new SLA(map);
 
         MinecraftForge.EVENT_BUS.register(new Round1Correction());
     }

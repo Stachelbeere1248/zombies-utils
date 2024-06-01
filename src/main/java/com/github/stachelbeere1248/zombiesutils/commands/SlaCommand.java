@@ -1,8 +1,8 @@
 package com.github.stachelbeere1248.zombiesutils.commands;
 
+import com.github.stachelbeere1248.zombiesutils.game.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.game.sla.QuickSLA;
-import com.github.stachelbeere1248.zombiesutils.game.SLA;
 import net.minecraft.command.*;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;

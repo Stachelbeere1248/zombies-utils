@@ -2,7 +2,6 @@ package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.waves.WaveTiming;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,7 +19,7 @@ public class KeyInputHandler {
                 Hotkeys hotkeys = ZombiesUtils.getInstance().getHotkeys();
                 if (Keyboard.getEventKey() == hotkeys.getChatMacro().getKeyCode()) {
                     Minecraft.getMinecraft().thePlayer.sendChatMessage(
-                            ZombiesUtilsConfig.getChatMacro()
+                            ZombiesUtils.getInstance().getConfig().getChatMacro()
                     );
                 } else if (Keyboard.getEventKey() == hotkeys.getRlSpawn().getKeyCode()) {
                     ZombiesUtils.getInstance().getHandlers().getRenderer().toggleRL();

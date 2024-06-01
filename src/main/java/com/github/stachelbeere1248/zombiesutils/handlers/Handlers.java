@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Handlers {
@@ -11,7 +11,7 @@ public class Handlers {
     }
 
     public void registerAll() {
-        MinecraftForge.EVENT_BUS.register(new ZombiesUtilsConfig());
+        MinecraftForge.EVENT_BUS.register(ZombiesUtils.getInstance().getConfig());
         MinecraftForge.EVENT_BUS.register(renderer);
         MinecraftForge.EVENT_BUS.register(new TickHandler());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());

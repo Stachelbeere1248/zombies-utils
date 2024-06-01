@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.game.windows;
 
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import net.minecraft.util.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -179,7 +179,8 @@ public class Room {
         StringBuilder slaString = new StringBuilder(String.format("§6%s§r§d %x§e:", this.getName(), activeWindowCount));
         for (Window window : this.windows) {
             if (window.isActive()) slaString.append("§2 ").append(alias).append(window.getID());
-            else if (!ZombiesUtilsConfig.isSlaShortened()) slaString.append("§c ").append(alias).append(window.getID());
+            else if (!ZombiesUtils.getInstance().getConfig().isSlaShortened())
+                slaString.append("§c ").append(alias).append(window.getID());
         }
         return slaString.toString();
     }

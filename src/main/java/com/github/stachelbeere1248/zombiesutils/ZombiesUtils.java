@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class ZombiesUtils {
     private static ZombiesUtils instance;
     private final Hotkeys hotkeys;
+    private ZombiesUtilsConfig config;
     private Handlers handlers;
     private Logger logger;
 
@@ -28,14 +29,18 @@ public class ZombiesUtils {
         return instance;
     }
 
+    public static boolean isHypixel() {
+        String ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
+        return (ip.equals("localhost") || ip.matches("(.+\\.)?(hypixel\\.net)(:25565)?"));
+    }
+
     @Mod.EventHandler
     public void preInit(@NotNull FMLPreInitializationEvent event) {
         logger = event.getModLog();
-        ZombiesUtilsConfig.config = new Configuration(
+        this.config = new ZombiesUtilsConfig(new Configuration(
                 event.getSuggestedConfigurationFile(),
-                "1.2.4"
+                "1.2.4")
         );
-        ZombiesUtilsConfig.load();
     }
 
     @Mod.EventHandler
@@ -58,7 +63,7 @@ public class ZombiesUtils {
         return handlers;
     }
 
-    public static boolean isHypixel() {
-        return Minecraft.getMinecraft().getCurrentServerData().serverIP.matches("(.+\\.)?(hypixel\\.net)(:25565)?");
+    public ZombiesUtilsConfig getConfig() {
+        return config;
     }
 }

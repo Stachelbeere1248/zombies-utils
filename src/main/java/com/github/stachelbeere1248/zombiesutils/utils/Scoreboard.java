@@ -1,7 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.utils;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -67,7 +66,7 @@ public class Scoreboard {
         } catch (IndexOutOfBoundsException | NullPointerException ignored) {
             return 0;
         }
-        final Pattern ROUND_LINE_PATTERN = LanguageSupport.roundPattern(ZombiesUtilsConfig.getLanguage());
+        final Pattern ROUND_LINE_PATTERN = LanguageSupport.roundPattern(ZombiesUtils.getInstance().getConfig().getLanguage());
 
         String string = ROUND_LINE_PATTERN.matcher(line).replaceAll("$1");
 
@@ -105,7 +104,7 @@ public class Scoreboard {
                 return Optional.empty();
             }
         }
-        final Pattern MAP_PATTERN = LanguageSupport.mapPattern(ZombiesUtilsConfig.getLanguage());
+        final Pattern MAP_PATTERN = LanguageSupport.mapPattern(ZombiesUtils.getInstance().getConfig().getLanguage());
         String mapString = MAP_PATTERN.matcher(line).replaceAll("$1");
         switch (mapString) {
             case "Dead End":

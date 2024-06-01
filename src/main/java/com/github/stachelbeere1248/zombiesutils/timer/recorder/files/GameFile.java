@@ -24,6 +24,7 @@ public class GameFile extends SplitsFile {
         this.data = new GameData(map);
         FileManager.createDataFile(this, this.data);
     }
+
     @NotNull
     private static String formattedTime() {
         final LocalDateTime dateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);

@@ -1,7 +1,8 @@
 package com.github.stachelbeere1248.zombiesutils.game.waves;
 
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
+import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,31 +13,36 @@ public class WaveTiming {
 
     public static byte[] getWaves(@NotNull Timer timer) {
         return Waves.get(
-            timer.getGameMode().getMap(),
-            timer.getRound()
+                timer.getGameMode().getMap(),
+                timer.getRound()
         );
     }
+
     public static byte getLastWave(@NotNull Timer timer) {
         return Waves.getLastWave(
-            timer.getGameMode().getMap(),
-            timer.getRound()
+                timer.getGameMode().getMap(),
+                timer.getRound()
         );
     }
 
     public static void onTick() {
+        if (Scoreboard.isNotZombies()) return;
         Timer.getInstance().ifPresent(timer -> {
-            int wave = (getLastWave(timer)*20)+rl;
+            byte[] waves = getWaves(timer);
             final int roundTime = timer.roundTime();
-            final int[] auditory = ZombiesUtilsConfig.getAuditory();
-            final Integer pre = roundTime-wave;
-            if (Arrays.stream(auditory).anyMatch(pre::equals)) {
-                Minecraft.getMinecraft().thePlayer.playSound("note.pling",1,2);
+            final int[] auditory = ZombiesUtils.getInstance().getConfig().getAuditory();
+            for (int wave : waves) {
+                wave = wave * 20 + rl;
+                final Integer pre = roundTime - wave;
+                if (Arrays.stream(auditory).anyMatch(pre::equals)) {
+                    Minecraft.getMinecraft().thePlayer.playSound("note.pling", 1, 2);
+                }
             }
         });
     }
 
     public static void toggleRL() {
-        if (rl == 0) rl = ZombiesUtilsConfig.getWaveOffset();
+        if (rl == 0) rl = ZombiesUtils.getInstance().getConfig().getOffset();
         else rl = 0;
     }
 }

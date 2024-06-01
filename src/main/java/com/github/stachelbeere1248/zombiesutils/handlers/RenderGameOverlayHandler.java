@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.waves.Waves;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
@@ -16,10 +16,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class RenderGameOverlayHandler {
-    private int rl = 0;
-    private final boolean[] clicks = new boolean[20];
-    private int clickPointer = 0;
+    private final byte[] clicks = new byte[20];
     private final FontRenderer fontRenderer;
+    private int rl = 0;
+    private int clickPointer = 0;
 
     public RenderGameOverlayHandler() {
         this.fontRenderer = Objects.requireNonNull(Minecraft.getMinecraft().fontRendererObj, "FontRenderer must not be null!");
@@ -40,7 +40,7 @@ public class RenderGameOverlayHandler {
     }
 
     void toggleRL() {
-        if (rl == 0) rl = ZombiesUtilsConfig.getWaveOffset();
+        if (rl == 0) rl = ZombiesUtils.getInstance().getConfig().getOffset();
         else rl = 0;
     }
 
@@ -64,7 +64,7 @@ public class RenderGameOverlayHandler {
             renderSla(sla.getRooms());
         });
 
-        if (ZombiesUtilsConfig.getCpsToggle()) renderCPS();
+        if (ZombiesUtils.getInstance().getConfig().getCpsToggle()) renderCPS();
     }
 
     private void renderTime(long timerTicks) {
@@ -88,7 +88,7 @@ public class RenderGameOverlayHandler {
     private void renderSla(Room @NotNull [] rooms) {
         int y = 0;
         for (Room room : rooms) {
-            if (ZombiesUtilsConfig.isSlaShortened() && room.getActiveWindowCount() == 0) continue;
+            if (ZombiesUtils.getInstance().getConfig().isSlaShortened() && room.getActiveWindowCount() == 0) continue;
             fontRenderer.drawStringWithShadow(
                     room.getSlaString(),
                     1,
@@ -100,7 +100,7 @@ public class RenderGameOverlayHandler {
     }
 
     private void renderSpawnTime(byte @NotNull [] waveTimes, short roundTicks) {
-        if (Scoreboard.isNotZombies() || !ZombiesUtilsConfig.getSST()) return;
+        if (Scoreboard.isNotZombies() || !ZombiesUtils.getInstance().getConfig().getSST()) return;
 
         final int length = waveTimes.length + 1;
         int heightIndex = 0;
@@ -111,7 +111,7 @@ public class RenderGameOverlayHandler {
             final short waveTicks = (short) ((waveTime * 20) + rl);
 
             if (roundTicks > waveTicks) {
-                if (ZombiesUtilsConfig.isSpawntimeNotShortened()) clonedColor = 0x555555;
+                if (!ZombiesUtils.getInstance().getConfig().isSpawntimeShortened()) clonedColor = 0x555555;
                 else {
                     heightIndex++;
                     continue;
@@ -134,6 +134,7 @@ public class RenderGameOverlayHandler {
             heightIndex++;
         }
     }
+
     public void renderCPS() {
         final String cps = String.format("%2d", getClicks());
         final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
@@ -150,18 +151,18 @@ public class RenderGameOverlayHandler {
 
     public int getClicks() {
         int i = 0;
-        for (boolean tick : clicks) {
-            if (tick) i++;
+        for (byte tick : clicks) {
+            i += tick;
         }
         return i;
     }
 
     public void addClick() {
-        clicks[clickPointer] = true;
+        clicks[clickPointer]++;
     }
 
     public void tick() {
         clickPointer = (clickPointer + 1) % 20;
-        clicks[clickPointer] = false;
+        clicks[clickPointer] = 0;
     }
 }

@@ -25,7 +25,8 @@ public class GameData implements ISplitsData {
         Arrays.fill(segments, (short) 0);
     }
 
-    @Override @NotNull
+    @Override
+    @NotNull
     public String toJSON() {
         Gson gson = new Gson();
         return gson.toJson(this.segments);

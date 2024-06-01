@@ -1,9 +1,8 @@
 package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
-import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class Category {
-    private static String selectedCategory = ZombiesUtilsConfig.getDefaultCategory();
+    private static String selectedCategory = ZombiesUtils.getInstance().getConfig().getDefaultCategory();
     public final CategoryFile[] categoryFiles = new CategoryFile[7];
     private final String name;
 

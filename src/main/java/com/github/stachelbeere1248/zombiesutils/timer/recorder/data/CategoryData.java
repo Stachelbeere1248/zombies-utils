@@ -29,7 +29,8 @@ public class CategoryData implements ISplitsData {
         Arrays.fill(personalBests, 0);
     }
 
-    @Override @NotNull
+    @Override
+    @NotNull
     public String toJSON() {
         Gson gson = new Gson();
         return gson.toJson(this, CategoryData.class);
