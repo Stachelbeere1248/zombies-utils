@@ -6,6 +6,7 @@ import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -27,6 +28,10 @@ public class SLA {
                 break;
             case ALIEN_ARCADIUM:
                 this.rooms = Room.getAA();
+                break;
+            case PRISON:
+                this.rooms = new Room[0];
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("$cThis map has no SLA database yet. Contribute by dming Stachelbeere1248 coordinates for windows on Discord."));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + map);
@@ -68,7 +73,7 @@ public class SLA {
         ZombiesUtils.getInstance().getLogger().info("Window \"0\" is now at %s %s %s" + (double) win0[0] / 2 + (double) win0[1] / 2 + (double) win0[2] / 2);
     }
 
-    public void refreshActives() {
+    private void refreshActives() {
         final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         final double[] playerCoords = {
                 (player.posX - offset[0]),
@@ -95,7 +100,8 @@ public class SLA {
     }
 
     public Room[] getRooms() {
-        return rooms;
+        this.refreshActives();
+        return this.rooms;
     }
 
     public void resetOffset() {

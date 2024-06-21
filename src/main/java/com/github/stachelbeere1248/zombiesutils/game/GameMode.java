@@ -30,6 +30,7 @@ public class GameMode {
         switch (map) {
             case DEAD_END:
             case BAD_BLOOD:
+            case PRISON:
                 this.difficulty = difficulty;
                 break;
             case ALIEN_ARCADIUM:

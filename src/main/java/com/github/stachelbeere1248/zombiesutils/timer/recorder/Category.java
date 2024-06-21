@@ -12,7 +12,7 @@ import java.io.File;
 
 public class Category {
     private static String selectedCategory = ZombiesUtils.getInstance().getConfig().getDefaultCategory();
-    public final CategoryFile[] categoryFiles = new CategoryFile[7];
+    public final CategoryFile[] categoryFiles = new CategoryFile[10];
     private final String name;
 
     public Category() {
@@ -28,6 +28,11 @@ public class Category {
         categoryFiles[5] = new CategoryFile(category, new GameMode(Map.BAD_BLOOD, Difficulty.RIP));
 
         categoryFiles[6] = new CategoryFile(category, new GameMode(Map.ALIEN_ARCADIUM));
+
+        categoryFiles[7] = new CategoryFile(category, new GameMode(Map.PRISON));
+        categoryFiles[8] = new CategoryFile(category, new GameMode(Map.PRISON, Difficulty.HARD));
+        categoryFiles[9] = new CategoryFile(category, new GameMode(Map.PRISON, Difficulty.RIP));
+
         this.name = Category.selectedCategory;
     }
 
@@ -45,15 +50,21 @@ public class Category {
     }
 
     public CategoryFile getByGameMode(@NotNull GameMode gameMode) {
-        if (gameMode.is(Map.DEAD_END, Difficulty.NORMAL)) return categoryFiles[0];
-        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.NORMAL)) return categoryFiles[3];
-        else if (gameMode.is(Map.ALIEN_ARCADIUM, Difficulty.NORMAL)) return categoryFiles[6];
 
+
+        if (gameMode.is(Map.DEAD_END, Difficulty.NORMAL)) return categoryFiles[0];
         else if (gameMode.is(Map.DEAD_END, Difficulty.HARD)) return categoryFiles[1];
         else if (gameMode.is(Map.DEAD_END, Difficulty.RIP)) return categoryFiles[2];
 
+        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.NORMAL)) return categoryFiles[3];
         else if (gameMode.is(Map.BAD_BLOOD, Difficulty.HARD)) return categoryFiles[4];
         else if (gameMode.is(Map.BAD_BLOOD, Difficulty.RIP)) return categoryFiles[5];
+
+        else if (gameMode.is(Map.ALIEN_ARCADIUM, Difficulty.NORMAL)) return categoryFiles[6];
+
+        else if (gameMode.is(Map.PRISON, Difficulty.NORMAL)) return categoryFiles[7];
+        else if (gameMode.is(Map.PRISON, Difficulty.HARD)) return categoryFiles[8];
+        else if (gameMode.is(Map.PRISON, Difficulty.RIP)) return categoryFiles[9];
         else throw new IllegalStateException("Unexpected value: " + gameMode);
     }
 

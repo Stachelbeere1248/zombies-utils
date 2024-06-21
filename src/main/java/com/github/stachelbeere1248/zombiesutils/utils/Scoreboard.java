@@ -96,7 +96,7 @@ public class Scoreboard {
     public static Optional<Map> getMap() {
         String line;
         try {
-            line = lines.get(12);
+            line = lines.get(12); //TODO: This was changed!
         } catch (Exception couldBePregame) {
             try {
                 line = lines.get(2);
@@ -113,6 +113,8 @@ public class Scoreboard {
                 return Optional.of(Map.BAD_BLOOD);
             case "Alien Arcadium":
                 return Optional.of(Map.ALIEN_ARCADIUM);
+            case "Prison":
+                return Optional.of(Map.PRISON);
             default:
                 return Optional.empty();
         }

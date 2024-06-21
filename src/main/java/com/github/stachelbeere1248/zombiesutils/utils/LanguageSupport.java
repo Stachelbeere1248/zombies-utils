@@ -68,11 +68,11 @@ public class LanguageSupport {
     public static @NotNull Pattern mapPattern(@NotNull String language) {
         switch (language) {
             case "EN":
-                return Pattern.compile("Map:.*(Dead End|Bad Blood|Alien Arcadium)");
+                return Pattern.compile("Map:.*(Dead End|Bad Blood|Alien Arcadium|Prison)");
             case "FR":
-                return Pattern.compile("Carte:.*(Dead End|Bad Blood|Alien Arcadium)");
+                return Pattern.compile("Carte:.*(Dead End|Bad Blood|Alien Arcadium|Prison)");
             case "DE":
-                return Pattern.compile("Karte:.*(Dead End|Bad Blood|Alien Arcadium)");
+                return Pattern.compile("Karte:.*(Dead End|Bad Blood|Alien Arcadium|Prison)");
             default:
                 throw new IllegalStateException("Unexpected value: " + language);
         }

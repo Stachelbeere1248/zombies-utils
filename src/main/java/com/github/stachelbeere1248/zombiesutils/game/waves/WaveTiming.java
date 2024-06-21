@@ -27,6 +27,7 @@ public class WaveTiming {
 
     public static void onTick() {
         if (Scoreboard.isNotZombies()) return;
+        //TODO: Assert correct server number!
         Timer.getInstance().ifPresent(timer -> {
             byte[] waves = getWaves(timer);
             final int roundTime = timer.roundTime();

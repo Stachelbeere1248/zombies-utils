@@ -15,6 +15,7 @@ public class KeyInputHandler {
     public void onKeyInput(InputEvent event) {
         if (Minecraft.getMinecraft().currentScreen != null) return;
         if (event instanceof InputEvent.KeyInputEvent) {
+            if (Keyboard.getEventKey() == '\0') return;
             if (Keyboard.getEventKeyState()) {
                 Hotkeys hotkeys = ZombiesUtils.getInstance().getHotkeys();
                 if (Keyboard.getEventKey() == hotkeys.getChatMacro().getKeyCode()) {

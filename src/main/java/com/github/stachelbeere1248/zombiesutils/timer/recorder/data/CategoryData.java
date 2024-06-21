@@ -19,6 +19,7 @@ public class CategoryData implements ISplitsData {
                 break;
             case DEAD_END:
             case BAD_BLOOD:
+            case PRISON:
                 bestSegments = new short[30];
                 personalBests = new int[30];
                 break;

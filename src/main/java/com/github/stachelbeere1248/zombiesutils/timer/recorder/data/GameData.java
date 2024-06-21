@@ -17,6 +17,7 @@ public class GameData implements ISplitsData {
                 break;
             case DEAD_END:
             case BAD_BLOOD:
+            case PRISON:
                 segments = new short[30];
                 break;
             default:

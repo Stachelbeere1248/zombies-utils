@@ -7,6 +7,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -41,6 +42,7 @@ public class CategoryCommand implements ICommand {
             if (cat.contains(File.separator))
                 throw new WrongUsageException("Your name must not contain '" + File.separator + "' as this is the systems separator character for folder" + File.separator + "sub-folder");
             Category.setSelectedCategory(cat);
+            sender.addChatMessage(new ChatComponentText("§eSet category to §c" + cat));
             Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
         }
     }

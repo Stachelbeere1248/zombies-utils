@@ -27,6 +27,7 @@ public class ZombiesUtilsConfig {
     private Property copyDelta;
     private Property cpsCounter;
     private Property announcePB;
+    private Property playerVis;
 
     public ZombiesUtilsConfig(Configuration config) {
         this.config = config;
@@ -120,6 +121,12 @@ public class ZombiesUtilsConfig {
                 "T",
                 "The Text to be sent when pressing the chat-macro hotkey"
         );
+        playerVis = config.get(
+                Configuration.CATEGORY_GENERAL,
+                "playervis",
+                false,
+                "If players should always be visible"
+        );
         cpsCounter = config.get(
                 Configuration.CATEGORY_GENERAL,
                 "cps",
@@ -154,11 +161,12 @@ public class ZombiesUtilsConfig {
 
     List<IConfigElement> getRootElements() {
         return Arrays.asList(
-                new DummyConfigElement.DummyCategoryElement("Timer", "", getSpawntimeElements()),
-                new DummyConfigElement.DummyCategoryElement("SST", "", getSpawntimeElements()),
-                new DummyConfigElement.DummyCategoryElement("SLA", "", getSpawntimeElements()),
                 new CustomConfigElement("Language", language),
+                new DummyConfigElement.DummyCategoryElement("Timer", "", getTimerElements()),
+                new DummyConfigElement.DummyCategoryElement("SST", "", getSpawntimeElements()),
+                new DummyConfigElement.DummyCategoryElement("SLA", "", getSlaElements()),
                 new CustomConfigElement("Macro message", chatMacro),
+                new CustomConfigElement("Player visibility", playerVis),
                 new CustomConfigElement("CPS counter", cpsCounter)
 
         );
@@ -210,6 +218,9 @@ public class ZombiesUtilsConfig {
     }
     public boolean getAnnouncePB() {
         return announcePB.getBoolean();
+    }
+    public boolean getPlayerVis() {
+        return playerVis.getBoolean();
     }
 
     @SubscribeEvent

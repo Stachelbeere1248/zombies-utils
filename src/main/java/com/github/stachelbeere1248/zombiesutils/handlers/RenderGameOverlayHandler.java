@@ -59,10 +59,7 @@ public class RenderGameOverlayHandler {
             );
         });
 
-        SLA.getInstance().ifPresent(sla -> {
-            sla.refreshActives();
-            renderSla(sla.getRooms());
-        });
+        SLA.getInstance().ifPresent(sla -> renderSla(sla.getRooms()));
 
         if (ZombiesUtils.getInstance().getConfig().getCpsToggle()) renderCPS();
     }

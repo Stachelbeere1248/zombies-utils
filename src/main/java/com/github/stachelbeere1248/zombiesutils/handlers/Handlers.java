@@ -16,6 +16,7 @@ public class Handlers {
         MinecraftForge.EVENT_BUS.register(new TickHandler());
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
         MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
+        MinecraftForge.EVENT_BUS.register(new RenderPlayerHandler());
     }
 
     public RenderGameOverlayHandler getRenderer() {

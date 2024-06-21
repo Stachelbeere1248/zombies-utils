@@ -81,6 +81,7 @@ public class MixinNetHandlerPlayClient {
                 switch (timer.getGameMode().getMap()) {
                     case DEAD_END:
                     case BAD_BLOOD:
+                    case PRISON:
                         timer.split((byte) 30);
                         Timer.dropInstances();
                         break;
