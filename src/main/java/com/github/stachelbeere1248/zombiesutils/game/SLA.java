@@ -31,7 +31,7 @@ public class SLA {
                 break;
             case PRISON:
                 this.rooms = new Room[0];
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("$cThis map has no SLA database yet. Contribute by dming Stachelbeere1248 coordinates for windows on Discord."));
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cThis map has no SLA database yet. Contribute by dming Stachelbeere1248 coordinates for windows on Discord."));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + map);
@@ -91,7 +91,7 @@ public class SLA {
                 }
 
                 // (2x)²+(2y)²+(2z)² = 4(x²+y²+z²) = 4d²
-                if (distanceDoubledThenSquared < 10000) {
+                if (distanceDoubledThenSquared < 6400) {
                     window.setActive(true);
                     room.increaseActiveWindowCount();
                 } else window.setActive(false);

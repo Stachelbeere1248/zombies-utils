@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class RenderPlayerHandler {
     @SubscribeEvent
     public void onRender(RenderPlayerEvent.@NotNull Pre event) {
+        if (event.entityPlayer.isPlayerSleeping() || event.entityPlayer.isUser()) return;
         if (inRange(event.entityPlayer.getPositionVector())) {
             event.setCanceled(!ZombiesUtils.getInstance().getConfig().getPlayerVis());
         }
