@@ -1,6 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.mixin;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
@@ -41,30 +42,41 @@ public class MixinNetHandlerPlayClient {
         )) return;
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
         try {
-            if (Timer.getInstance().isPresent()) {
-                final Timer running = Timer.getInstance().get();
-                final byte round = Scoreboard.getRound();
 
-                if (round == 0) {
-                    if (Scoreboard.getLineCount() < 13) Timer.instance = new Timer(
-                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
-                            Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
-                            round
-                    );
-                } else if (!running.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) {
-                    Timer.instance = new Timer(
-                            Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
-                            Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
-                            round
-                    );
-                } else running.split(round);
-            } else Timer.instance = new Timer(
-                    Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
-                    Scoreboard.getMap().orElseThrow(Timer.TimerException.MapException::new),
-                    Scoreboard.getRound()
-            );
+            if (!Timer.getInstance().isPresent()) {
+                Timer.instance = new Timer(
+                        Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                        Map.getMap().orElseThrow(Timer.TimerException.MapException::new),
+                        Scoreboard.getRound()
+                );
+                return;
+            }
+
+            final Timer running = Timer.getInstance().get();
+            final byte round = Scoreboard.getRound();
+
+            if (round == 0) {
+                if (Scoreboard.getLineCount() < 13) Timer.instance = new Timer(
+                        Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                        Map.getMap().orElseThrow(Timer.TimerException.MapException::new),
+                        round
+                );
+                return;
+            }
+
+            if (!running.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) {
+                Timer.instance = new Timer(
+                        Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
+                        Map.getMap().orElseThrow(Timer.TimerException.MapException::new),
+                        round
+                );
+                return;
+            }
+
+            running.split(round);
+
         } catch (Timer.TimerException e) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cFailed to start or split timer.\nData parsing error. Blame scoreboard."));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cFailed to start or split timer. Please send a log to Stachelbeere1248."));
             ZombiesUtils.getInstance().getLogger().warn(e);
         }
     }
@@ -81,7 +93,7 @@ public class MixinNetHandlerPlayClient {
                 switch (timer.getGameMode().getMap()) {
                     case DEAD_END:
                     case BAD_BLOOD:
-                    case PRISON:
+                    case PRISON: //TODO: Escape
                         timer.split((byte) 30);
                         Timer.dropInstances();
                         break;

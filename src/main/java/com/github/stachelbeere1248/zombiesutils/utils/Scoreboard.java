@@ -1,7 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.utils;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
@@ -42,17 +41,16 @@ public class Scoreboard {
         // get
         title = STRIP_COLOR_PATTERN.matcher(sidebar.getDisplayName().trim()).replaceAll("");
         Collection<Score> scoreCollection = scoreboard.getSortedScores(sidebar);
-        List<Score> filteredScores = scoreCollection.stream().filter(input -> input.getPlayerName() != null && !input.getPlayerName().startsWith("#")).collect(Collectors.toList());
+        List<Score> filteredScores = scoreCollection
+                .stream()
+                .filter(input -> input.getPlayerName() != null && !input.getPlayerName().startsWith("#"))
+                .collect(Collectors.toList());
 
-        List<Score> scores;
-        if (filteredScores.size() > 15)
-            scores = Lists.newArrayList(Iterables.skip(filteredScores, scoreCollection.size() - 15));
-        else scores = filteredScores;
+        List<Score> scores = (filteredScores.size() > 15) ? Lists.newArrayList(Iterables.skip(filteredScores, scoreCollection.size() - 15)) : filteredScores;
         scores = Lists.reverse(scores);
 
-        lines = new ArrayList<>();
-        for (Score score : scores
-        ) {
+        lines = new ArrayList<>(scores.size());
+        for (Score score : scores) {
             ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
             String scoreboardLine = ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()).trim();
             lines.add(STRIP_COLOR_PATTERN.matcher(SIDEBAR_EMOJI_PATTERN.matcher(scoreboardLine).replaceAll("")).replaceAll(""));
@@ -93,10 +91,11 @@ public class Scoreboard {
         return Optional.ofNullable(string);
     }
 
+    /* Outdated
     public static Optional<Map> getMap() {
         String line;
         try {
-            line = lines.get(12); //TODO: This was changed!
+            line = lines.get(12); //This was changed!
         } catch (Exception couldBePregame) {
             try {
                 line = lines.get(2);
@@ -118,8 +117,8 @@ public class Scoreboard {
             default:
                 return Optional.empty();
         }
-
     }
+    */
 
     public static int getLineCount() {
         return lines.size();

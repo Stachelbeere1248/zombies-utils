@@ -20,13 +20,13 @@ public class QuickZombiesCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/qz <de|bb|aa>";
+        return "/qz <de|bb|aa|p>";
     }
 
     @Override
     public void processCommand(ICommandSender sender, String @NotNull [] args) throws CommandException {
         if (args.length == 0) throw new WrongUsageException(
-                "[Missing option] options: de, bb, aa");
+                "[Missing option] options: de, bb, aa, p");
         else switch (args[0]) {
             case "de":
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/play arcade_zombies_dead_end");
@@ -37,9 +37,12 @@ public class QuickZombiesCommand extends CommandBase {
             case "aa":
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/play arcade_zombies_alien_arcadium");
                 break;
+            case "p":
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/play arcade_zombies_prison");
+                break;
             default:
                 throw new WrongUsageException(
-                        "[Invalid option] options: de, bb, aa", args[0]);
+                        "[Invalid option] options: de, bb, aa, p", args[0]);
 
         }
     }
