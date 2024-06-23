@@ -28,7 +28,7 @@ public class FileManager {
         return gson.fromJson(dataJson, CategoryData.class);
     }
 
-    public static void createDataFile(@NotNull SplitsFile file, ISplitsData data) {
+    public static void createDataFile(@NotNull File file, ISplitsData data) {
         try {
             //noinspection ResultOfMethodCallIgnored
             file.getParentFile().mkdirs();
@@ -40,7 +40,7 @@ public class FileManager {
         }
     }
 
-    public static void writeDataToFile(SplitsFile file, @NotNull ISplitsData data) throws IOException {
+    public static void writeDataToFile(File file, @NotNull ISplitsData data) throws IOException {
         FileUtils.writeStringToFile(file, data.toJSON(), StandardCharsets.UTF_16);
     }
 

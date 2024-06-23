@@ -1,6 +1,6 @@
 package com.github.stachelbeere1248.zombiesutils.commands;
 
-import com.github.stachelbeere1248.zombiesutils.timer.Timer;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -42,8 +42,8 @@ public class CategoryCommand implements ICommand {
             if (cat.contains(File.separator))
                 throw new WrongUsageException("Your name must not contain '" + File.separator + "' as this is the systems separator character for folder" + File.separator + "sub-folder");
             Category.setSelectedCategory(cat);
+            ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(game -> game.setCategory(new Category()));
             sender.addChatMessage(new ChatComponentText("§eSet category to §c" + cat));
-            Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
         }
     }
 

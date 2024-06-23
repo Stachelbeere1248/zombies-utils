@@ -17,8 +17,10 @@ public class GameData implements ISplitsData {
                 break;
             case DEAD_END:
             case BAD_BLOOD:
-            case PRISON:
                 segments = new short[30];
+                break;
+            case PRISON:
+                segments = new short[31];
                 break;
             default:
                 throw new IllegalStateException("Not a map: " + map);
@@ -33,7 +35,7 @@ public class GameData implements ISplitsData {
         return gson.toJson(this.segments);
     }
 
-    public void setSegment(int index, short ticks) {
-        segments[index] = ticks;
+    public void setSegment(int index, int ticks) {
+        segments[index] = (short) ticks;
     }
 }

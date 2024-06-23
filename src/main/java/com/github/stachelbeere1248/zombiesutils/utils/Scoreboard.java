@@ -57,7 +57,7 @@ public class Scoreboard {
         }
     }
 
-    public static byte getRound() {
+    public static int getRound() {
         String line;
         try {
             line = lines.get(2);
@@ -89,39 +89,6 @@ public class Scoreboard {
         String string = SERVER_NUMBER_PATTERN.matcher(line).replaceAll("$1");
         ZombiesUtils.getInstance().getLogger().debug("Servernumber: " + string);
         return Optional.ofNullable(string);
-    }
-
-    /* Outdated
-    public static Optional<Map> getMap() {
-        String line;
-        try {
-            line = lines.get(12); //This was changed!
-        } catch (Exception couldBePregame) {
-            try {
-                line = lines.get(2);
-            } catch (IndexOutOfBoundsException | NullPointerException ignored) {
-                return Optional.empty();
-            }
-        }
-        final Pattern MAP_PATTERN = LanguageSupport.mapPattern(ZombiesUtils.getInstance().getConfig().getLanguage());
-        String mapString = MAP_PATTERN.matcher(line).replaceAll("$1");
-        switch (mapString) {
-            case "Dead End":
-                return Optional.of(Map.DEAD_END);
-            case "Bad Blood":
-                return Optional.of(Map.BAD_BLOOD);
-            case "Alien Arcadium":
-                return Optional.of(Map.ALIEN_ARCADIUM);
-            case "Prison":
-                return Optional.of(Map.PRISON);
-            default:
-                return Optional.empty();
-        }
-    }
-    */
-
-    public static int getLineCount() {
-        return lines.size();
     }
 
     public static boolean isNotZombies() {

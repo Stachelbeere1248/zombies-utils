@@ -1,8 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
-import com.github.stachelbeere1248.zombiesutils.game.GameMode;
+import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
-import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,16 +16,17 @@ public class ChatHandler {
     }
 
     @SubscribeEvent
-    public void difficultyChange(@NotNull ClientChatReceivedEvent event) {
-        if (!Timer.getInstance().isPresent()) return;
-        String message = STRIP_COLOR_PATTERN.matcher(event.message.getUnformattedText()).replaceAll("").trim();
-        GameMode gameMode = Timer.getInstance().get().getGameMode();
-
-        if (message.contains(":")) return;
-        if (LanguageSupport.containsHard(message)) {
-            gameMode.changeDifficulty(Difficulty.HARD);
-        } else if (LanguageSupport.containsRIP(message)) {
-            gameMode.changeDifficulty(Difficulty.RIP);
-        }
+    public void difficultyChange(@NotNull final ClientChatReceivedEvent event) {
+        ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(
+                game -> {
+                    String message = STRIP_COLOR_PATTERN.matcher(event.message.getUnformattedText()).replaceAll("").trim();
+                    if (message.contains(":")) return;
+                    if (LanguageSupport.containsHard(message)) {
+                        game.getGameMode().changeDifficulty(Difficulty.HARD);
+                    } else if (LanguageSupport.containsRIP(message)) {
+                        game.getGameMode().changeDifficulty(Difficulty.RIP);
+                    }
+                }
+        );
     }
 }

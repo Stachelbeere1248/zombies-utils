@@ -1,9 +1,9 @@
 package com.github.stachelbeere1248.zombiesutils.mixin;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
-import com.github.stachelbeere1248.zombiesutils.timer.Timer;
+import com.github.stachelbeere1248.zombiesutils.utils.InvalidMapException;
 import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
+import com.github.stachelbeere1248.zombiesutils.utils.ScoardboardException;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -36,74 +36,32 @@ public class MixinNetHandlerPlayClient {
     private void zombies_utils$handleSound(@NotNull S29PacketSoundEffect packet) {
         if (Scoreboard.isNotZombies()) return;
         final String soundEffect = packet.getSoundName();
+
         if (!(
                 soundEffect.equals("mob.wither.spawn")
-                        || (soundEffect.equals("mob.guardian.curse") && !zombies_utils$alienUfoOpened)
+                || (soundEffect.equals("mob.guardian.curse")
+                && !zombies_utils$alienUfoOpened)
         )) return;
+
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
+
         try {
-
-            if (!Timer.getInstance().isPresent()) {
-                Timer.instance = new Timer(
-                        Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
-                        Map.getMap().orElseThrow(Timer.TimerException.MapException::new),
-                        Scoreboard.getRound()
-                );
-                return;
-            }
-
-            final Timer running = Timer.getInstance().get();
-            final byte round = Scoreboard.getRound();
-
-            if (round == 0) {
-                if (Scoreboard.getLineCount() < 13) Timer.instance = new Timer(
-                        Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
-                        Map.getMap().orElseThrow(Timer.TimerException.MapException::new),
-                        round
-                );
-                return;
-            }
-
-            if (!running.equalsServerOrNull(Scoreboard.getServerNumber().orElse(null))) {
-                Timer.instance = new Timer(
-                        Scoreboard.getServerNumber().orElseThrow(Timer.TimerException.ServerNumberException::new),
-                        Map.getMap().orElseThrow(Timer.TimerException.MapException::new),
-                        round
-                );
-                return;
-            }
-
-            running.split(round);
-
-        } catch (Timer.TimerException e) {
+            ZombiesUtils.getInstance().getGameManager().splitOrNew(Scoreboard.getRound());
+        } catch (ScoardboardException | InvalidMapException e) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cFailed to start or split timer. Please send a log to Stachelbeere1248."));
-            ZombiesUtils.getInstance().getLogger().warn(e);
+            ZombiesUtils.getInstance().getLogger().error(e.getStackTrace());
         }
     }
 
     @Unique
     private void zombies_utils$handleTitle(@NotNull S45PacketTitle packet) {
         if (packet.getType() != S45PacketTitle.Type.TITLE) return;
+        if (Scoreboard.isNotZombies()) return;
         final String message = packet.getMessage().getUnformattedText().trim();
-
-        Timer.getInstance().ifPresent(timer -> {
-            if (Scoreboard.isNotZombies()) return;
-
-            if (LanguageSupport.isWin(message)) {
-                switch (timer.getGameMode().getMap()) {
-                    case DEAD_END:
-                    case BAD_BLOOD:
-                    case PRISON: //TODO: Escape
-                        timer.split((byte) 30);
-                        Timer.dropInstances();
-                        break;
-                    case ALIEN_ARCADIUM:
-                        timer.split((byte) 105);
-                        Timer.dropInstances();
-                        break;
-                }
-            } else if (LanguageSupport.isLoss(message)) Timer.dropInstances();
-        });
+        String serverNumber;
+            serverNumber = Scoreboard.getServerNumber().orElse("");
+        if (LanguageSupport.isWin(message)) ZombiesUtils.getInstance().getGameManager().endGame(serverNumber,true);
+        if (LanguageSupport.isLoss(message)) ZombiesUtils.getInstance().getGameManager().endGame(serverNumber, false);
     }
 
 }

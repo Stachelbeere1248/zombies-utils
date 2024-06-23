@@ -4,7 +4,6 @@ import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.waves.Waves;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
-import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -48,23 +47,25 @@ public class RenderGameOverlayHandler {
     public void onRenderGameOverlay(RenderGameOverlayEvent.@NotNull Post event) {
         if (event.type != RenderGameOverlayEvent.ElementType.TEXT) return;
 
-        Timer.getInstance().ifPresent(timer -> {
-            renderTime(timer.roundTime());
-            renderSpawnTime(
-                    Waves.get(
-                            timer.getGameMode().getMap(),
-                            timer.getRound()
-                    ),
-                    timer.roundTime()
-            );
-        });
+
+        ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(
+                game -> {
+                    renderTime(game.getTimer().getRoundTime());
+                    renderSpawnTime(
+                            Waves.get(
+                                    game.getGameMode().getMap(),
+                                    game.getRound()
+                            ),
+                            game.getTimer().getRoundTime()
+                    );
+                }
+        );
 
         SLA.getInstance().ifPresent(sla -> renderSla(sla.getRooms()));
-
         if (ZombiesUtils.getInstance().getConfig().getCpsToggle()) renderCPS();
     }
 
-    private void renderTime(long timerTicks) {
+    private void renderTime(short timerTicks) {
         if (Scoreboard.isNotZombies()) return;
 
         final String time = getTimeString(timerTicks);

@@ -4,8 +4,8 @@ Hello, I am currently working on this mod. More features will come. For now it h
 - An accurate timer + Automatic splitting
 - Tracking of splits & segment PBs (with custom categories)
 - SLA hud
-- 1 chat macro
-- Spawntime (no aa colors yet, but Rocket Launcher mode)
+- A chat macro
+- Spawn-times HUD (no aa colors yet, but Rocket Launcher mode)
 #### Disclaimers
 - If you are using a Hypixel language other than the selected one the mod may not work entirely. Check config.
 ## For Users
@@ -25,7 +25,7 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
   - Enabled: Whether the SLA HUD should automatically be shown when starting a game.
   - Truncate: Whether inactive windows and rooms should be shown.
 - Macro Message: The Message to be sent when pressing the Chat Macro Key. Do NOT use "§" as symbol.
-- Player Visibility: Whether to show players even if they are within a 4 block radius or not.
+- Player Visibility: Whether to enable PlayerVisibility by default.
 - CPS Counter: A simple CPS Counter which shows the amount of clicks within the last 20 gameticks.
 ### Commands
 - /category \<name> - Switches to the category called name. All recorded times are bound to its category. Tabcomplete suggests already existing categories, but you can insert a new (clean) one as well.
@@ -46,7 +46,8 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
     - /zombiesutils timer split \<round> - Splits as if \<round> was passed, not recommended to use as it might create impossible PBs.
 - /qz \<de|bb|aa|p> - sends you to a new game of Dead End, Bad Blood, Alien Arcadium or Prison
 ### Hotkeys
-- Chat Macro: sends the message specified in the config
-- RL Mode: Toggle usage of the rocket launcher mode spawn-time offset.
+- Chat Macro: Sends the message specified in the config.
+- RL Mode: Toggles usage of the rocket launcher mode spawn-time offset.
+- Player Visibility: Toggles whether to show players that are within a 4 block radius.
 ### Extra
 - Managing split-categories: In your game directory is a folder called "zombies" which contains the folder "splits". You can simply rename or delete the folders inside "splits". You can also edit your splits, the data is stored as a list of ticks inside the MAP_DIFFICULTY.times files, a simple text editor (such as Notepad on Windows) should be able to edit it (UTF-16 encoded text). The other subfolder, runs, logs all the splits for every run you play.

@@ -119,7 +119,7 @@ public class SlaCommand extends CommandBase {
         List<String> options = new ArrayList<>();
         if (args.length == 1) options.addAll(Arrays.asList("off", "offset", "rotate", "mirror", "map", "quick"));
         else {
-            if (args.length > 1) switch (args[0]) {
+            if (args.length >= 2) switch (args[0]) {
                 case "offset":
                     if (args.length < 5) options.add("0");
                     break;

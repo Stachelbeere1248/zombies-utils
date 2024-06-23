@@ -18,13 +18,13 @@ public class KeyInputHandler {
             if (Keyboard.getEventKey() == '\0') return;
             if (Keyboard.getEventKeyState()) {
                 Hotkeys hotkeys = ZombiesUtils.getInstance().getHotkeys();
-                if (Keyboard.getEventKey() == hotkeys.getChatMacro().getKeyCode()) {
-                    Minecraft.getMinecraft().thePlayer.sendChatMessage(
-                            ZombiesUtils.getInstance().getConfig().getChatMacro()
-                    );
-                } else if (Keyboard.getEventKey() == hotkeys.getRlSpawn().getKeyCode()) {
+                if (Keyboard.getEventKey() == hotkeys.getChatMacro().getKeyCode()) Minecraft.getMinecraft().thePlayer
+                        .sendChatMessage(ZombiesUtils.getInstance().getConfig().getChatMacro());
+                else if (Keyboard.getEventKey() == hotkeys.getRlSpawn().getKeyCode()) {
                     ZombiesUtils.getInstance().getHandlers().getRenderer().toggleRL();
                     WaveTiming.toggleRL();
+                } else if (Keyboard.getEventKey() == hotkeys.getPlayerVisiblity().getKeyCode()) {
+                    ZombiesUtils.getInstance().getHandlers().getRenderPlayerHandler().togglePlayerVisibility();
                 }
             }
         } else if (event instanceof InputEvent.MouseInputEvent) {

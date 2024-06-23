@@ -15,7 +15,7 @@ public class Waves {
             prisonWaveTimes = {{10, 20}, {10, 20, 30}, {10, 17, 24, 31}, {10, 17, 24, 31}, {10, 20, 30}, {10, 20, 30}, {10, 20, 30}, {10, 25, 40}, {10, 25, 35}, {10, 25, 45}, {10, 25, 40}, {10, 25, 37}, {10, 22, 34}, {10, 25, 37}, {10, 25, 40}, {10, 22, 37}, {10, 22, 42}, {10, 25, 45}, {10, 25, 45}, {10, 25, 40}, {10, 20, 35, 55, 75}, {10, 25, 40}, {10, 30, 50}, {10, 30, 50}, {10, 25, 45}, {10, 30, 50}, {10, 25, 45}, {10, 30, 50}, {10, 30, 55}, {10}};
 
     @Contract(pure = true)
-    public static byte[] get(@NotNull Map map, byte round) {
+    public static byte[] get(@NotNull Map map, int round) {
         byte[] ret = new byte[]{0};
         try {
             switch (map) {
@@ -40,7 +40,7 @@ public class Waves {
         return ret;
     }
 
-    public static byte getLastWave(@NotNull Map map, byte round) {
+    public static byte getLastWave(@NotNull Map map, int round) {
         byte[] aByte = get(map, round);
         return aByte[aByte.length - 1];
     }

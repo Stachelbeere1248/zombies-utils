@@ -4,6 +4,7 @@ import com.github.stachelbeere1248.zombiesutils.commands.CommandRegistry;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
 import com.github.stachelbeere1248.zombiesutils.handlers.Handlers;
+import com.github.stachelbeere1248.zombiesutils.timer.GameManager;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -16,12 +17,15 @@ import org.jetbrains.annotations.NotNull;
 public class ZombiesUtils {
     private static ZombiesUtils instance;
     private final Hotkeys hotkeys;
+    private final GameManager gameManager;
     private ZombiesUtilsConfig config;
     private Handlers handlers;
     private Logger logger;
 
     public ZombiesUtils() {
         hotkeys = new Hotkeys();
+        gameManager = new GameManager();
+
         instance = this;
     }
 
@@ -65,5 +69,9 @@ public class ZombiesUtils {
 
     public ZombiesUtilsConfig getConfig() {
         return config;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 }

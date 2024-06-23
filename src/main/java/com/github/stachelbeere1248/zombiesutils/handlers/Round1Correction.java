@@ -10,11 +10,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class Round1Correction {
 
+    private final Timer TIMER;
+
+    public Round1Correction(Timer timer) {
+        TIMER = timer;
+    }
+
     @SubscribeEvent
     public void onWaveSpawn(@NotNull EntityJoinWorldEvent event) {
         final Entity entity = event.entity;
         if (entity instanceof EntityZombie) {
-            Timer.getInstance().ifPresent(Timer::correctRn);
+            TIMER.correctStartTick();
             MinecraftForge.EVENT_BUS.unregister(this);
         }
     }

@@ -3,7 +3,6 @@ package com.github.stachelbeere1248.zombiesutils.timer.recorder.files;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileManager;
-import com.github.stachelbeere1248.zombiesutils.timer.recorder.SplitsFile;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.data.CategoryData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public class CategoryFile extends SplitsFile {
+public class CategoryFile extends File {
     private final CategoryData data;
     private final GameMode gameMode;
 
@@ -28,7 +27,7 @@ public class CategoryFile extends SplitsFile {
         return this.data.getBestSegment(round - 1);
     }
 
-    public void setBestSegment(int round, short ticks) {
+    public void setBestSegment(int round, int ticks) {
         this.data.setBestSegment(round - 1, ticks);
 
         try {

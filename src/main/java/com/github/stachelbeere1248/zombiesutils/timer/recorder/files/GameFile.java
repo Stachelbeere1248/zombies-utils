@@ -4,7 +4,6 @@ package com.github.stachelbeere1248.zombiesutils.timer.recorder.files;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.FileManager;
-import com.github.stachelbeere1248.zombiesutils.timer.recorder.SplitsFile;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.data.GameData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-public class GameFile extends SplitsFile {
+public class GameFile extends File {
     private final GameData data;
 
     public GameFile(String serverNumber, Map map) {
@@ -31,7 +30,7 @@ public class GameFile extends SplitsFile {
         return dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace(':', '-').replaceFirst("T", "_");
     }
 
-    public void setSegment(int round, short ticks) {
+    public void setSegment(int round, int ticks) {
         this.data.setSegment(round - 1, ticks);
 
         try {

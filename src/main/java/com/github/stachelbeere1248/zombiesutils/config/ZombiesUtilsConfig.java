@@ -147,15 +147,15 @@ public class ZombiesUtilsConfig {
     private List<IConfigElement> getSlaElements() {
         return Arrays.asList(
                 new CustomConfigElement("Enabled", slaToggle),
-                new CustomConfigElement("Truncate", slaShortener),
-                new CustomConfigElement("PB announcements", announcePB)
+                new CustomConfigElement("Truncate", slaShortener)
         );
     }
 
     private List<IConfigElement> getTimerElements() {
         return Arrays.asList(
                 new CustomConfigElement("Default category", defaultCategory),
-                new CustomConfigElement("Paste delta", copyDelta)
+                new CustomConfigElement("Paste delta", copyDelta),
+                new CustomConfigElement("PB announcements", announcePB)
         );
     }
 

@@ -19,9 +19,12 @@ public class CategoryData implements ISplitsData {
                 break;
             case DEAD_END:
             case BAD_BLOOD:
-            case PRISON:
                 bestSegments = new short[30];
                 personalBests = new int[30];
+                break;
+            case PRISON:
+                bestSegments = new short[31];
+                personalBests = new int[31];
                 break;
             default:
                 throw new IllegalStateException("Not a map: " + map);
@@ -45,8 +48,8 @@ public class CategoryData implements ISplitsData {
         return personalBests[index];
     }
 
-    public void setBestSegment(int index, short ticks) {
-        bestSegments[index] = ticks;
+    public void setBestSegment(int index, int ticks) {
+        bestSegments[index] = (short) ticks;
     }
 
     public void setPersonalBest(int index, int ticks) {

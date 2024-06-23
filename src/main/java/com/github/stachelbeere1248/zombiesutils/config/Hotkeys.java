@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 public class Hotkeys {
     private final KeyBinding chatMacro;
     private final KeyBinding rlSpawn;
+    private final KeyBinding playerVisiblity;
 
     public Hotkeys() {
         chatMacro = new KeyBinding(
@@ -16,7 +17,12 @@ public class Hotkeys {
         );
         rlSpawn = new KeyBinding(
                 "Rocket Launcher Mode",
-                Keyboard.KEY_NONE,
+                Keyboard.KEY_UP,
+                "Zombies Utils"
+        );
+        playerVisiblity = new KeyBinding(
+                "Player Visibility",
+                Keyboard.KEY_RIGHT,
                 "Zombies Utils"
         );
 
@@ -25,6 +31,7 @@ public class Hotkeys {
     public void registerAll() {
         ClientRegistry.registerKeyBinding(this.chatMacro);
         ClientRegistry.registerKeyBinding(this.rlSpawn);
+        ClientRegistry.registerKeyBinding(this.playerVisiblity);
     }
 
     public KeyBinding getChatMacro() {
@@ -33,5 +40,8 @@ public class Hotkeys {
 
     public KeyBinding getRlSpawn() {
         return rlSpawn;
+    }
+    public KeyBinding getPlayerVisiblity() {
+        return playerVisiblity;
     }
 }

@@ -4,7 +4,6 @@ import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
-import com.github.stachelbeere1248.zombiesutils.timer.Timer;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +37,7 @@ public class Category {
 
     public static void setSelectedCategory(String selectedCategory) {
         Category.selectedCategory = selectedCategory;
-        Timer.getInstance().ifPresent(timer -> timer.setCategory(new Category()));
+        ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(game -> game.setCategory(new Category()));
     }
 
     public static String[] getCategories() {

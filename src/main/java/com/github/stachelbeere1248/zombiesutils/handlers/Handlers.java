@@ -5,9 +5,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class Handlers {
     private final RenderGameOverlayHandler renderer;
+    private final RenderPlayerHandler renderPlayerHandler;
 
     public Handlers() {
         renderer = new RenderGameOverlayHandler();
+        renderPlayerHandler = new RenderPlayerHandler();
     }
 
     public void registerAll() {
@@ -21,5 +23,9 @@ public class Handlers {
 
     public RenderGameOverlayHandler getRenderer() {
         return renderer;
+    }
+
+    public RenderPlayerHandler getRenderPlayerHandler() {
+        return renderPlayerHandler;
     }
 }
