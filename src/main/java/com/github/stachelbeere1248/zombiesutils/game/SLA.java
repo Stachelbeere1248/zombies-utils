@@ -30,8 +30,7 @@ public class SLA {
                 this.rooms = Room.getAA();
                 break;
             case PRISON:
-                this.rooms = new Room[0];
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cThis map has no SLA database yet. Contribute by dming Stachelbeere1248 coordinates for windows on Discord."));
+                this.rooms = Room.getP();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + map);

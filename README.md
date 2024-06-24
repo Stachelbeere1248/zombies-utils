@@ -1,5 +1,5 @@
 # zombies-utils
-##### Download latest release: [v1.3.3](https://github.com/Stachelbeere1248/zombies-utils/releases/tag/v1.3.3).
+##### Download latest release: [v1.3.4](https://github.com/Stachelbeere1248/zombies-utils/releases/tag/v1.3.4).
 Hello, I am currently working on this mod. More features will come. For now it has:
 - An accurate timer + Automatic splitting
 - Tracking of splits & segment PBs (with custom categories)
@@ -34,7 +34,7 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
   - note: you do NOT need to make your own categories to seperate difficulties or map
 - /sla \<off|map|quick|rotate|mirror|offset>
   - /sla off - Disables the SLA hud
-  - /sla map \<de|bb|aa> - forcefully set the map
+  - /sla map \<de|bb|aa|p> - forcefully set the map
   - /sla quick \<mogi_a|ghxula|ghxula-garden>
   - /sla rotate - rotates all windows around the axis (0,y,0)
   - /sla mirror \<x|z> - mirrors all windows along the plane (0,y,z) or (x,y,0)

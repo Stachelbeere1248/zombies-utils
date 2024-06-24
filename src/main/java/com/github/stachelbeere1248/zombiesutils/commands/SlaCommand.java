@@ -21,7 +21,7 @@ public class SlaCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/sla off\n/sla offset [x] [x] [x]\n/sla rotate\n/sla mirror\n/sla map <de|bb|aa>\n/sla quick";
+        return "/sla off\n/sla offset [x] [x] [x]\n/sla rotate\n/sla mirror\n/sla map <de|bb|aa|p>\n/sla quick";
     }
 
     @Override
@@ -83,9 +83,12 @@ public class SlaCommand extends CommandBase {
                     case "aa":
                         SLA.instance = new SLA(Map.ALIEN_ARCADIUM);
                         break;
+                    case "p":
+                        SLA.instance = new SLA(Map.PRISON);
+                        break;
                     default:
                         throw new WrongUsageException(
-                                "[Invalid option] options: de, bb, aa", args[1]);
+                                "[Invalid option] options: de, bb, aa, p", args[1]);
                 }
                 break;
             case "quick":
@@ -124,7 +127,7 @@ public class SlaCommand extends CommandBase {
                     if (args.length < 5) options.add("0");
                     break;
                 case "map":
-                    options.addAll(Arrays.asList("de", "bb", "aa"));
+                    options.addAll(Arrays.asList("de", "bb", "aa", "p"));
                     break;
                 case "mirror":
                     options.addAll(Arrays.asList("x", "z"));
