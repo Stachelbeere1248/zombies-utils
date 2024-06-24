@@ -5,7 +5,8 @@ Hello, I am currently working on this mod. More features will come. For now it h
 - Tracking of splits & segment PBs (with custom categories)
 - SLA hud
 - A chat macro
-- Spawn-times HUD (no aa colors yet, but Rocket Launcher mode)
+- Spawn-times HUD: visual, auditory, RL-mode
+- Player Visibility
 #### Disclaimers
 - If you are using a Hypixel language other than the selected one the mod may not work entirely. Check config.
 ## For Users
