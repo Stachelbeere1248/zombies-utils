@@ -23,7 +23,7 @@ public class CategoryData implements ISplitsData {
                 personalBests = new int[30];
                 break;
             case PRISON:
-                bestSegments = new short[31];
+                bestSegments = new short[30];
                 personalBests = new int[31];
                 break;
             default:

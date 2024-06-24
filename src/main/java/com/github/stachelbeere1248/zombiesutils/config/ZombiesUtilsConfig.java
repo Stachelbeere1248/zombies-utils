@@ -24,7 +24,6 @@ public class ZombiesUtilsConfig {
     private Property defaultCategory;
     private Property language;
     private Property auditory;
-    private Property copyDelta;
     private Property cpsCounter;
     private Property announcePB;
     private Property playerVis;
@@ -93,12 +92,6 @@ public class ZombiesUtilsConfig {
                 "general",
                 "name of the category to be selected unless specified using /runCategory"
         );
-        copyDelta = config.get(
-                "timer",
-                "copy delta",
-                false,
-                "Also copy the delta-time when clicking the round-end message?"
-        );
         announcePB = config.get(
                 "timer",
                 "announce",
@@ -154,7 +147,6 @@ public class ZombiesUtilsConfig {
     private List<IConfigElement> getTimerElements() {
         return Arrays.asList(
                 new CustomConfigElement("Default category", defaultCategory),
-                new CustomConfigElement("Paste delta", copyDelta),
                 new CustomConfigElement("PB announcements", announcePB)
         );
     }
@@ -207,10 +199,6 @@ public class ZombiesUtilsConfig {
 
     public boolean getSST() {
         return sstHud.getBoolean();
-    }
-
-    public boolean getCopyDelta() {
-        return copyDelta.getBoolean();
     }
 
     public boolean getCpsToggle() {

@@ -80,8 +80,7 @@ public class SLA {
                 player.posY - offset[1],
                 player.posZ - offset[2]
         };
-        for (Room room : rooms
-        ) {
+        for (Room room : rooms) {
             room.resetActiveWindowCount();
             for (Window window : room.getWindows()
             ) {
@@ -91,7 +90,8 @@ public class SLA {
                 }
 
                 // (2x)²+(2y)²+(2z)² = 4(x²+y²+z²) = 4d²
-                if (distanceDoubledThenSquared < 6400) {
+                final int slaRange = 40;
+                if (distanceDoubledThenSquared < 4 * slaRange * slaRange) {
                     window.setActive(true);
                     room.increaseActiveWindowCount();
                 } else window.setActive(false);

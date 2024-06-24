@@ -17,7 +17,7 @@ public class KeyInputHandler {
         if (event instanceof InputEvent.KeyInputEvent) {
             if (Keyboard.getEventKey() == '\0') return;
             if (Keyboard.getEventKeyState()) {
-                Hotkeys hotkeys = ZombiesUtils.getInstance().getHotkeys();
+                final Hotkeys hotkeys = ZombiesUtils.getInstance().getHotkeys();
                 if (Keyboard.getEventKey() == hotkeys.getChatMacro().getKeyCode()) Minecraft.getMinecraft().thePlayer
                         .sendChatMessage(ZombiesUtils.getInstance().getConfig().getChatMacro());
                 else if (Keyboard.getEventKey() == hotkeys.getRlSpawn().getKeyCode()) {

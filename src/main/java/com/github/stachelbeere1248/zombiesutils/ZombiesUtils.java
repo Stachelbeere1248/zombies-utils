@@ -40,10 +40,9 @@ public class ZombiesUtils {
 
     @Mod.EventHandler
     public void preInit(@NotNull FMLPreInitializationEvent event) {
-        logger = event.getModLog();
+        this.logger = event.getModLog();
         this.config = new ZombiesUtilsConfig(new Configuration(
-                event.getSuggestedConfigurationFile(),
-                "1.2.4")
+                event.getSuggestedConfigurationFile())
         );
     }
 

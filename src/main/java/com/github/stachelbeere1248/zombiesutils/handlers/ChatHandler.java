@@ -25,6 +25,8 @@ public class ChatHandler {
                         game.getGameMode().changeDifficulty(Difficulty.HARD);
                     } else if (LanguageSupport.containsRIP(message)) {
                         game.getGameMode().changeDifficulty(Difficulty.RIP);
+                    } else if (LanguageSupport.isHelicopterIncoming(message)) {
+                        game.helicopter();
                     }
                 }
         );

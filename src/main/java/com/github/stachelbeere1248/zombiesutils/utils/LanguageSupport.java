@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class LanguageSupport {
-    private static final String[] LANGUAGEs = {
+    private static final String[] LANGUAGES = {
             "EN",
             "FR",
             "DE"
@@ -51,6 +51,12 @@ public class LanguageSupport {
         };
         return Arrays.stream(words).anyMatch(input::contains);
     }
+    public static boolean isHelicopterIncoming(@NotNull String input) {
+        final String[] words = {
+                "The Helicopter is on its way! Hold out for 120 more seconds!"
+        };
+        return Arrays.stream(words).anyMatch(input::contains);
+    }
 
     public static @NotNull Pattern roundPattern(@NotNull String language) {
         switch (language) {
@@ -64,21 +70,7 @@ public class LanguageSupport {
                 throw new IllegalStateException("Unexpected value: " + language);
         }
     }
-
-    public static @NotNull Pattern mapPattern(@NotNull String language) {
-        switch (language) {
-            case "EN":
-                return Pattern.compile("Map:.*(Dead End|Bad Blood|Alien Arcadium|Prison)");
-            case "FR":
-                return Pattern.compile("Carte:.*(Dead End|Bad Blood|Alien Arcadium|Prison)");
-            case "DE":
-                return Pattern.compile("Karte:.*(Dead End|Bad Blood|Alien Arcadium|Prison)");
-            default:
-                throw new IllegalStateException("Unexpected value: " + language);
-        }
-    }
-
     public static String[] getLanguages() {
-        return LANGUAGEs;
+        return LANGUAGES;
     }
 }

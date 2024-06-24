@@ -14,7 +14,6 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
 - Language: The selected Hypixel language. Currently supports EN,FR,DE.
 - Timer:
   - Default Category: The record-category to be selected when starting the game.
-  - Paste Delta: Whether to include +- relative to PB when clicking the round summaries to paste it in chat.
   - PB Announcements: Whether to show **\*\*\*NEW PERSONAL BEST\*\*\*** on PB in summaries.
 - SST:
   - Enabled: Enables / disables this feature.

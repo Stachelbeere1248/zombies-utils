@@ -28,11 +28,11 @@ public class GameManager {
             switch (game.getGameMode().getMap()) {
                     case DEAD_END:
                     case BAD_BLOOD:
-                    case PRISON: //TODO: Escape
-                        game.pass((byte) 30);
+                    case PRISON:
+                        game.pass(30);
                         break;
                     case ALIEN_ARCADIUM:
-                        game.pass((byte) 105);
+                        game.pass(105);
                         break;
             }
         }

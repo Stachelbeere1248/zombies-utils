@@ -47,7 +47,6 @@ public class RenderGameOverlayHandler {
     public void onRenderGameOverlay(RenderGameOverlayEvent.@NotNull Post event) {
         if (event.type != RenderGameOverlayEvent.ElementType.TEXT) return;
 
-
         ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(
                 game -> {
                     renderTime(game.getTimer().getRoundTime());
@@ -61,7 +60,7 @@ public class RenderGameOverlayHandler {
                 }
         );
 
-        SLA.getInstance().ifPresent(sla -> renderSla(sla.getRooms()));
+        if (!Minecraft.getMinecraft().gameSettings.showDebugInfo) SLA.getInstance().ifPresent(sla -> renderSla(sla.getRooms()));
         if (ZombiesUtils.getInstance().getConfig().getCpsToggle()) renderCPS();
     }
 

@@ -4,6 +4,8 @@ import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class GameMode {
     private final Map map;
     private Difficulty difficulty;
@@ -40,5 +42,8 @@ public class GameMode {
 
     public boolean is(Map map, Difficulty difficulty) {
         return this.getDifficulty() == difficulty && this.getMap() == map;
+    }
+    public boolean is(Map map) {
+        return this.getMap() == map;
     }
 }
