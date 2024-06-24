@@ -57,6 +57,7 @@ public class RecordMessageSender {
                 .append(round)
                 .append("§e finished at §a")
                 .append(timeString)
+                .append(" §9")
                 .append(deltaString)
                 .append("§e!");
         this.copyString = deltaString.isEmpty() ?
