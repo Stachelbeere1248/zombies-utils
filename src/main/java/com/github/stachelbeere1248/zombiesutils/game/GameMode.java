@@ -2,48 +2,80 @@ package com.github.stachelbeere1248.zombiesutils.game;
 
 import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
-public class GameMode {
+public enum GameMode {
+    DEAD_END(Map.DEAD_END, Difficulty.NORMAL), DEAD_END_HARD(Map.DEAD_END, Difficulty.HARD), DEAD_END_RIP(Map.DEAD_END, Difficulty.RIP),
+    BAD_BLOOD(Map.BAD_BLOOD, Difficulty.NORMAL), BAD_BLOOD_HARD(Map.BAD_BLOOD, Difficulty.HARD), BAD_BLOOD_RIP(Map.BAD_BLOOD, Difficulty.RIP),
+    ALIEN_ARCADIUM(Map.ALIEN_ARCADIUM, Difficulty.NORMAL),
+    PRISON(Map.PRISON, Difficulty.NORMAL), PRISON_HARD(Map.PRISON, Difficulty.HARD), PRISON_RIP(Map.PRISON, Difficulty.RIP);
     private final Map map;
-    private Difficulty difficulty;
-
-    public GameMode(@NotNull Map map) {
-        this.map = map;
-        this.difficulty = Difficulty.NORMAL;
-    }
-
-    public GameMode(@NotNull Map map, @NotNull Difficulty difficulty) {
+    private final Difficulty difficulty;
+    GameMode(final @NotNull Map map, final @NotNull Difficulty difficulty) {
         this.map = map;
         this.difficulty = difficulty;
     }
 
     public Map getMap() {
-        return map;
+        return this.map;
     }
 
     public Difficulty getDifficulty() {
-        return difficulty;
+        return this.difficulty;
     }
-
-    public void changeDifficulty(@NotNull Difficulty difficulty) {
-        switch (map) {
+    public GameMode appliedDifficulty(final Difficulty difficulty) {
+        switch (this.map) {
             case DEAD_END:
+                switch (difficulty) {
+                    case NORMAL:
+                        return DEAD_END;
+                    case HARD:
+                        return DEAD_END_HARD;
+                    case RIP:
+                        return DEAD_END_RIP;
+                }
             case BAD_BLOOD:
+                switch (difficulty) {
+                    case NORMAL:
+                        return BAD_BLOOD;
+                    case HARD:
+                        return BAD_BLOOD_HARD;
+                    case RIP:
+                        return BAD_BLOOD_RIP;
+                }
             case PRISON:
-                this.difficulty = difficulty;
-                break;
+                switch (difficulty) {
+                    case NORMAL:
+                        return PRISON;
+                    case HARD:
+                        return PRISON_HARD;
+                    case RIP:
+                        return PRISON_RIP;
+                }
             case ALIEN_ARCADIUM:
-                throw new RuntimeException("Achievement Get: Alien Arcadium Hard/RIP" + Map.ALIEN_ARCADIUM);
+                return ALIEN_ARCADIUM;
+            default:
+                throw new IllegalStateException("Invalid Map: " + this.map);
         }
     }
-
-    public boolean is(Map map, Difficulty difficulty) {
-        return this.getDifficulty() == difficulty && this.getMap() == map;
-    }
-    public boolean is(Map map) {
+    public boolean isMap(Map map) {
         return this.getMap() == map;
+    }
+
+    @Contract(pure = true)
+    public static GameMode getNormalForMap(final @NotNull Map map) {
+        switch (map) {
+            case DEAD_END:
+                return DEAD_END;
+            case BAD_BLOOD:
+                return BAD_BLOOD;
+            case ALIEN_ARCADIUM:
+                return ALIEN_ARCADIUM;
+            case PRISON:
+                return PRISON;
+            default:
+                throw new IllegalStateException("Unexpected value: " + map);
+        }
     }
 }

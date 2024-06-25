@@ -1,9 +1,12 @@
 package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
-import com.github.stachelbeere1248.zombiesutils.game.SLA;
-import com.github.stachelbeere1248.zombiesutils.game.waves.Waves;
+import com.github.stachelbeere1248.zombiesutils.game.waves.Prefix;
+import com.github.stachelbeere1248.zombiesutils.game.waves.Round;
+import com.github.stachelbeere1248.zombiesutils.game.waves.Wave;
+import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
+import com.github.stachelbeere1248.zombiesutils.timer.Game;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -31,13 +34,6 @@ public class RenderGameOverlayHandler {
         return String.format("%d:%02d.%d", minutesPart, secondsPart, tenthSecondsPart);
     }
 
-    private static String getWaveString(long waveTicks, int wave) {
-        final long minutesPart = (waveTicks * 50) / 60000;
-        final long secondsPart = ((waveTicks * 50) % 60000) / 1000;
-        final long tenthSecondsPart = ((waveTicks * 50) % 1000) / 100;
-        return String.format("W%d %d:%02d.%d", wave, minutesPart, secondsPart, tenthSecondsPart);
-    }
-
     void toggleRL() {
         if (rl == 0) rl = ZombiesUtils.getInstance().getConfig().getOffset();
         else rl = 0;
@@ -51,11 +47,7 @@ public class RenderGameOverlayHandler {
                 game -> {
                     renderTime(game.getTimer().getRoundTime());
                     renderSpawnTime(
-                            Waves.get(
-                                    game.getGameMode().getMap(),
-                                    game.getRound()
-                            ),
-                            game.getTimer().getRoundTime()
+                            game
                     );
                 }
         );
@@ -95,44 +87,52 @@ public class RenderGameOverlayHandler {
             y++;
         }
     }
-
-    private void renderSpawnTime(byte @NotNull [] waveTimes, short roundTicks) {
-        if (Scoreboard.isNotZombies() || !ZombiesUtils.getInstance().getConfig().getSST()) return;
-
-        final int length = waveTimes.length + 1;
+    private void renderSpawnTime(final Game game) {
+        if (!ZombiesUtils.getInstance().getConfig().getSST() || Scoreboard.isNotZombies()) return;
+        final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        final int screenWidth = scaledResolution.getScaledWidth();
+        final int screenHeight = scaledResolution.getScaledHeight();
+        final Wave[] round = ZombiesUtils.getInstance().getGameData().getRound(game.getGameMode(), game.getRound()).getWaves();
+        final int roundTime = game.getTimer().getRoundTime();
+        final int length = round.length + 1;
         int heightIndex = 0;
         int color = 0xFFFF55;
+        boolean faded = false;
 
-        for (byte waveTime : waveTimes) {
-            int clonedColor = color;
-            final short waveTicks = (short) ((waveTime * 20) + rl);
-
-            if (roundTicks > waveTicks) {
-                if (!ZombiesUtils.getInstance().getConfig().isSpawntimeShortened()) clonedColor = 0x555555;
+        for (Wave wave : round) {
+            final short spawnTime = (short) (wave.getTime() + rl);
+            if (roundTime > spawnTime) {
+                if (!ZombiesUtils.getInstance().getConfig().isSpawntimeShortened()) faded = true;
                 else {
                     heightIndex++;
                     continue;
                 }
-            }
-
-            final String time = getWaveString(waveTicks, heightIndex + 1);
-            final int width = fontRenderer.getStringWidth(time);
-            final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-            final int screenWidth = scaledResolution.getScaledWidth();
-            final int screenHeight = scaledResolution.getScaledHeight();
-
+            } else faded = false;
+            final String spawnTimeString = "  W" + (heightIndex + 1) + ": " + getTimeString(spawnTime);
+            int width = fontRenderer.getStringWidth(spawnTimeString);
             fontRenderer.drawStringWithShadow(
-                    time,
+                    spawnTimeString,
                     screenWidth - width,
                     screenHeight - fontRenderer.FONT_HEIGHT * (length - heightIndex),
-                    clonedColor
+                    faded ? 0x555555 : color
             );
-            if (clonedColor != 0x555555) color = 0xAAAAAA;
+            for (Prefix prefix : wave.getPrefixes()) {
+                final String prefixString = prefix.getPrefix() + " ";
+                width += fontRenderer.getStringWidth(prefixString);
+                fontRenderer.drawStringWithShadow(
+                        prefixString,
+                        screenWidth - width,
+                        screenHeight - fontRenderer.FONT_HEIGHT * (length - heightIndex),
+                        faded ? prefix.getFadedColor(3,5) : prefix.getColor()
+                );
+            }
+            if (!faded) color = 0xAAAAAA;
             heightIndex++;
         }
     }
 
-    public void renderCPS() {
+
+        public void renderCPS() {
         final String cps = String.format("%2d", getClicks());
         final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         final int screenWidth = scaledResolution.getScaledWidth();

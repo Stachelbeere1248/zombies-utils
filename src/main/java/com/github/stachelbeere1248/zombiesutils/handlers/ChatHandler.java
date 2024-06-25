@@ -22,9 +22,9 @@ public class ChatHandler {
                     String message = STRIP_COLOR_PATTERN.matcher(event.message.getUnformattedText()).replaceAll("").trim();
                     if (message.contains(":")) return;
                     if (LanguageSupport.containsHard(message)) {
-                        game.getGameMode().changeDifficulty(Difficulty.HARD);
+                        game.changeDifficulty(Difficulty.HARD);
                     } else if (LanguageSupport.containsRIP(message)) {
-                        game.getGameMode().changeDifficulty(Difficulty.RIP);
+                        game.changeDifficulty(Difficulty.RIP);
                     } else if (LanguageSupport.isHelicopterIncoming(message)) {
                         game.helicopter();
                     }

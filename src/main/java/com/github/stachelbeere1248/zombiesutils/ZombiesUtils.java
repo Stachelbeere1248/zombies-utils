@@ -3,6 +3,7 @@ package com.github.stachelbeere1248.zombiesutils;
 import com.github.stachelbeere1248.zombiesutils.commands.CommandRegistry;
 import com.github.stachelbeere1248.zombiesutils.config.Hotkeys;
 import com.github.stachelbeere1248.zombiesutils.config.ZombiesUtilsConfig;
+import com.github.stachelbeere1248.zombiesutils.game.GameData;
 import com.github.stachelbeere1248.zombiesutils.handlers.Handlers;
 import com.github.stachelbeere1248.zombiesutils.timer.GameManager;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,7 @@ public class ZombiesUtils {
     private ZombiesUtilsConfig config;
     private Handlers handlers;
     private Logger logger;
+    private GameData gameData;
 
     public ZombiesUtils() {
         hotkeys = new Hotkeys();
@@ -52,6 +54,7 @@ public class ZombiesUtils {
         handlers.registerAll();
         CommandRegistry.registerAll();
         hotkeys.registerAll();
+        gameData = new GameData();
     }
 
     public Logger getLogger() {
@@ -72,5 +75,9 @@ public class ZombiesUtils {
 
     public GameManager getGameManager() {
         return gameManager;
+    }
+
+    public GameData getGameData() {
+        return gameData;
     }
 }

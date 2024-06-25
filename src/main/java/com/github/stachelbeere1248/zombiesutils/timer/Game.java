@@ -2,7 +2,8 @@ package com.github.stachelbeere1248.zombiesutils.timer;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
-import com.github.stachelbeere1248.zombiesutils.game.SLA;
+import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
+import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.handlers.Round1Correction;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
@@ -16,15 +17,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class Game {
     private final Timer timer;
-    private final GameMode gameMode;
     private final GameFile gameFile;
     private final boolean roundOneRecorded;
-    private int round;
+    private GameMode gameMode;
     private Category category;
+    private int round;
     private boolean escaping;
 
     public Game(@NotNull final Map map, final String serverNumber) {
-        this.gameMode = new GameMode(map);
+        this.gameMode = GameMode.getNormalForMap(map);
         this.timer = new Timer();
         this.gameFile = new GameFile(serverNumber, map);
         this.category = new Category();
@@ -35,7 +36,7 @@ public class Game {
         if (ZombiesUtils.getInstance().getConfig().isSlaToggled()) SLA.instance = new SLA(map);
     }
     public Game(@NotNull final Map map, final String serverNumber, final int round) {
-        this.gameMode = new GameMode(map);
+        this.gameMode = GameMode.getNormalForMap(map);
         this.timer = new Timer();
         this.gameFile = new GameFile(serverNumber, map);
         this.category = new Category();
@@ -50,9 +51,11 @@ public class Game {
     public Timer getTimer() {
       return this.timer;
     }
-
     public void setCategory(Category category) {
         this.category = category;
+    }
+    public void changeDifficulty(final Difficulty difficulty) {
+        this.gameMode = this.gameMode.appliedDifficulty(difficulty);
     }
     public int getRound() {
         return round;
@@ -76,7 +79,7 @@ public class Game {
         this.round = round + 1;
     }
     public void helicopter() {
-        if (!gameMode.is(Map.PRISON)) {
+        if (!gameMode.isMap(Map.PRISON)) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cEscaping without playing prison???"));
             ZombiesUtils.getInstance().getLogger().error(Thread.currentThread().getStackTrace());
             return;

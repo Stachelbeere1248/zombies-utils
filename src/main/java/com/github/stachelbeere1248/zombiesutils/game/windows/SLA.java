@@ -1,12 +1,9 @@
-package com.github.stachelbeere1248.zombiesutils.game;
+package com.github.stachelbeere1248.zombiesutils.game.windows;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
-import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
-import com.github.stachelbeere1248.zombiesutils.game.windows.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.ChatComponentText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

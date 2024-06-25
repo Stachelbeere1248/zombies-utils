@@ -49,7 +49,7 @@ public class MixinNetHandlerPlayClient {
             ZombiesUtils.getInstance().getGameManager().splitOrNew(Scoreboard.getRound());
         } catch (ScoardboardException | InvalidMapException e) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cFailed to start or split timer. Please send a log to Stachelbeere1248."));
-            ZombiesUtils.getInstance().getLogger().error(e.getStackTrace());
+            ZombiesUtils.getInstance().getLogger().error(e.fillInStackTrace());
         }
     }
 

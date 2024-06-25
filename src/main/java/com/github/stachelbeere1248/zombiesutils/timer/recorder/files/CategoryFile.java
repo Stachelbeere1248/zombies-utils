@@ -18,7 +18,7 @@ public class CategoryFile extends File {
     public CategoryFile(File category, @NotNull GameMode gameMode) {
         // Game-directory -> custom category -> file named "MAP_DIFFICULTY.times"
         // Content encoded in StandardCharsets.UTF_16
-        super(category, gameMode.getMap() + "_" + gameMode.getDifficulty() + ".times");
+        super(category, gameMode + ".times");
         this.gameMode = gameMode;
         this.data = FileManager.categoryReadOrCreate(this);
     }

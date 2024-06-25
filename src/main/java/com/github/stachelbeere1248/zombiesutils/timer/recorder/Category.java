@@ -2,8 +2,6 @@ package com.github.stachelbeere1248.zombiesutils.timer.recorder;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
-import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
-import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,19 +16,19 @@ public class Category {
         final File category;
         if (ZombiesUtils.isHypixel()) category = new File(new File("zombies", "splits"), selectedCategory);
         else category = new File(new File("zombies", "practise-splits"), selectedCategory);
-        categoryFiles[0] = new CategoryFile(category, new GameMode(Map.DEAD_END));
-        categoryFiles[1] = new CategoryFile(category, new GameMode(Map.DEAD_END, Difficulty.HARD));
-        categoryFiles[2] = new CategoryFile(category, new GameMode(Map.DEAD_END, Difficulty.RIP));
+        categoryFiles[0] = new CategoryFile(category, GameMode.DEAD_END);
+        categoryFiles[1] = new CategoryFile(category, GameMode.DEAD_END_HARD);
+        categoryFiles[2] = new CategoryFile(category, GameMode.DEAD_END_RIP);
 
-        categoryFiles[3] = new CategoryFile(category, new GameMode(Map.BAD_BLOOD));
-        categoryFiles[4] = new CategoryFile(category, new GameMode(Map.BAD_BLOOD, Difficulty.HARD));
-        categoryFiles[5] = new CategoryFile(category, new GameMode(Map.BAD_BLOOD, Difficulty.RIP));
+        categoryFiles[3] = new CategoryFile(category, GameMode.BAD_BLOOD);
+        categoryFiles[4] = new CategoryFile(category, GameMode.BAD_BLOOD_HARD);
+        categoryFiles[5] = new CategoryFile(category, GameMode.BAD_BLOOD_RIP);
 
-        categoryFiles[6] = new CategoryFile(category, new GameMode(Map.ALIEN_ARCADIUM));
+        categoryFiles[6] = new CategoryFile(category, GameMode.ALIEN_ARCADIUM);
 
-        categoryFiles[7] = new CategoryFile(category, new GameMode(Map.PRISON));
-        categoryFiles[8] = new CategoryFile(category, new GameMode(Map.PRISON, Difficulty.HARD));
-        categoryFiles[9] = new CategoryFile(category, new GameMode(Map.PRISON, Difficulty.RIP));
+        categoryFiles[7] = new CategoryFile(category, GameMode.PRISON);
+        categoryFiles[8] = new CategoryFile(category, GameMode.PRISON_HARD);
+        categoryFiles[9] = new CategoryFile(category, GameMode.PRISON_RIP);
 
         this.name = Category.selectedCategory;
     }
@@ -49,22 +47,30 @@ public class Category {
     }
 
     public CategoryFile getByGameMode(@NotNull GameMode gameMode) {
-
-
-        if (gameMode.is(Map.DEAD_END, Difficulty.NORMAL)) return categoryFiles[0];
-        else if (gameMode.is(Map.DEAD_END, Difficulty.HARD)) return categoryFiles[1];
-        else if (gameMode.is(Map.DEAD_END, Difficulty.RIP)) return categoryFiles[2];
-
-        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.NORMAL)) return categoryFiles[3];
-        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.HARD)) return categoryFiles[4];
-        else if (gameMode.is(Map.BAD_BLOOD, Difficulty.RIP)) return categoryFiles[5];
-
-        else if (gameMode.is(Map.ALIEN_ARCADIUM, Difficulty.NORMAL)) return categoryFiles[6];
-
-        else if (gameMode.is(Map.PRISON, Difficulty.NORMAL)) return categoryFiles[7];
-        else if (gameMode.is(Map.PRISON, Difficulty.HARD)) return categoryFiles[8];
-        else if (gameMode.is(Map.PRISON, Difficulty.RIP)) return categoryFiles[9];
-        else throw new IllegalStateException("Unexpected value: " + gameMode);
+        switch (gameMode) {
+            case DEAD_END:
+                return categoryFiles[0];
+            case DEAD_END_HARD:
+                return categoryFiles[1];
+            case DEAD_END_RIP:
+                return categoryFiles[2];
+            case BAD_BLOOD:
+                return categoryFiles[3];
+            case BAD_BLOOD_HARD:
+                return categoryFiles[4];
+            case BAD_BLOOD_RIP:
+                return categoryFiles[5];
+            case ALIEN_ARCADIUM:
+                return categoryFiles[6];
+            case PRISON:
+                return categoryFiles[7];
+            case PRISON_HARD:
+                return categoryFiles[8];
+            case PRISON_RIP:
+                return categoryFiles[9];
+            default:
+                throw new IllegalStateException("Unexpected value: " + gameMode);
+        }
     }
 
     public String getName() {

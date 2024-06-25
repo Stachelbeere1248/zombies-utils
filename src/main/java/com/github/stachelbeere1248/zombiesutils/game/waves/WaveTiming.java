@@ -3,7 +3,6 @@ package com.github.stachelbeere1248.zombiesutils.game.waves;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -13,11 +12,11 @@ public class WaveTiming {
         if (Scoreboard.isNotZombies()) return;
         ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(
                 game -> {
-                    byte[] waves = Waves.get(game.getGameMode().getMap(), game.getRound());
+                    short[] waves = ZombiesUtils.getInstance().getGameData().getRound(game.getGameMode(), game.getRound()).getWaveTimes();
                     final int roundTime = game.getTimer().getRoundTime();
                     final int[] auditory = ZombiesUtils.getInstance().getConfig().getAuditory();
-                    for (int wave : waves) {
-                        wave = wave * 20 + rl;
+                    for (short wave : waves) {
+                        wave = (short) (wave + rl);
                         final Integer pre = roundTime - wave;
                         if (Arrays.stream(auditory).anyMatch(pre::equals)) {
                             Minecraft.getMinecraft().thePlayer.playSound("note.pling", 1, 2);
