@@ -114,7 +114,7 @@ public class RenderGameOverlayHandler {
                     spawnTimeString,
                     screenWidth - width,
                     screenHeight - fontRenderer.FONT_HEIGHT * (length - heightIndex),
-                    faded ? 0x555555 : color
+                    faded ? 0x666666 : color
             );
             for (Prefix prefix : wave.getPrefixes()) {
                 final String prefixString = prefix.getPrefix() + " ";

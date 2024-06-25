@@ -5,8 +5,8 @@ import java.util.stream.IntStream;
 public enum Prefix {
     BOSS(0xCC5555, "B"),
     BLAZES(0xEFB61F, "F"),
-    OLD_ONE(0x55AA55, "O"),
     SLIME(0x88FF88,"S"),
+    OLD_ONE(0x55AA55, "O1"),
     GIANT(0x00FFFF,"G"),
     UFO(0x30D5C8,"U"),
     POLICE(0x16537E,"P"),
