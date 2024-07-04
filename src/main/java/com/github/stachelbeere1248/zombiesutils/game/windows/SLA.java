@@ -27,7 +27,7 @@ public class SLA {
                 this.rooms = Room.getAA();
                 break;
             case PRISON:
-                this.rooms = Room.getP();
+                this.rooms = new Room[0];
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + map);
@@ -86,7 +86,7 @@ public class SLA {
                 }
 
                 // (2x)²+(2y)²+(2z)² = 4(x²+y²+z²) = 4d²
-                final int slaRange = 40;
+                final int slaRange = 50;
                 if (distanceDoubledThenSquared < 4 * slaRange * slaRange) {
                     window.setActive(true);
                     room.increaseActiveWindowCount();

@@ -2,6 +2,7 @@ package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,5 +28,14 @@ public class RenderPlayerHandler {
     }
     public void togglePlayerVisibility() {
         this.visible = !this.visible;
+        final String s;
+        if (this.visible) {
+            s = "§dPlayer Visibility §e is now §rON";
+        } else {
+            s = "§dPlayer Visibility §e is now §8OFF";
+        }
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+                s
+        ));
     }
 }

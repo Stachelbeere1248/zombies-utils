@@ -102,7 +102,7 @@ public class Game {
 
         if (bestSegment == (short) 0) categoryFile.setBestSegment(round, roundTime);
         else if (roundTime < bestSegment) categoryFile.setBestSegment(round, roundTime);
-        final RecordMessageSender recordMessageSender = new RecordMessageSender(this.category.getName(), round, false, roundTime, bestSegment);
+        final RecordMessageSender recordMessageSender = new RecordMessageSender(this.category.getName(), round, roundTime, bestSegment);
         recordMessageSender.roundSplit();
         recordMessageSender.sendRecordMessage();
     }
@@ -115,7 +115,7 @@ public class Game {
 
         if (personalBest == 0) categoryFile.setPersonalBest(round, gameTime);
         else if (gameTime < personalBest) categoryFile.setPersonalBest(round, gameTime);
-        final RecordMessageSender recordMessageSender = new RecordMessageSender(category.getName(), round, true, gameTime, personalBest);
+        final RecordMessageSender recordMessageSender = new RecordMessageSender(category.getName(), round, gameTime, personalBest);
         if (!escaping) recordMessageSender.gameSplit();
         else recordMessageSender.helicopterSplit();
         recordMessageSender.sendRecordMessage();

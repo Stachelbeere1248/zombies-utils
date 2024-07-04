@@ -149,6 +149,7 @@ public class Room {
                 })
         };
     }
+
     @Contract(" -> new")
     public static Room @NotNull [] getP() {
         return new Room[]{
@@ -172,7 +173,8 @@ public class Room {
                         new Window(2, 189, 144, 25),
                 }),
                 new Room("Visitor's Room", "v", new Window[]{
-                        new Window(1, 261, 146, -45),
+                        new Window(1, 261, 144, -45),
+                        new Window(2, 273, 144, 13)
                 }),
                 new Room("Library", "l", new Window[]{
                         new Window(1, 265, 158, 9),
@@ -188,7 +190,8 @@ public class Room {
                 }),
                 new Room("The Courts", "cs", new Window[]{
                         new Window(1, 285, 144, 81),
-                        new Window(2, 211, 144, 157),
+                        new Window(2, 247, 144, 157),
+                        new Window(3, 211, 144, 157),
                 }),
                 new Room("Offices", "o", new Window[]{
                         new Window(1, 153, 144, 161),
@@ -205,6 +208,7 @@ public class Room {
                 }),
                 new Room("Basement Corridor", "bc", new Window[]{
                         new Window(1, 231, 130, 29),
+                        new Window(2, 193, 130, 31),
                 }),
                 new Room("The Deep", "d", new Window[]{
                         new Window(1, 167, 126, -45),
@@ -224,6 +228,7 @@ public class Room {
                 }),
                 new Room("Alleyway", "a", new Window[]{
                         new Window(1, 101, 144, 133),
+                        new Window(2, 147, 144, 117)
                 }),
                 new Room("Guard's Gunroom", "gr", new Window[]{
                         new Window(1, 29, 148, 75),
@@ -249,6 +254,10 @@ public class Room {
                 new Room("Showers", "sh", new Window[]{
                         new Window(1, 37, 144, 15),
                         new Window(2, 37, 144, -11),
+                }),
+                new Room("???", "?", new Window[]{
+                        new Window(1, 191, 126, -67),
+                        new Window(2, 207, 126, -67),
                 }),
 
         };

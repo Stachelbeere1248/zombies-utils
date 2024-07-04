@@ -9,33 +9,20 @@ import org.jetbrains.annotations.Contract;
 
 public class RecordMessageSender {
     private final StringBuilder recordMessage;
-    private final int roundTime;
-    private final int gameTime;
-    private final int oldPB;
-    private final int oldBS;
+    private final int newTime;
+    private final int oldTime;
     private final int round;
     private final String deltaString;
     private final String timeString;
-    private final boolean cumulative;
     private String copyString;
-    public RecordMessageSender(final String categoryName, final int round, final boolean cumulative, final int newTime, final int oldTime) {
+    public RecordMessageSender(final String categoryName, final int round, final int newTime, final int oldTime) {
         this.recordMessage = new StringBuilder(
                 "§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n§e Category: §d" + categoryName
         );
-        if (cumulative) {
-            this.gameTime = newTime;
-            this.oldPB = oldTime;
-            this.roundTime = 0;
-            this.oldBS = 0;
-        } else {
-            this.gameTime = 0;
-            this.oldPB = 0;
-            this.roundTime = newTime;
-            this.oldBS = oldTime;
-        }
-        this.deltaString = oldTime  != 0 ? formattedDelta(newTime, oldTime) : "";
+        this.newTime = newTime;
+        this.oldTime = oldTime;
+        this.deltaString = oldTime  != 0 ? " " + formattedDelta(newTime, oldTime) : "";
         this.timeString = formattedTime(newTime);
-        this.cumulative = cumulative;
         this.round = round;
     }
 
@@ -50,14 +37,14 @@ public class RecordMessageSender {
     }
 
     public void gameSplit() {
-        final String announcement = gameTime < oldPB && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
+        final String announcement = newTime < oldTime && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
                 "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***" : "";
         this.recordMessage.append(announcement)
                 .append("\n§cRound ")
                 .append(round)
                 .append("§e finished at §a")
                 .append(timeString)
-                .append(" §9")
+                .append("§9")
                 .append(deltaString)
                 .append("§e!");
         this.copyString = deltaString.isEmpty() ?
@@ -66,16 +53,16 @@ public class RecordMessageSender {
     }
 
     public void roundSplit() {
-        final String announcement = roundTime < oldBS && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
+        final String announcement = newTime < oldTime && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
                 "\n§e§l***§6§l NEW BEST SEGMENT! §e§l***" : "";
-        final String timeString = formattedTime(roundTime);
-        final String deltaString = oldBS != 0 ? formattedDelta(roundTime, oldBS) : "";
+        final String timeString = formattedTime(newTime);
+        final String deltaString = oldTime != 0 ? formattedDelta(newTime, oldTime) : "";
         this.recordMessage.append(announcement)
                 .append("\n§cRound ")
                 .append(round)
                 .append("§e took §a")
                 .append(timeString)
-                .append(" §9")
+                .append("§9")
                 .append(deltaString)
                 .append("§e!");
         this.copyString = deltaString.isEmpty() ?
@@ -83,12 +70,12 @@ public class RecordMessageSender {
                 String.format("Round %d took %s (%s)!", round, timeString, deltaString);
     }
     public void helicopterSplit() {
-        final String announcement = gameTime < oldPB && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
+        final String announcement = newTime < oldTime && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
                 "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***" : "";
         this.recordMessage.append(announcement)
-                .append("§8§lHelicopter §r§ecalled at §a")
+                .append("\n§8§lHelicopter §r§ecalled at §a")
                 .append(timeString)
-                .append(" §9")
+                .append("§9")
                 .append(deltaString)
                 .append("§e!");
         this.copyString = deltaString.isEmpty() ?
