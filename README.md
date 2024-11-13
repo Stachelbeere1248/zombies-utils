@@ -1,5 +1,5 @@
 # zombies-utils
-##### Download [latest release](https://github.com/Stachelbeere1248/zombies-utils/releases/latest).
+##### Download the latest release [here](https://github.com/Stachelbeere1248/zombies-utils/releases/latest)
 Hello, I am currently working on this mod. More features will come. For now it has:
 - An accurate timer + Automatic splitting
 - Tracking of splits & segment PBs (with custom categories)
