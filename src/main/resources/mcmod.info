@@ -6,7 +6,7 @@
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://github.com/Stachelbeere1248/zombies-utils",
-    "updateUrl": "https://github.com/Stachelbeere1248/zombies-utils/update.json",
+    "updateUrl": "https://github.com/Stachelbeere1248/zombies-utils/blob/master/update.json",
     "authorList": [
       "Stachelbeere1248"
     ],
