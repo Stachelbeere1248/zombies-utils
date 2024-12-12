@@ -23,7 +23,6 @@ public class GameData {
     }
 
     public Round getRound(@NotNull GameMode gameMode, int round) {
-        final Round[] selected;
         switch (gameMode) {
             case DEAD_END:
                 return roundData[0][round-1];

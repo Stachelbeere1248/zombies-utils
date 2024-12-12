@@ -12,21 +12,23 @@ Hello, I am currently working on this mod. More features will come. For now it h
 ## For Users
 The timer automatically splits every round. The PB/Segment recorder automatically distinguishes maps and difficulties, but not player count.
 ### Config
-- Language: The selected Hypixel language. Currently supports EN,FR,DE.
-- Timer:
-  - Default Category: The record-category to be selected when starting the game.
-  - PB Announcements: Whether to show **\*\*\*NEW PERSONAL BEST\*\*\*** on PB in summaries.
-- SST:
+- `Language`: The selected Hypixel language. Currently supports EN,FR,DE.
+- ###### Timer:
+  - `Default Category`: The record-category to be selected when starting the game.
+  - `PB Announcements`: Whether to show **\*\*\*NEW PERSONAL BEST\*\*\*** on PB in summaries.
+- ###### SST:
   - Enabled: Enables / disables this feature.
   - Auditory: A List of tick offsets that a sound should be played. Default (-40, -20, 0) means 2s and 1s in advance, as well as on spawn.
   - RL pre-timing: During RL mode, how much SST times sohuld be offsetted. Defaults to 1.4s earlier. Affects HUD as well as auditory.
   - Truncate: Whether to show passed rounds in the HUD.
-- SLA:
-  - Enabled: Whether the SLA HUD should automatically be shown when starting a game.
-  - Truncate: Whether inactive windows and rooms should be shown.
-- Macro Message: The Message to be sent when pressing the Chat Macro Key. Do NOT use "§" as symbol.
-- Player Visibility: Whether to enable PlayerVisibility by default.
-- CPS Counter: A simple CPS Counter which shows the amount of clicks within the last 20 gameticks.
+- ###### SLA:
+  - `Enabled`: Whether the SLA HUD should automatically be shown when starting a game.
+  - `Truncate`: Whether inactive windows and rooms should be shown.
+- ###### Player Visibility:
+  - `Enabled`: Whether to enable PlayerVisibility by default.
+  - `Range`: The range within which players are hidden while enabled.
+- `Macro Message`: The Message to be sent when pressing the Chat Macro Key. Do NOT use "§" as symbol.
+- `CPS Counter`: A simple CPS Counter which shows the amount of clicks within the last 20 gameticks.
 ### Commands
 - /category \<name> - Switches to the category called name. All recorded times are bound to its category. Tabcomplete suggests already existing categories, but you can insert a new (clean) one as well.
   - Examples:
@@ -37,9 +39,10 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
   - /sla off - Disables the SLA hud
   - /sla map \<de|bb|aa|p> - forcefully set the map
   - /sla quick \<mogi_a|ghxula|ghxula-garden>
-  - /sla rotate - rotates all windows around the axis (0,y,0)
-  - /sla mirror \<x|z> - mirrors all windows along the plane (0,y,z) or (x,y,0)
-  - /sla offset \<x> \<y> \<z> - set an offset, allowing you to use sla on map-recreations, such as housings
+  - useless for most players:
+    - /sla rotate - rotates all windows around the axis (0,y,0)
+    - /sla mirror \<x|z> - mirrors all windows along the plane (0,y,z) or (x,y,0)
+    - /sla offset \<x> \<y> \<z> - set an offset, allowing you to use sla on map-recreations, such as housings
 - /zombiesutils \<timer>
   - /zombiesutils timer \<kill|split>
     - /zombiesutils timer kill - Stops the running timer completely
@@ -50,4 +53,4 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
 - RL Mode: Toggles usage of the rocket launcher mode spawn-time offset.
 - Player Visibility: Toggles whether to show players that are within a 4 block radius.
 ### Extra
-- Managing split-categories: In your game directory is a folder called "zombies" which contains the folder "splits". You can simply rename or delete the folders inside "splits". You can also edit your splits, the data is stored as a list of ticks inside the MAP_DIFFICULTY.times files, a simple text editor (such as Notepad on Windows) should be able to edit it (UTF-16 encoded text). The other subfolder, runs, logs all the splits for every run you play.
+- Managing split-categories: In your game directory (aka `.minecraft`) is a folder called `zombies` which contains the folder `splits`. You can simply rename or delete the folders inside `splits`, they represent your categories. You can also edit your splits, the data is stored as a list of ticks inside the `MAP_DIFFICULTY.times` files, a simple text editor (such as Notepad on Windows) should be able to edit it (UTF-16 encoded text). The other subfolder, runs, logs all the splits for every run you play.

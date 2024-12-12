@@ -17,18 +17,19 @@ public class ChatHandler {
 
     @SubscribeEvent
     public void difficultyChange(@NotNull final ClientChatReceivedEvent event) {
-        ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(
-                game -> {
-                    String message = STRIP_COLOR_PATTERN.matcher(event.message.getUnformattedText()).replaceAll("").trim();
-                    if (message.contains(":")) return;
-                    if (LanguageSupport.containsHard(message)) {
-                        game.changeDifficulty(Difficulty.HARD);
-                    } else if (LanguageSupport.containsRIP(message)) {
-                        game.changeDifficulty(Difficulty.RIP);
-                    } else if (LanguageSupport.isHelicopterIncoming(message)) {
-                        game.helicopter();
+        if (event.message.getUnformattedText().contains(":")) return;
+        final String message = STRIP_COLOR_PATTERN.matcher(event.message.getUnformattedText()).replaceAll("").trim();
+
+        if (LanguageSupport.containsHard(message)) {
+            ZombiesUtils.getInstance().getGameManager().setDifficulty(Difficulty.HARD);
+        } else if (LanguageSupport.containsRIP(message)) {
+            ZombiesUtils.getInstance().getGameManager().setDifficulty(Difficulty.RIP);
+        } else {
+            ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(
+                    game -> {
+                        if (LanguageSupport.isHelicopterIncoming(message)) game.helicopter();
                     }
-                }
-        );
+            );
+        }
     }
 }

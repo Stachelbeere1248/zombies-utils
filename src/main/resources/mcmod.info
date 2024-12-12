@@ -2,7 +2,7 @@
   {
     "modid": "${modid}",
     "name": "Zombies Utils",
-    "description": "",
+    "description": "An all-in-one mod for Hypixel Zombies. Targets legit speed-runners.",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://github.com/Stachelbeere1248/zombies-utils",
@@ -11,7 +11,7 @@
       "Stachelbeere1248"
     ],
     "credits": "Seosean, thamid-23",
-    "logoFile": "",
+    "logoFile": "zombiesutils.png",
     "screenshots": [],
     "dependencies": []
   }

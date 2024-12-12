@@ -24,7 +24,8 @@ public class RenderPlayerHandler {
     }
 
     private boolean inRange(@NotNull Vec3 playerOther) {
-        return playerOther.squareDistanceTo(Minecraft.getMinecraft().thePlayer.getPositionVector()) <= 16;
+        final int range = ZombiesUtils.getInstance().getConfig().getPlayerVisRange();
+        return playerOther.squareDistanceTo(Minecraft.getMinecraft().thePlayer.getPositionVector()) <= range * range;
     }
     public void togglePlayerVisibility() {
         this.visible = !this.visible;

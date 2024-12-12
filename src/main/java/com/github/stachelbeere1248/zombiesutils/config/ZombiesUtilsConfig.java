@@ -1,6 +1,5 @@
 package com.github.stachelbeere1248.zombiesutils.config;
 
-import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.utils.LanguageSupport;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -27,6 +26,7 @@ public class ZombiesUtilsConfig {
     private Property cpsCounter;
     private Property announcePB;
     private Property playerVis;
+    private Property playerVisRange;
 
     public ZombiesUtilsConfig(Configuration config) {
         this.config = config;
@@ -34,9 +34,7 @@ public class ZombiesUtilsConfig {
     }
 
     private void read() {
-        ZombiesUtils.getInstance().getLogger().debug("Loading config...");
         config.load();
-        ZombiesUtils.getInstance().getLogger().debug("Config loaded.");
 
         //SST
         sstHud = config.get(
@@ -99,6 +97,22 @@ public class ZombiesUtilsConfig {
                 "Whether to announce PBs."
         );
 
+        //Player Visibility
+        playerVis = config.get(
+                "PlayerVis",
+                "default",
+                false,
+                "If players should always be visible"
+        );
+        playerVisRange = config.get(
+                "PlayerVis",
+                "range",
+                4,
+                "The range within which players are hidden",
+                0,
+                50
+        );
+
 
         //ROOT
         language = config.get(
@@ -113,12 +127,6 @@ public class ZombiesUtilsConfig {
                 "Chat Macro",
                 "T",
                 "The Text to be sent when pressing the chat-macro hotkey"
-        );
-        playerVis = config.get(
-                Configuration.CATEGORY_GENERAL,
-                "playervis",
-                false,
-                "If players should always be visible"
         );
         cpsCounter = config.get(
                 Configuration.CATEGORY_GENERAL,
@@ -150,6 +158,12 @@ public class ZombiesUtilsConfig {
                 new CustomConfigElement("PB announcements", announcePB)
         );
     }
+    private List<IConfigElement> getPlayerVisElements() {
+        return Arrays.asList(
+                new CustomConfigElement("Enabled", playerVis),
+                new CustomConfigElement("Range", playerVisRange)
+        );
+    }
 
     List<IConfigElement> getRootElements() {
         return Arrays.asList(
@@ -157,8 +171,8 @@ public class ZombiesUtilsConfig {
                 new DummyConfigElement.DummyCategoryElement("Timer", "", getTimerElements()),
                 new DummyConfigElement.DummyCategoryElement("SST", "", getSpawntimeElements()),
                 new DummyConfigElement.DummyCategoryElement("SLA", "", getSlaElements()),
+                new DummyConfigElement.DummyCategoryElement("Player Visibility", "", getPlayerVisElements()),
                 new CustomConfigElement("Macro message", chatMacro),
-                new CustomConfigElement("Player visibility", playerVis),
                 new CustomConfigElement("CPS counter", cpsCounter)
 
         );
@@ -209,6 +223,9 @@ public class ZombiesUtilsConfig {
     }
     public boolean getPlayerVis() {
         return playerVis.getBoolean();
+    }
+    public int getPlayerVisRange() {
+        return playerVis.getInt();
     }
 
     @SubscribeEvent
