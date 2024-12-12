@@ -15,13 +15,14 @@ public class RecordMessageSender {
     private final String deltaString;
     private final String timeString;
     private String copyString;
+
     public RecordMessageSender(final String categoryName, final int round, final int newTime, final int oldTime) {
         this.recordMessage = new StringBuilder(
                 "§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n§e Category: §d" + categoryName
         );
         this.newTime = newTime;
         this.oldTime = oldTime;
-        this.deltaString = oldTime  != 0 ? " " + formattedDelta(newTime, oldTime) : "";
+        this.deltaString = oldTime != 0 ? " " + formattedDelta(newTime, oldTime) : "";
         this.timeString = formattedTime(newTime);
         this.round = round;
     }
@@ -29,8 +30,8 @@ public class RecordMessageSender {
     public void sendRecordMessage() {
         final ChatComponentText message = new ChatComponentText(
                 this.recordMessage
-                .append("\n§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
-                .toString()
+                        .append("\n§l§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬")
+                        .toString()
         );
         message.setChatStyle(new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, this.copyString)));
         Minecraft.getMinecraft().thePlayer.addChatMessage(message);
@@ -69,6 +70,7 @@ public class RecordMessageSender {
                 String.format("Round %d took %s!", round, timeString) :
                 String.format("Round %d took %s (%s)!", round, timeString, deltaString);
     }
+
     public void helicopterSplit() {
         final String announcement = newTime < oldTime && ZombiesUtils.getInstance().getConfig().getAnnouncePB() ?
                 "\n§e§l***§6§l NEW PERSONAL BEST! §e§l***" : "";
@@ -82,6 +84,7 @@ public class RecordMessageSender {
                 String.format("Helicopter called at %s!", timeString) :
                 String.format("Helicopter called at %s (%s)!", timeString, deltaString);
     }
+
     @Contract(pure = true)
     private String formattedTime(int time) {
         time *= 50;
@@ -92,6 +95,7 @@ public class RecordMessageSender {
                 (time % 100) / 10
         );
     }
+
     @Contract(pure = true)
     private String formattedDelta(int newTime, int oldTime) {
         final double delta = (double) (newTime - oldTime) / 20;

@@ -39,8 +39,8 @@ public class MixinNetHandlerPlayClient {
 
         if (!(
                 soundEffect.equals("mob.wither.spawn")
-                || (soundEffect.equals("mob.guardian.curse")
-                && !zombies_utils$alienUfoOpened)
+                        || (soundEffect.equals("mob.guardian.curse")
+                        && !zombies_utils$alienUfoOpened)
         )) return;
 
         zombies_utils$alienUfoOpened = soundEffect.equals("mob.guardian.curse");
@@ -59,8 +59,8 @@ public class MixinNetHandlerPlayClient {
         if (Scoreboard.isNotZombies()) return;
         final String message = packet.getMessage().getUnformattedText().trim();
         String serverNumber;
-            serverNumber = Scoreboard.getServerNumber().orElse("");
-        if (LanguageSupport.isWin(message)) ZombiesUtils.getInstance().getGameManager().endGame(serverNumber,true);
+        serverNumber = Scoreboard.getServerNumber().orElse("");
+        if (LanguageSupport.isWin(message)) ZombiesUtils.getInstance().getGameManager().endGame(serverNumber, true);
         if (LanguageSupport.isLoss(message)) ZombiesUtils.getInstance().getGameManager().endGame(serverNumber, false);
     }
 

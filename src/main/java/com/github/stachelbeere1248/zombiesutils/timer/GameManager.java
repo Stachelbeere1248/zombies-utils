@@ -29,14 +29,14 @@ public class GameManager {
         final Game game = GAMES.get(serverNumber);
         if (isWin) {
             switch (game.getGameMode().getMap()) {
-                    case DEAD_END:
-                    case BAD_BLOOD:
-                    case PRISON:
-                        game.pass(30);
-                        break;
-                    case ALIEN_ARCADIUM:
-                        game.pass(105);
-                        break;
+                case DEAD_END:
+                case BAD_BLOOD:
+                case PRISON:
+                    game.pass(30);
+                    break;
+                case ALIEN_ARCADIUM:
+                    game.pass(105);
+                    break;
             }
         }
         GAMES.remove(serverNumber);

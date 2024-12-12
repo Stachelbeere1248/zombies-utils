@@ -2,10 +2,9 @@ package com.github.stachelbeere1248.zombiesutils.handlers;
 
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.waves.Prefix;
-import com.github.stachelbeere1248.zombiesutils.game.waves.Round;
 import com.github.stachelbeere1248.zombiesutils.game.waves.Wave;
-import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.windows.Room;
+import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.timer.Game;
 import com.github.stachelbeere1248.zombiesutils.utils.Scoreboard;
 import net.minecraft.client.Minecraft;
@@ -52,7 +51,8 @@ public class RenderGameOverlayHandler {
                 }
         );
 
-        if (!Minecraft.getMinecraft().gameSettings.showDebugInfo) SLA.getInstance().ifPresent(sla -> renderSla(sla.getRooms()));
+        if (!Minecraft.getMinecraft().gameSettings.showDebugInfo)
+            SLA.getInstance().ifPresent(sla -> renderSla(sla.getRooms()));
         if (ZombiesUtils.getInstance().getConfig().getCpsToggle()) renderCPS();
     }
 
@@ -87,6 +87,7 @@ public class RenderGameOverlayHandler {
             y++;
         }
     }
+
     private void renderSpawnTime(final Game game) {
         if (!ZombiesUtils.getInstance().getConfig().getSST() || Scoreboard.isNotZombies()) return;
         final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
@@ -123,7 +124,7 @@ public class RenderGameOverlayHandler {
                         prefixString,
                         screenWidth - width,
                         screenHeight - fontRenderer.FONT_HEIGHT * (length - heightIndex),
-                        faded ? prefix.getFadedColor(3,5) : prefix.getColor()
+                        faded ? prefix.getFadedColor() : prefix.getColor()
                 );
             }
             if (!faded) color = 0xAAAAAA;
@@ -132,7 +133,7 @@ public class RenderGameOverlayHandler {
     }
 
 
-        public void renderCPS() {
+    public void renderCPS() {
         final String cps = String.format("%2d", getClicks());
         final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         final int screenWidth = scaledResolution.getScaledWidth();

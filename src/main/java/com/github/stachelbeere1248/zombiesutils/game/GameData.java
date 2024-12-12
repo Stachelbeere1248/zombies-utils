@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class GameData {
     private final Round[][] roundData;
+
     public GameData() {
         roundData = new Round[10][];
         roundData[0] = readFromFile("data/rounds/DEAD_END_NORMAL.json");
@@ -25,25 +26,25 @@ public class GameData {
     public Round getRound(@NotNull GameMode gameMode, int round) {
         switch (gameMode) {
             case DEAD_END:
-                return roundData[0][round-1];
+                return roundData[0][round - 1];
             case DEAD_END_HARD:
-                return roundData[1][round-1];
+                return roundData[1][round - 1];
             case DEAD_END_RIP:
-                return roundData[2][round-1];
+                return roundData[2][round - 1];
             case BAD_BLOOD:
-                return roundData[3][round-1];
+                return roundData[3][round - 1];
             case BAD_BLOOD_HARD:
-                return roundData[4][round-1];
+                return roundData[4][round - 1];
             case BAD_BLOOD_RIP:
-                return roundData[5][round-1];
+                return roundData[5][round - 1];
             case ALIEN_ARCADIUM:
-                return roundData[6][round-1];
+                return roundData[6][round - 1];
             case PRISON:
-                return roundData[7][round-1];
+                return roundData[7][round - 1];
             case PRISON_HARD:
-                return roundData[8][round-1];
+                return roundData[8][round - 1];
             case PRISON_RIP:
-                return roundData[9][round-1];
+                return roundData[9][round - 1];
             default:
                 throw new IllegalStateException("Invalid GameMode: " + gameMode);
         }

@@ -14,7 +14,7 @@ public enum Map {
 
     public static Optional<Map> getMap() {
         World world = Minecraft.getMinecraft().theWorld;
-        BlockPos pos = new BlockPos(44,71,0);
+        BlockPos pos = new BlockPos(44, 71, 0);
         if (!world.isBlockLoaded(pos) || Scoreboard.isNotZombies()) return Optional.empty();
         Block block = world.getBlockState(pos).getBlock();
 

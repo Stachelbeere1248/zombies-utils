@@ -51,6 +51,7 @@ public class LanguageSupport {
         };
         return Arrays.stream(words).anyMatch(input::contains);
     }
+
     public static boolean isHelicopterIncoming(@NotNull String input) {
         final String[] words = {
                 "The Helicopter is on its way! Hold out for 120 more seconds!"
@@ -70,6 +71,7 @@ public class LanguageSupport {
                 throw new IllegalStateException("Unexpected value: " + language);
         }
     }
+
     public static String[] getLanguages() {
         return LANGUAGES;
     }

@@ -1,8 +1,5 @@
 package com.github.stachelbeere1248.zombiesutils.game.waves;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public class Round {
     private final Wave[] waves;
 

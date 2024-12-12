@@ -14,9 +14,11 @@ public class Timer {
     public void correctStartTick() {
         this.startTick = this.getCurrentTick() - 200;
     }
+
     void split() {
         this.roundStart = this.getGameTime();
     }
+
     public int getGameTime() {
         return (int) (getCurrentTick() - startTick);
     }

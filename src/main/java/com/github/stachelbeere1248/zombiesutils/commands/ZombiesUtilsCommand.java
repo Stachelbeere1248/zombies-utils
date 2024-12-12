@@ -68,8 +68,7 @@ public class ZombiesUtilsCommand extends CommandBase {
                 default:
                     return Collections.emptyList();
             }
-        }
-        else if (args.length == 3) {
+        } else if (args.length == 3) {
             switch (args[0]) {
                 case "timer":
                     switch (args[1]) {

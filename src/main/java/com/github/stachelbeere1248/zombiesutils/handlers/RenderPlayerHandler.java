@@ -27,6 +27,7 @@ public class RenderPlayerHandler {
         final int range = ZombiesUtils.getInstance().getConfig().getPlayerVisRange();
         return playerOther.squareDistanceTo(Minecraft.getMinecraft().thePlayer.getPositionVector()) <= range * range;
     }
+
     public void togglePlayerVisibility() {
         this.visible = !this.visible;
         final String s;

@@ -1,7 +1,7 @@
 package com.github.stachelbeere1248.zombiesutils.game.sla;
 
-import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
+import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class QuickSLA {

@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 public class WaveTiming {
     public static int rl = 0;
+
     public static void onTick() {
         if (Scoreboard.isNotZombies()) return;
         ZombiesUtils.getInstance().getGameManager().getGame().ifPresent(

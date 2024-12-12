@@ -12,9 +12,26 @@ public enum GameMode {
     PRISON(Map.PRISON, Difficulty.NORMAL), PRISON_HARD(Map.PRISON, Difficulty.HARD), PRISON_RIP(Map.PRISON, Difficulty.RIP);
     private final Map map;
     private final Difficulty difficulty;
+
     GameMode(final @NotNull Map map, final @NotNull Difficulty difficulty) {
         this.map = map;
         this.difficulty = difficulty;
+    }
+
+    @Contract(pure = true)
+    public static GameMode getNormalForMap(final @NotNull Map map) {
+        switch (map) {
+            case DEAD_END:
+                return DEAD_END;
+            case BAD_BLOOD:
+                return BAD_BLOOD;
+            case ALIEN_ARCADIUM:
+                return ALIEN_ARCADIUM;
+            case PRISON:
+                return PRISON;
+            default:
+                throw new IllegalStateException("Unexpected value: " + map);
+        }
     }
 
     public Map getMap() {
@@ -24,6 +41,7 @@ public enum GameMode {
     public Difficulty getDifficulty() {
         return this.difficulty;
     }
+
     public GameMode appliedDifficulty(final Difficulty difficulty) {
         switch (this.map) {
             case DEAD_END:
@@ -59,23 +77,8 @@ public enum GameMode {
                 throw new IllegalStateException("Invalid Map: " + this.map);
         }
     }
+
     public boolean isMap(Map map) {
         return this.getMap() == map;
-    }
-
-    @Contract(pure = true)
-    public static GameMode getNormalForMap(final @NotNull Map map) {
-        switch (map) {
-            case DEAD_END:
-                return DEAD_END;
-            case BAD_BLOOD:
-                return BAD_BLOOD;
-            case ALIEN_ARCADIUM:
-                return ALIEN_ARCADIUM;
-            case PRISON:
-                return PRISON;
-            default:
-                throw new IllegalStateException("Unexpected value: " + map);
-        }
     }
 }

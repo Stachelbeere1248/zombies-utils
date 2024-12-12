@@ -9,9 +9,10 @@ public class Wave {
         this.ticks = ticks;
         this.prefixes = prefixes;
     }
+
     public Wave(final short ticks) {
         this.ticks = ticks;
-        this.prefixes = new Prefix[]{Prefix.WINDOW};
+        this.prefixes = new Prefix[]{ Prefix.WINDOW };
     }
 
     public short getTime() {

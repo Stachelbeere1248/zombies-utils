@@ -158,6 +158,7 @@ public class ZombiesUtilsConfig {
                 new CustomConfigElement("PB announcements", announcePB)
         );
     }
+
     private List<IConfigElement> getPlayerVisElements() {
         return Arrays.asList(
                 new CustomConfigElement("Enabled", playerVis),
@@ -218,12 +219,15 @@ public class ZombiesUtilsConfig {
     public boolean getCpsToggle() {
         return cpsCounter.getBoolean();
     }
+
     public boolean getAnnouncePB() {
         return announcePB.getBoolean();
     }
+
     public boolean getPlayerVis() {
         return playerVis.getBoolean();
     }
+
     public int getPlayerVisRange() {
         return playerVisRange.getInt();
     }

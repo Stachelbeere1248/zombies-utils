@@ -3,8 +3,8 @@ package com.github.stachelbeere1248.zombiesutils.timer;
 import com.github.stachelbeere1248.zombiesutils.ZombiesUtils;
 import com.github.stachelbeere1248.zombiesutils.game.GameMode;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Difficulty;
-import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.game.enums.Map;
+import com.github.stachelbeere1248.zombiesutils.game.windows.SLA;
 import com.github.stachelbeere1248.zombiesutils.handlers.Round1Correction;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.Category;
 import com.github.stachelbeere1248.zombiesutils.timer.recorder.files.CategoryFile;
@@ -35,6 +35,7 @@ public class Game {
         MinecraftForge.EVENT_BUS.register(new Round1Correction(this.timer, serverNumber));
         if (ZombiesUtils.getInstance().getConfig().isSlaToggled()) SLA.instance = new SLA(map);
     }
+
     public Game(@NotNull final Map map, final String serverNumber, final int round) {
         this.gameMode = GameMode.getNormalForMap(map);
         this.timer = new Timer();
@@ -49,17 +50,21 @@ public class Game {
     }
 
     public Timer getTimer() {
-      return this.timer;
+        return this.timer;
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
+
     public void changeDifficulty(final Difficulty difficulty) {
         this.gameMode = this.gameMode.appliedDifficulty(difficulty);
     }
+
     public int getRound() {
         return round;
     }
+
     public GameMode getGameMode() {
         return gameMode;
     }
@@ -78,6 +83,7 @@ public class Game {
         this.timer.split();
         this.round = round + 1;
     }
+
     public void helicopter() {
         if (!gameMode.isMap(Map.PRISON)) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§cEscaping without playing prison???"));
@@ -89,9 +95,9 @@ public class Game {
     }
 
     private void record() {
-            this.compareSegment();
-            if (this.roundOneRecorded) this.compareBest();
-            this.gameFile.setSegment(this.round, this.timer.getRoundTime());
+        this.compareSegment();
+        if (this.roundOneRecorded) this.compareBest();
+        this.gameFile.setSegment(this.round, this.timer.getRoundTime());
     }
 
     public void compareSegment() throws IndexOutOfBoundsException {

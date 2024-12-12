@@ -41,6 +41,7 @@ public class Hotkeys {
     public KeyBinding getRlSpawn() {
         return rlSpawn;
     }
+
     public KeyBinding getPlayerVisiblity() {
         return playerVisiblity;
     }
