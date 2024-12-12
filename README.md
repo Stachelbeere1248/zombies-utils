@@ -17,10 +17,10 @@ The timer automatically splits every round. The PB/Segment recorder automaticall
   - `Default Category`: The record-category to be selected when starting the game.
   - `PB Announcements`: Whether to show **\*\*\*NEW PERSONAL BEST\*\*\*** on PB in summaries.
 - ###### SST:
-  - Enabled: Enables / disables this feature.
-  - Auditory: A List of tick offsets that a sound should be played. Default (-40, -20, 0) means 2s and 1s in advance, as well as on spawn.
-  - RL pre-timing: During RL mode, how much SST times sohuld be offsetted. Defaults to 1.4s earlier. Affects HUD as well as auditory.
-  - Truncate: Whether to show passed rounds in the HUD.
+  - `Enabled`: Enables / disables this feature.
+  - `Auditory`: A List of tick offsets that a sound should be played. Default (-40, -20, 0) means 2s and 1s in advance, as well as on spawn.
+  - `RL pre-timing`: During RL mode, how much SST times sohuld be offsetted. Defaults to 1.4s earlier. Affects HUD as well as auditory.
+  - `Truncate`: Whether to show passed rounds in the HUD.
 - ###### SLA:
   - `Enabled`: Whether the SLA HUD should automatically be shown when starting a game.
   - `Truncate`: Whether inactive windows and rooms should be shown.
