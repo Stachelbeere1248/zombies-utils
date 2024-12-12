@@ -225,7 +225,7 @@ public class ZombiesUtilsConfig {
         return playerVis.getBoolean();
     }
     public int getPlayerVisRange() {
-        return playerVis.getInt();
+        return playerVisRange.getInt();
     }
 
     @SubscribeEvent
