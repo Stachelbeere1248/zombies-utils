@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.github.stachelbeere1248.zombiesutils.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ExampleMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
